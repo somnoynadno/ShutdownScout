@@ -40,4 +40,4 @@ class DatabaseClient:
         return self.cursor.fetchall()
     
     def insert_record(self, country_name, top_sites_str):
-        self.cursor.execute("INSERT INTO public.CountryTopSites (country_name, top_sites) VALUES(%s, %s)", (country_name, top_sites_str))
+        self.cursor.execute("INSERT INTO public.CountryTopSites (country_name, top_sites) VALUES(%s, %s) ON CONFLICT UPDATE", (country_name, top_sites_str))
