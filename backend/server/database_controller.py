@@ -55,7 +55,7 @@ class DatabaseClient:
         if len(condition_statements):
             condition = " AND ".join(condition_statements)
             query += f" where {condition}"
-        query += " order by timestamp"
+        query += " order by timestamp desc"
         if limit:
             query += f" limit {limit}"
         print(query)
