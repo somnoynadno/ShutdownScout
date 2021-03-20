@@ -3,6 +3,7 @@ import {Box, Button, Center, Heading, Progress, Text} from "@chakra-ui/react"
 import {api} from "../http/API";
 import {getPingStats} from "../services/PingService";
 import {PingResultPage} from "./PingResultPage";
+import {maxPingListSize} from "../config";
 
 
 export const IndexPage = () => {
@@ -34,6 +35,7 @@ export const IndexPage = () => {
         for (let [country, list] of Object.entries(webPool)) {
             list = list.slice(0, 10);
             let res = await getPingStats(list);
+
             setCurrentCountry(country);
             updateResult(country, res);
             console.log(country, res);
@@ -46,7 +48,7 @@ export const IndexPage = () => {
             let i = 0;
             for (const [country, list] of Object.entries(res)) {
                 p[country] = list;
-                if (++i > 300) {
+                if (++i > maxPingListSize) {
                     break;
                 }
             }

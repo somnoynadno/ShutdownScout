@@ -9,6 +9,7 @@ import {
     Flex,
     Heading,
     Link,
+    ListItem,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -18,7 +19,8 @@ import {
     ModalOverlay,
     Spacer,
     Stack,
-    Text, ListItem, UnorderedList,
+    Text,
+    UnorderedList,
     useDisclosure
 } from "@chakra-ui/react";
 

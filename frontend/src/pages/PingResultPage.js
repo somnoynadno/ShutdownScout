@@ -2,6 +2,7 @@ import React from "react";
 import {Box, Tab, TabList, TabPanel, TabPanels, Tabs} from "@chakra-ui/react"
 import Chart from "react-google-charts";
 import {mapColors} from "../config";
+import {OtherResultsTab} from "../components/OtherResultsTab";
 
 
 export const PingResultPage = (props) => {
@@ -16,6 +17,7 @@ export const PingResultPage = (props) => {
                 <TabList>
                     <Tab>Скорость соединения</Tab>
                     <Tab>Доступность сервисов</Tab>
+                    <Tab>Другие результаты</Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
@@ -63,6 +65,9 @@ export const PingResultPage = (props) => {
                                 colorAxis: {colors: [mapColors.red, mapColors.yellow, mapColors.green]},
                             }}
                         />
+                    </TabPanel>
+                    <TabPanel>
+                        <OtherResultsTab/>
                     </TabPanel>
                 </TabPanels>
             </Tabs>
