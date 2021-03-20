@@ -40,7 +40,7 @@ class DatabaseClient:
         return self.cursor.fetchall()
     
     def insert_country_topsites_record(self, country_name, top_sites_str):
-        self.cursor.execute("INSERT INTO public.CountryTopSites (country_name, top_sites) VALUES(%s, %s) ON CONFLICT UPDATE", (country_name, top_sites_str))
+        self.cursor.execute("INSERT INTO public.CountryTopSites (country_name, top_sites) VALUES(%s, %s) ON CONFLICT DO NOTHING;", (country_name, top_sites_str))
 
     def select_records(self, ip=None, region=None, limit=None):
         condition_statements = []
@@ -62,4 +62,4 @@ class DatabaseClient:
         return self.cursor.fetchall()
 
     def insert_record(self,timestamp, ip, region, country, ping, availability):
-        self.cursor.execute("INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_country, ping, availability) VALUES(%s,%s,%s,%s,%s,%s) ON CONFLICT NOTHING", (timestamp, ip, region, country, ping, availability))
+        self.cursor.execute("INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_country, ping, availability) VALUES(%s,%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING;", (timestamp, ip, region, country, ping, availability))
