@@ -62,4 +62,4 @@ class DatabaseClient:
         return self.cursor.fetchall()
 
     def insert_record(self,timestamp, ip, region, country, ping, availability):
-        self.cursor.execute("INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_country, ping, availability) VALUES(%s,%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING;", (timestamp, ip, region, country, ping, availability))
+        self.cursor.execute("INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_county, ping, availability) VALUES(%s,%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING;", (timestamp, ip, region, country, ping, availability))

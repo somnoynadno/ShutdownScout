@@ -39,10 +39,10 @@ def ip_lookup():
     ans = lookup(ip)
     return jsonify(ans)
 
-@app.route('/api/send_result')
+@app.route('/api/send_result', methods=["POST"])
 @cross_origin()
 def send_result():
-    ts = datetime.datetime.now().timestamp()
+    ts = datetime.datetime.now(datetime.timezone.utc)
     ip = request.headers.get('X-Real-IP')
     region = lookup(ip)["region"]
     results = request.get_json()

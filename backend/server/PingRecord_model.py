@@ -15,12 +15,12 @@ class PingRecord:
         self.availability = availability
     
     def save_to_db(self):
-        with DatabaseClient as db:
+        with DatabaseClient() as db:
             db.insert_record(self.timestamp, self.user_ip, self.user_region, self.pinged_county, self.ping, self.availability)
 
     @classmethod
     def select_records(self, ip=None, region=None, limit=None):
-        with DatabaseClient as db:
+        with DatabaseClient() as db:
             recs = db.select_records(ip, region, limit)
         ans = []
         for r in recs:
