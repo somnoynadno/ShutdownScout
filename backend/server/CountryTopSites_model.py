@@ -9,7 +9,7 @@ class CountryTopSites:
     def save_to_db(self):
         sites_list_string = ';'.join(self.sites_list)
         with DatabaseClient() as db:
-            db.insert_record(self.country_name, sites_list_string)
+            db.insert_country_topsites_record(self.country_name, sites_list_string)
     
     @classmethod
     def get_all_records(self):

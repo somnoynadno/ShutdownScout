@@ -39,5 +39,27 @@ class DatabaseClient:
         self.cursor.execute('SELECT * FROM public.CountryTopSites')
         return self.cursor.fetchall()
     
-    def insert_record(self, country_name, top_sites_str):
+    def insert_country_topsites_record(self, country_name, top_sites_str):
         self.cursor.execute("INSERT INTO public.CountryTopSites (country_name, top_sites) VALUES(%s, %s) ON CONFLICT UPDATE", (country_name, top_sites_str))
+
+    def select_records(self, ip=None, region=None, limit=None):
+        condition_statements = []
+        values = []
+        if ip:
+            condition_statements.append("user_ip=%s")
+            values.append(ip)
+        if region:
+            condition_statements.append("user_region=%s")
+            values.append(region)
+        query = f"SELECT * FROM public.PingRecord order by timestamp"
+        if len(condition_statements):
+            condition = " AND ".join(condition_statements)
+            query += f" where {condition}"
+        if limit:
+            query += f" limit {limit}"
+        print(query)
+        self.cursor.execute(query, values)
+        return self.cursor.fetchall()
+
+    def insert_record(self,timestamp, ip, region, country, ping, availability):
+        self.cursor.execute("INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_country, ping, availability) VALUES(%s,%s,%s,%s,%s,%s) ON CONFLICT NOTHING", (timestamp, ip, region, country, ping, availability))

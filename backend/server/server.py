@@ -3,11 +3,18 @@ from flask import Flask, jsonify, request
 import threading
 import requests
 from CountryTopSites_model import CountryTopSites
+from PingRecord_model import PingRecord
 from flask_cors import CORS, cross_origin
+import datetime
+from collections import defaultdict
 
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
+def lookup(ip):
+    url = f"https://ipapi.co/{ip}/json/"
+    ans = requests.get(url).json()
+    return ans
 
 def init_db():
     with open('init_db/web_pool.json', "r") as f:
@@ -29,10 +36,35 @@ def get_countries_top_sites():
 @cross_origin()
 def ip_lookup():
     ip = request.headers.get('X-Real-IP')
-    url = f"https://ipapi.co/{ip}/json/"
-    ans = requests.get(url).json()
+    ans = lookup(ip)
     return jsonify(ans)
 
+@app.route('/api/send_result')
+@cross_origin()
+def send_result():
+    ts = datetime.datetime.now().timestamp()
+    ip = request.headers.get('X-Real-IP')
+    region = lookup(ip)["region"]
+    results = request.get_json()
+    for country in results:
+        measure = results[country]
+        r = PingRecord(ts, ip, region, country, measure["Ping"], measure["Availability"])
+        r.save_to_db()
+    return "ok", 200
+
+@app.route('/api/last_results')
+@cross_origin()
+def select_records():
+    ip = request.args["ip"]
+    region = request.args["region"]
+    limit = request.args["limit"]
+    results_list = PingRecord.select_records(ip, region, limit)
+    ans_dict = defaultdict(dict)
+    for rec in results_list:
+        ans_dict[rec.timestamp][rec.pinged_county] = {"Ping":rec.ping, "Availability":rec.availability}
+    return jsonify(ans_dict.values)
+
+    
 if __name__ == "__main__":
     init_db()
     app.run(port=3113, host='0.0.0.0')
