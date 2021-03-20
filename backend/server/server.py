@@ -65,9 +65,9 @@ def select_records():
     for rec in results_list:
         ans_dict[rec.timestamp][rec.pinged_county] = {"Ping":rec.ping, "Availability":rec.availability}
     print(ans_dict)
-    return jsonify(list(ans_dict.values()))
+    return jsonify(ans_dict)
 
-    
+
 if __name__ == "__main__":
     init_db()
     app.run(port=3113, host='0.0.0.0')
