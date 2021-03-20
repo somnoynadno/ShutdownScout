@@ -30,7 +30,7 @@ export const IndexPage = () => {
     const pingWebPool = async () => {
         setIsProcessing(true);
         for (let [country, list] of Object.entries(webPool)) {
-            if (list.length > 5) list = list.slice(5);
+            list = list.slice(0, 10);
             let res = await getPingStats(list);
             setCurrentCountry(country);
             updateResult(country, res);
@@ -61,7 +61,7 @@ export const IndexPage = () => {
                     {!isProcessing && !isReady ?
                     <Center>
                         <Button disabled={webPool === {} || isProcessing} size={"lg"}
-                                onClick={() => pingWebPool()}>Начать обработку</Button>
+                                onClick={() => pingWebPool()}>Начать сканирование</Button>
                     </Center> : ''
                     }
                     {isProcessing ?
