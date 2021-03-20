@@ -7,6 +7,8 @@ import {PingResultPage} from "./PingResultPage";
 
 export const IndexPage = () => {
     let [webPool, setWebPool] = useState({});
+    let [lookup, setLookup] = useState({});
+
     let [pingResult, setPingResult] = useState({});
     let [currentCountry, setCurrentCountry] = useState("");
     let [progress, setProgress] = useState(0);
@@ -52,6 +54,11 @@ export const IndexPage = () => {
         }).catch((err) => {
             console.log(err);
         })
+
+        api.GetIPLookup().then((res) => {
+            console.log(res);
+            setLookup(res);
+        })
     }, []);
 
     return (
@@ -59,10 +66,19 @@ export const IndexPage = () => {
             <Center>
                 <Box w="500px">
                     {!isProcessing && !isReady ?
-                    <Center>
-                        <Button disabled={webPool === {} || isProcessing} size={"lg"}
-                                onClick={() => pingWebPool()}>Начать сканирование</Button>
-                    </Center> : ''
+                        <Center>
+                            <Box>
+                                {lookup ? <Box>
+                                    <Text align="center">IP-адрес: {lookup["ip"]}</Text>
+                                    <Text align="center">Местоположение: {lookup["country_name"]}, {lookup["city"]}</Text>
+                                    <Text align="center">Часовой пояс: {lookup["timezone"]} ({lookup["utc_offset"]})</Text>
+                                    <Text align="center">Геометка: {lookup["longitude"]}, {lookup["latitude"]}</Text>
+                                    <br/>
+                                </Box> : ''}
+                                <Button disabled={webPool === {} || isProcessing} size={"lg"}
+                                        onClick={() => pingWebPool()}>Начать сканирование</Button>
+                            </Box>
+                        </Center> : ''
                     }
                     {isProcessing ?
                         <Box>
