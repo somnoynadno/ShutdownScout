@@ -63,7 +63,7 @@ def select_records():
     results_list = PingRecord.select_records(ip, region, limit)
     ans_dict = defaultdict(dict)
     for rec in results_list:
-        ans_dict[rec.timestamp][rec.pinged_county] = {"Ping":rec.ping, "Availability":rec.availability}
+        ans_dict[str(rec.timestamp)][rec.pinged_county] = {"Ping":rec.ping, "Availability":rec.availability}
     print(ans_dict)
     return jsonify(ans_dict)
 
