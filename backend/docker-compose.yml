@@ -1,0 +1,23 @@
+version: '2.2'
+
+services:
+  postgres:
+    image: postgres:13.1-alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+    volumes:
+      - ./server/init_db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: on-failure
+    ports:
+      - "3114:5432"
+  web:
+    build:
+      context: ./server
+    restart: on-failure
+    stop_grace_period: 10s
+    depends_on:
+      - postgres
+    ports:
+      - "3113:3113"
