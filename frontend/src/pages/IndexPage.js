@@ -95,6 +95,10 @@ export const IndexPage = () => {
                             </Text>
                             <br/>
                             <Progress value={progress}/>
+                            <br/>
+                            <Text align={"center"} color="gray.300">
+                                P.S. Желательно не переключать данную вкладку
+                            </Text>
                         </Box> : ''
                     }
                 </Box>
