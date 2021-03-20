@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend/server
+    restart: always
+    container_name: backend
+    stop_grace_period: 10s
+    depends_on:
+      - postgres
+    ports:
+      - "3113:3113"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "5050:5050"
+
+  postgres:
+    image: postgres:13.1-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+    volumes:
+      - ./backend/server/init_db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    ports:
+      - "3114:5432"
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always 
+    ports:
+      - "12121:8080"
+    depends_on:
+      - postgres
+
+
