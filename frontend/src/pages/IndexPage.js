@@ -27,6 +27,10 @@ export const IndexPage = () => {
         if (k === 100) {
             setIsProcessing(false);
             setIsReady(true);
+
+            api.SendResult(pingResult)
+                .then((res) => console.log("Result saved"))
+                .catch((err) => console.log(err));
         }
     }, [pingResult, webPool])
 
