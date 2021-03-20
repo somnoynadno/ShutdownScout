@@ -28,7 +28,7 @@ def get_countries_top_sites():
 @app.route('/api/ip_lookup')
 @cross_origin()
 def ip_lookup():
-    ip = request.remote_addr
+    ip = request.headers.get('X-Real-IP')
     url = f"https://ipapi.co/{ip}/json/"
     ans = requests.get(url).json()
     return jsonify(ans)
