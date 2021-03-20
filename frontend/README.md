@@ -1,0 +1,2 @@
+# Shutdown Scout Frontend
+
