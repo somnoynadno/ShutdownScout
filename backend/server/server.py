@@ -1,6 +1,7 @@
 import json
 from flask import Flask, jsonify, request
 import threading
+import requests
 from CountryTopSites_model import CountryTopSites
 from flask_cors import CORS, cross_origin
 
