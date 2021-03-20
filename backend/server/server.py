@@ -55,14 +55,17 @@ def send_result():
 @app.route('/api/last_results')
 @cross_origin()
 def select_records():
-    ip = request.args["ip"]
-    region = request.args["region"]
-    limit = request.args["limit"]
+    print("hh")
+    ip = request.args.get("ip")
+    region = request.args.get("region")
+    limit = request.args.get("limit")
+    print(ip, region, limit)
     results_list = PingRecord.select_records(ip, region, limit)
     ans_dict = defaultdict(dict)
     for rec in results_list:
         ans_dict[rec.timestamp][rec.pinged_county] = {"Ping":rec.ping, "Availability":rec.availability}
-    return jsonify(ans_dict.values)
+    print(ans_dict)
+    return jsonify(list(ans_dict.values()))
 
     
 if __name__ == "__main__":
