@@ -108,7 +108,7 @@ export const IndexPage = () => {
                 </Box>
             </Center>
             {
-                (isReady ? <PingResultPage result={pingResult}/> : '')
+                (isReady ? <PingResultPage lookup={lookup} result={pingResult}/> : '')
             }
         </Box>
     )

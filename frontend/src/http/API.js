@@ -26,9 +26,9 @@ export class API {
         })
     }
 
-    GetLastResults(limit = 5, ip=undefined, region=undefined) {
-        if (ip) ip = `&ip=${ip}`;
-        if (region) region = `&region=${region}`;
+    GetLastResults(limit = 5, region=undefined, ip=undefined) {
+        ip = (ip ? `&ip=${ip}` : '');
+        region = (region ? `&region=${region}` : '');
         return new Promise((resolve, reject) => {
             axios.get(apiAddress + `/last_results?limit=${limit}${ip}${region}`)
                 .then(response => resolve(response.data))
