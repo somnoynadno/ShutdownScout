@@ -85,10 +85,10 @@ def test_proxy():
     ip = inp["IP"]
     port = inp["Port"]
     proxies = {}
-    for proto in ip["Protocol"]:
+    for proto in inp["Protocol"]:
         proxies[proto] = f"{proto}://{ip}:{port}"
     region = lookup(ip)["region"]
-    protocols = ';'.join(ip["Protocol"])
+    protocols = ';'.join(inp["Protocol"])
     ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
     country_top_sites_records = CountryTopSites.get_all_records()
     for rec in country_top_sites_records:
@@ -103,15 +103,23 @@ def test_proxy():
                 ping += time_delta.total_seconds()*10**3
         country_av = availability // len(rec.sites_list)
         country_ping = ping // len(rec.sites_list)
-        ans["Result"][rec.country_name] = {"Ping":country_ping, "Availability":country_av}
-    return ans
+        ans["Results"][rec.country_name] = {"Ping":country_ping, "Availability":country_av}
+        print(ans["Results"][rec.country_name])
+    return jsonify(ans)
 
 def ping_site(url, proxy):
-    resp = requests.get(url, proxy=proxy)
-    if resp.ok:
-        return 1
-    else:
+    try:
+        resp = requests.get(f"http://{url}", proxies=proxy, timeout=1)
+        if resp.ok:
+            return 1
         return 0
+#    except requests.exceptions.Timeout, ConnectionResetError, requests.exceptions.ConnectionError:
+    except Exception:
+        return 0
+    #resp = requests.get(f"https://{url}", proxies=proxy)
+    #if resp.ok:
+    #    return 1
+    return 0
 
 if __name__ == "__main__":
     init_db()
