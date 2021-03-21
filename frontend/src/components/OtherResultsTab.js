@@ -47,11 +47,11 @@ export const OtherResultsTab = (props) => {
     }
 
     useEffect(() => {
-        api.GetLastResults(30)
+        api.GetLastResults(6)
             .then((res) => setLastResults(res))
             .catch((err) => console.log(err))
 
-        api.GetLastResults(30, lookup.region)
+        api.GetLastResults(6, lookup.region)
             .then((res) => setResultsByRegion(res))
             .catch((err) => console.log(err))
     }, [lookup]);
@@ -60,7 +60,8 @@ export const OtherResultsTab = (props) => {
         <Heading size={"lg"}>Последние запросы</Heading>
         <br/>
         <List spacing={3}>
-            {Object.entries(lastResults).map((e, i) => {
+            {Object.entries(lastResults).reverse().map((e, i) => {
+                if (i === 0) return '';
                 const date = moment(e[0]).format("MM.DD.YYYY hh:mm");
                 const payload = e[1];
                 return <ListItem key={i}>
@@ -75,7 +76,8 @@ export const OtherResultsTab = (props) => {
         <br/>
         <List spacing={3}>
             <List spacing={3}>
-                {Object.entries(resultsByRegion).map((e, i) => {
+                {Object.entries(resultsByRegion).reverse().map((e, i) => {
+                    if (i === 0) return '';
                     const date = moment(e[0]).format("MM.DD.YYYY hh:mm");
                     const payload = e[1];
                     return <ListItem key={i}>
