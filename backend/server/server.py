@@ -7,6 +7,7 @@ from PingRecord_model import PingRecord
 from flask_cors import CORS, cross_origin
 import datetime
 from collections import defaultdict 
+import subprocess
 
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
@@ -89,37 +90,9 @@ def test_proxy():
         proxies[proto] = f"{proto}://{ip}:{port}"
     region = lookup(ip)["region"]
     protocols = ';'.join(inp["Protocol"])
-    ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
-    country_top_sites_records = CountryTopSites.get_all_records()
-    for rec in country_top_sites_records:
-        availability=0
-        ping = 0
-        for site in rec.sites_list:
-            ts = datetime.datetime.now()
-            cur_av = ping_site(site, proxies)
-            if cur_av == 1:
-                availability += ping_site(site, proxies)
-                time_delta = datetime.datetime.now() - ts
-                ping += time_delta.total_seconds()*10**3
-        country_av = availability // len(rec.sites_list)
-        country_ping = ping // len(rec.sites_list)
-        ans["Results"][rec.country_name] = {"Ping":country_ping, "Availability":country_av}
-        print(ans["Results"][rec.country_name])
-    return jsonify(ans)
-
-def ping_site(url, proxy):
-    try:
-        resp = requests.get(f"http://{url}", proxies=proxy, timeout=1)
-        if resp.ok:
-            return 1
-        return 0
-#    except requests.exceptions.Timeout, ConnectionResetError, requests.exceptions.ConnectionError:
-    except Exception:
-        return 0
-    #resp = requests.get(f"https://{url}", proxies=proxy)
-    #if resp.ok:
-    #    return 1
-    return 0
+    #ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
+    subprocess.run(["python3","proxy_tester.py", f"{proxies['http']}"])
+    return "look to test.json after"
 
 if __name__ == "__main__":
     init_db()
