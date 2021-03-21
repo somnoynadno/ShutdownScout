@@ -51,13 +51,14 @@ class DatabaseClient:
         if region:
             condition_statements.append("user_region=%s")
             values.append(region)
+        if limit:
+            condition_statements.append(f"timestamp in (select distinct timestamp from public.PingRecord order by timestamp desc limit {limit})")
         query = f"SELECT * FROM public.PingRecord"
         if len(condition_statements):
             condition = " AND ".join(condition_statements)
             query += f" where {condition}"
         query += " order by timestamp desc"
-        if limit:
-            query += f" limit {limit}"
+        
         print(query)
         self.cursor.execute(query, values)
         return self.cursor.fetchall()
