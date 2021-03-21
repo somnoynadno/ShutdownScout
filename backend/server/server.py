@@ -6,7 +6,7 @@ from CountryTopSites_model import CountryTopSites
 from PingRecord_model import PingRecord
 from flask_cors import CORS, cross_origin
 import datetime
-from collections import defaultdict
+from collections import defaultdict 
 
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
@@ -71,6 +71,47 @@ def select_records():
     print(ans_dict)
     return jsonify(ans_dict)
 
+
+'''
+{ 
+    "IP":'95.182.120.116',
+    "Protocol":['http', 'https']
+    "Port":7397
+}
+'''
+@app.route("/api/proxy", methods=["POST"])
+def test_proxy():
+    inp = request.get_json()
+    ip = inp["IP"]
+    port = inp["Port"]
+    proxies = {}
+    for proto in ip["Protocol"]:
+        proxies[proto] = f"{proto}://{ip}:{port}"
+    region = lookup(ip)["region"]
+    protocols = ';'.join(ip["Protocol"])
+    ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
+    country_top_sites_records = CountryTopSites.get_all_records()
+    for rec in country_top_sites_records:
+        availability=0
+        ping = 0
+        for site in rec.sites_list:
+            ts = datetime.datetime.now()
+            cur_av = ping_site(site, proxies)
+            if cur_av == 1:
+                availability += ping_site(site, proxies)
+                time_delta = datetime.datetime.now() - ts
+                ping += time_delta.total_seconds()*10**3
+        country_av = availability // len(rec.sites_list)
+        country_ping = ping // len(rec.sites_list)
+        ans["Result"][rec.country_name] = {"Ping":country_ping, "Availability":country_av}
+    return ans
+
+def ping_site(url, proxy):
+    resp = requests.get(url, proxy=proxy)
+    if resp.ok:
+        return 1
+    else:
+        return 0
 
 if __name__ == "__main__":
     init_db()

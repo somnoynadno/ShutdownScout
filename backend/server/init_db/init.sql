@@ -9,3 +9,14 @@ user_region varchar not null,
 pinged_county varchar not null,
 ping integer not null,
 availability real not null);
+
+CREATE TABLE IF NOT EXISTS public.ProxyPingRecord(
+timestamp timestamp NOT NULL DEFAULT NOW(),
+proxy_protocol varchar not null,
+proxy_ip varchar not null,
+proxy_port integer not null,
+proxy_region varchar not null,
+pinged_county varchar not null,
+ping integer not null,
+availability real not null);
+
