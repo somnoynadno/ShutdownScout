@@ -25,6 +25,16 @@ export class API {
                 .catch(error => reject(error));
         })
     }
+
+    GetLastResults(limit = 5, ip=undefined, region=undefined) {
+        if (ip) ip = `&ip=${ip}`;
+        if (region) region = `&region=${region}`;
+        return new Promise((resolve, reject) => {
+            axios.get(apiAddress + `/last_results?limit=${limit}${ip}${region}`)
+                .then(response => resolve(response.data))
+                .catch(error => reject(error));
+        })
+    }
 }
 
 export const api = new API();

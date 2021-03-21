@@ -1,15 +1,17 @@
 import React from "react";
 import {Box, Tab, TabList, TabPanel, TabPanels, Tabs} from "@chakra-ui/react"
-import Chart from "react-google-charts";
 import {mapColors} from "../config";
 import {OtherResultsTab} from "../components/OtherResultsTab";
+import {GeoChart} from "../components/GeoChart";
+import {groupPingResultsForGeoChart} from "../services/helpers";
 
 
 export const PingResultPage = (props) => {
     let result = props.result;
+    let lookup = props.lookup;
 
-    let pingData = groupDataByKey(result, "Ping");
-    let availabilityData = groupDataByKey(result, "Availability");
+    let pingData = groupPingResultsForGeoChart(result, "Ping");
+    let availabilityData = groupPingResultsForGeoChart(result, "Availability");
 
     return (
         <Box>
@@ -21,53 +23,13 @@ export const PingResultPage = (props) => {
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        <Chart
-                            chartEvents={[
-                                {
-                                    eventName: "select",
-                                    callback: ({chartWrapper}) => {
-                                        const chart = chartWrapper.getChart();
-                                        const selection = chart.getSelection();
-                                        if (selection.length === 0) return;
-                                        const region = pingData[selection[0].row + 1];
-                                        console.log("Selected : " + region);
-                                    }
-                                }
-                            ]}
-                            chartType="GeoChart"
-                            width="100%"
-                            height="400px"
-                            data={pingData}
-                            options={{
-                                colorAxis: {colors: [mapColors.green, mapColors.yellow, mapColors.red]},
-                            }}
-                        />
+                        <GeoChart colors={[mapColors.green, mapColors.yellow, mapColors.red]} data={pingData}/>
                     </TabPanel>
                     <TabPanel>
-                        <Chart
-                            chartEvents={[
-                                {
-                                    eventName: "select",
-                                    callback: ({chartWrapper}) => {
-                                        const chart = chartWrapper.getChart();
-                                        const selection = chart.getSelection();
-                                        if (selection.length === 0) return;
-                                        const region = pingData[selection[0].row + 1];
-                                        console.log("Selected : " + region);
-                                    }
-                                }
-                            ]}
-                            chartType="GeoChart"
-                            width="100%"
-                            height="400px"
-                            data={availabilityData}
-                            options={{
-                                colorAxis: {colors: [mapColors.red, mapColors.yellow, mapColors.green]},
-                            }}
-                        />
+                        <GeoChart colors={[mapColors.red, mapColors.yellow, mapColors.green]} data={availabilityData}/>
                     </TabPanel>
                     <TabPanel>
-                        <OtherResultsTab/>
+                        <OtherResultsTab lookup={lookup}/>
                     </TabPanel>
                 </TabPanels>
             </Tabs>
@@ -75,20 +37,3 @@ export const PingResultPage = (props) => {
     )
 }
 
-function groupDataByKey(object = {}, key = "") {
-    let result = [];
-    result.push(["Country", key]);
-
-    for (const [country, pingResult] of Object.entries(object)) {
-        let row = [country];
-
-        for (const [k, v] of Object.entries(pingResult)) {
-            if (k === key) {
-                row.push(v);
-            }
-        }
-        result.push(row);
-    }
-
-    return result;
-}
