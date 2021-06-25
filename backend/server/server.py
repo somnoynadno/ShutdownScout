@@ -10,6 +10,8 @@ from collections import defaultdict
 import subprocess
 import random
 import string
+import socket
+import tracert_util as tu
 
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
@@ -117,6 +119,31 @@ def ping_from_local():
     p.communicate(timeout=timeout)
     with open(filename) as f:
         return jsonify(json.load(f))
+
+@app.route("/api/tracert", methods=["POST"])
+def tracert():
+    dest_name = request.get_json()["Address"]
+    dest_addr = socket.gethostbyname(dest_name)
+    icmp = socket.getprotobyname('icmp')
+    udp = socket.getprotobyname('udp')
+    ttl = 1
+    shouldContinue = True
+    ans = []
+    while True:
+        if (shouldContinue):
+            IP, shouldContinue = tu.check_one_node(
+                dest_name, ttl, dest_addr, icmp, udp)
+            #ans.append(IP)
+            ip_info = {}
+            if IP:
+                ip_info = requests.get(f"https://freegeoip.app/json/{IP}").json()
+            ans.append({"IP":IP, "Info": ip_info})
+            ttl += 1
+        else:
+            break
+    return jsonify(ans)
+
+
 
 if __name__ == "__main__":
     init_db()
