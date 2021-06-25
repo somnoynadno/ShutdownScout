@@ -15,6 +15,7 @@ db_changing_lock = threading.Lock()
 def lookup(ip):
     url = f"https://ipapi.co/{ip}/json/"
     ans = requests.get(url).json()
+    print(ans)
     return ans
 
 def init_db():
@@ -85,13 +86,12 @@ def test_proxy():
     inp = request.get_json()
     ip = inp["IP"]
     port = inp["Port"]
-    proxies = {}
-    for proto in inp["Protocol"]:
-        proxies[proto] = f"{proto}://{ip}:{port}"
-    region = lookup(ip)["region"]
-    protocols = ';'.join(inp["Protocol"])
+    proxies = f"{ip}:{port}"
+    #region = lookup(ip)["region"]
+    #protocols = ';'.join(inp["Protocol"])
     #ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
-    subprocess.run(["python3","proxy_tester.py", f"{proxies['http']}"])
+    p = subprocess.Popen(["python3","proxy_tester.py", f"{proxies}"])
+    p.communicate(timeout=60)
     return "look to test.json after"
 
 if __name__ == "__main__":
