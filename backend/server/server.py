@@ -8,9 +8,14 @@ from flask_cors import CORS, cross_origin
 import datetime
 from collections import defaultdict 
 import subprocess
+import random
+import string
 
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
+
+def generate_random_str(n=12):
+    return ''.join(random.choices(string.ascii_letters,k=n))
 
 def lookup(ip):
     url = f"https://ipapi.co/{ip}/json/"
@@ -94,8 +99,21 @@ def test_proxy():
     #region = lookup(ip)["region"]
     #protocols = ';'.join(inp["Protocol"])
     #ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
-    filename = "ahah.json"
+    filename = f"{generate_random_str()}.json"
     p = subprocess.Popen(["python3","ping_util.py", filename ,f"{proxies}"])
+    p.communicate(timeout=timeout)
+    with open(filename) as f:
+        return jsonify(json.load(f))
+
+@app.route("/api/ping_from_local", methods=["POST"])
+def ping_from_local():
+    inp = request.get_json()
+    if "Timeout" in inp:
+        timeout=inp["Timeout"]
+    else:
+        timeout=120
+    filename = "ping.json"
+    p = subprocess.Popen(["python3","ping_util.py", filename])
     p.communicate(timeout=timeout)
     with open(filename) as f:
         return jsonify(json.load(f))
