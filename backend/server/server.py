@@ -90,9 +90,11 @@ def test_proxy():
     #region = lookup(ip)["region"]
     #protocols = ';'.join(inp["Protocol"])
     #ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
-    p = subprocess.Popen(["python3","proxy_tester.py", f"{proxies}"])
+    filename = "ahah.json"
+    p = subprocess.Popen(["python3","ping_util.py", filename ,f"{proxies}"])
     p.communicate(timeout=60)
-    return "look to test.json after"
+    with open(filename) as f:
+        return jsonify(json.load(f))
 
 if __name__ == "__main__":
     init_db()
