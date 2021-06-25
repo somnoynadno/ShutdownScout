@@ -13,7 +13,7 @@ import resource
 from itertools import zip_longest
 
 PROTO = "https"
-PULL_FILENAME = 'init_db/small_pool.json'
+PULL_FILENAME = 'init_db/web_pool.json'
 
 ping_result_lock = threading.Lock()
 ping_res = {}
@@ -53,9 +53,10 @@ def scan_site(site):
 def scan_multithread(revert_dict):
     threads = []
     open_files_os_limit = resource.getrlimit(resource.RLIMIT_NOFILE)[0]
-    print(f"limit is {open_files_os_limit}")
+    print(f"I will run only {int(open_files_os_limit/2)} threads at once, because of openfile limit")
     items_parts = grouper(revert_dict.items(), int(open_files_os_limit/2))
-    print(f"partition is {items_parts}")
+    print(f"So there will be {len(items_parts)} parts of threads")
+    #print(f"partition is {items_parts}")
     for part in items_parts:
         for item in part:
             if item is None:

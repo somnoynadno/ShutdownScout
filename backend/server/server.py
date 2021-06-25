@@ -86,13 +86,17 @@ def test_proxy():
     inp = request.get_json()
     ip = inp["IP"]
     port = inp["Port"]
+    if "Timeout" in inp:
+        timeout=inp["Timeout"]
+    else:
+        timeout=120
     proxies = f"{ip}:{port}"
     #region = lookup(ip)["region"]
     #protocols = ';'.join(inp["Protocol"])
     #ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
     filename = "ahah.json"
     p = subprocess.Popen(["python3","ping_util.py", filename ,f"{proxies}"])
-    p.communicate(timeout=60)
+    p.communicate(timeout=timeout)
     with open(filename) as f:
         return jsonify(json.load(f))
 
