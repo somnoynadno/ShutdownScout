@@ -115,7 +115,9 @@ def test_proxy():
     else:
         timeout = 120
     proxies = f"{ip}:{port}"
-    region = lookup(ip)["region"]
+    lookup_res = lookup(ip)
+    region = lookup_res["region"]
+    country_name = lookup_res["country_name"]
     # protocols = ';'.join(inp["Protocol"])
     # ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
     output_filename = f"/tmp/{generate_random_str()}.json"
@@ -126,7 +128,7 @@ def test_proxy():
         proxy_ping_res = json.load(f)
         for country in proxy_ping_res:
             record = proxy_ping_res[country]
-            r = ProxyPingRecord(ts, ip, region, "Unknown", record["Ping"], record["Availability"])
+            r = ProxyPingRecord(ts, "https", ip, port, region, country_name, record["Ping"], record["Availability"])
             r.save_to_db()
         return jsonify(proxy_ping_res)
 
