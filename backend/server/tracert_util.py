@@ -1,14 +1,6 @@
 #!/usr/bin/python3
 
 import socket
-import struct
-import sys
-import subprocess
-import io
-from contextlib import redirect_stdout
-import re
-from struct import unpack
-from socket import AF_INET, inet_pton
 
 whois_servers = ['whois.arin.net', 'whois.apnic.net',
                  'whois.ripe.net', 'whois.afrinic.net',
@@ -63,10 +55,9 @@ def check_one_node(dest_name, ttl, dest_addr, icmp, udp):
                 except socket.error:
                     tries = tries - 1
                     if tries == 0:
-                        print('*', end='\r\n'*3)
+                        print('*', end='\r\n' * 3)
     if not finished:
         pass
     if curr_addr == dest_addr or ttl > max_hops:
         return curr_addr, False
     return curr_addr, True
-

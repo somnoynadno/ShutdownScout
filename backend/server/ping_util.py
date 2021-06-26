@@ -28,11 +28,12 @@ def grouper(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return list(zip_longest(*args, fillvalue=fillvalue))
 
+
 def ping_site(url):
     try:
         global proxies
         resp = requests.get(f"{PROTO}://{url}", proxies=proxies, timeout=3)
-        #print(resp.ok)
+        # print(resp.ok)
         if resp.ok:
             return 1
         return 0
@@ -40,23 +41,24 @@ def ping_site(url):
         return 0
     return 0
 
+
 def scan_site(site):
     ts = datetime.datetime.now()
     time_delta = 0
     cur_av = ping_site(site)
     if cur_av == 1:
-        time_delta = (datetime.datetime.now() - ts).total_seconds()*10**3
+        time_delta = (datetime.datetime.now() - ts).total_seconds() * 10 ** 3
     with ping_result_lock:
-        ping_site_res[site] = {"Ping":time_delta, "Availability":cur_av}
+        ping_site_res[site] = {"Ping": time_delta, "Availability": cur_av}
 
 
 def scan_multithread(revert_dict):
     threads = []
     open_files_os_limit = resource.getrlimit(resource.RLIMIT_NOFILE)[0]
-    print(f"I will run only {int(open_files_os_limit/2)} threads at once, because of openfile limit")
-    items_parts = grouper(revert_dict.items(), int(open_files_os_limit/2))
+    print(f"I will run only {int(open_files_os_limit / 2)} threads at once, because of openfile limit")
+    items_parts = grouper(revert_dict.items(), int(open_files_os_limit / 2))
     print(f"So there will be {len(items_parts)} parts of threads")
-    #print(f"partition is {items_parts}")
+    # print(f"partition is {items_parts}")
     for part in items_parts:
         for item in part:
             if item is None:
@@ -71,9 +73,10 @@ def scan_multithread(revert_dict):
             print(f"thread finished")
             t.join()
 
+
 def init_ping_res(country_list):
     for country in country_list:
-        ping_res[country] = {"Ping":0, "Availability":0}
+        ping_res[country] = {"Ping": 0, "Availability": 0}
 
 
 def fill_ping_res():
@@ -85,23 +88,23 @@ def fill_ping_res():
         ping_res[country]["Ping"] = ping_res[country]["Ping"] / len(top_sites[country])
         ping_res[country]["Availability"] = ping_res[country]["Availability"] / len(top_sites[country])
 
+
 filename = argv[1]
-if len(argv)>2:
-    #ip:port
+if len(argv) > 2:
+    # ip:port
     proxy_url = argv[2]
     p_list = proxy_url.split(':')
-    proxies = {p_list[0]:p_list[1]}
+    proxies = {p_list[0]: p_list[1]}
 
 with open(PULL_FILENAME, "r") as f:
     top_sites = json.load(f)
-
 
 print(f"I will scan {top_sites.keys()}")
 
 revert_dict = {}
 for country in top_sites:
     for site in top_sites[country]:
-        revert_dict[site]=country
+        revert_dict[site] = country
 
 print("Dict reverted")
 
@@ -109,7 +112,6 @@ scan_multithread(revert_dict)
 
 init_ping_res(top_sites.keys())
 fill_ping_res()
-
 
 with open(filename, 'w') as f:
     json.dump(ping_res, f)

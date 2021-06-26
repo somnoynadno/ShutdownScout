@@ -4,9 +4,9 @@ import threading
 import requests
 from CountryTopSites_model import CountryTopSites
 from PingRecord_model import PingRecord
-from flask_cors import CORS, cross_origin
+from flask_cors import cross_origin
 import datetime
-from collections import defaultdict 
+from collections import defaultdict
 import subprocess
 import random
 import string
@@ -17,8 +17,10 @@ import proxy_parser as pp
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
+
 def generate_random_str(n=12):
-    return ''.join(random.choices(string.ascii_letters,k=n))
+    return ''.join(random.choices(string.ascii_letters, k=n))
+
 
 def lookup(ip):
     url = f"https://ipapi.co/{ip}/json/"
@@ -26,12 +28,14 @@ def lookup(ip):
     print(ans)
     return ans
 
+
 def init_db():
     with open('init_db/web_pool.json', "r") as f:
         top_sites_dict = json.load(f)
     for country in top_sites_dict:
         cts = CountryTopSites(country, top_sites_dict[country])
         cts.save_to_db()
+
 
 @app.route('/api/web_pool')
 @cross_origin()
@@ -42,12 +46,17 @@ def get_countries_top_sites():
         ans[cts.country_name] = cts.sites_list
     return jsonify(ans)
 
+
 @app.route('/api/ip_lookup')
 @cross_origin()
 def ip_lookup():
-    ip = request.headers.get('X-Real-IP')
+    ip = request.args.get("ip")
+    if not ip:
+        ip = request.headers.get('X-Real-IP')
+
     ans = lookup(ip)
     return jsonify(ans)
+
 
 @app.route('/api/send_result', methods=["POST"])
 @cross_origin()
@@ -62,6 +71,7 @@ def send_result():
         r.save_to_db()
     return "ok", 200
 
+
 @app.route('/api/last_results')
 @cross_origin()
 def select_records():
@@ -74,52 +84,48 @@ def select_records():
     ans_dict = defaultdict(dict)
     for rec in results_list:
         if "IP" not in ans_dict[str(rec.timestamp)].keys():
-            ans_dict[str(rec.timestamp)]["Results"]={}
+            ans_dict[str(rec.timestamp)]["Results"] = {}
             ans_dict[str(rec.timestamp)]["IP"] = rec.user_ip
             ans_dict[str(rec.timestamp)]["Region"] = rec.user_region
-        ans_dict[str(rec.timestamp)]["Results"][rec.pinged_county] = {"Ping":rec.ping, "Availability":rec.availability}
+        ans_dict[str(rec.timestamp)]["Results"][rec.pinged_county] = {"Ping": rec.ping,
+                                                                      "Availability": rec.availability}
     print(ans_dict)
     return jsonify(ans_dict)
 
 
-'''
-{ 
-    "IP":'95.182.120.116',
-    "Protocol":['http', 'https']
-    "Port":7397
-}
-'''
 @app.route("/api/proxy", methods=["POST"])
 def test_proxy():
     inp = request.get_json()
     ip = inp["IP"]
     port = inp["Port"]
     if "Timeout" in inp:
-        timeout=inp["Timeout"]
+        timeout = inp["Timeout"]
     else:
-        timeout=120
+        timeout = 120
     proxies = f"{ip}:{port}"
-    #region = lookup(ip)["region"]
-    #protocols = ';'.join(inp["Protocol"])
-    #ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
+    # region = lookup(ip)["region"]
+    # protocols = ';'.join(inp["Protocol"])
+    # ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
     filename = f"{generate_random_str()}.json"
-    p = subprocess.Popen(["python3","ping_util.py", filename ,f"{proxies}"])
+    p = subprocess.Popen(["python3", "ping_util.py", filename, f"{proxies}"])
     p.communicate(timeout=timeout)
     with open(filename) as f:
         return jsonify(json.load(f))
+
 
 @app.route("/api/ping_from_local", methods=["POST"])
 def ping_from_local():
     inp = request.get_json()
     if "Timeout" in inp:
-        timeout=inp["Timeout"]
+        timeout = inp["Timeout"]
     else:
-        timeout=120
+        timeout = 120
     filename = "ping.json"
-    p = subprocess.Popen(["python3","ping_util.py", filename])
+    p = subprocess.Popen(["python3", "ping_util.py", filename])
     p.communicate(timeout=timeout)
     with open(filename) as f:
         return jsonify(json.load(f))
+
 
 @app.route("/api/tracert", methods=["POST"])
 def tracert():
@@ -134,11 +140,11 @@ def tracert():
         if (shouldContinue):
             IP, shouldContinue = tu.check_one_node(
                 dest_name, ttl, dest_addr, icmp, udp)
-            #ans.append(IP)
+            # ans.append(IP)
             ip_info = {}
             if IP:
                 ip_info = requests.get(f"https://freegeoip.app/json/{IP}").json()
-            ans.append({"IP":IP, "Info": ip_info})
+            ans.append({"IP": IP, "Info": ip_info})
             ttl += 1
         else:
             break
@@ -152,9 +158,8 @@ def get_proxy_list():
     ans = []
     for p in proxies:
         if p.is_valid and p.protocol == "https":
-            ans.append({"IP":p.ip, "Port":p.port, "Country":p.country, "Protocol":p.protocol})
+            ans.append({"IP": p.ip, "Port": p.port, "Country": p.country, "Protocol": p.protocol})
     return jsonify(ans)
-
 
 
 if __name__ == "__main__":
