@@ -27,11 +27,12 @@ import {
 import {useBreakpointValue} from "@chakra-ui/media-query";
 
 import history from "../history";
-import {ScanPage} from "../pages/ScanPage";
+import {BrowserScanPage} from "../pages/BrowserScanPage";
+import {ProxyPage} from "../pages/ProxyPage";
 
 
 export const Wrapper = () => {
-    const adaptiveDirection = useBreakpointValue({base: "column", sm: "row"});
+    const adaptiveDirection = useBreakpointValue({base: "column", md: "row"});
     const adaptiveAlign = useBreakpointValue({base: "center", sm: "stretch"});
 
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -41,7 +42,7 @@ export const Wrapper = () => {
             <Flex direction={"row"} align={"center"}>
                 <Stack onClick={() => history.push('/')} direction={"row"}
                        m={4} align={adaptiveAlign} style={{cursor: "pointer"}}>
-                    <Heading color="gray.700" size="lg">Shutdown</Heading>
+                    <Heading color="gray.700" size="lg">{adaptiveAlign !== "stretch" ? "S" : "Shutdown"}</Heading>
                     <Heading color="blue.500" size="lg">Scout</Heading>
                 </Stack>
                 <Stack direction={adaptiveDirection} spacing={4} align={adaptiveAlign}>
@@ -66,7 +67,8 @@ export const Wrapper = () => {
             <Divider mb={5}/>
 
             <Box>
-                <Route exact path="/scan" component={ScanPage}/>
+                <Route exact path="/scan" component={BrowserScanPage}/>
+                <Route exact path="/proxy" component={ProxyPage}/>
             </Box>
 
             <Modal isOpen={isOpen} onClose={onClose}>

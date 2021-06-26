@@ -6,7 +6,7 @@ import {PingResultPage} from "./PingResultPage";
 import {maxPingListSize} from "../config";
 
 
-export const ScanPage = () => {
+export const BrowserScanPage = () => {
     let [webPool, setWebPool] = useState({});
     let [lookup, setLookup] = useState({});
 
@@ -32,7 +32,7 @@ export const ScanPage = () => {
                 .then((res) => console.log("Result saved"))
                 .catch((err) => console.log(err));
         }
-    }, [pingResult, webPool])
+    }, [pingResult, webPool]);
 
     const pingWebPool = async () => {
         setIsProcessing(true);
@@ -70,7 +70,7 @@ export const ScanPage = () => {
     return (
         <Box>
             <Center>
-                <Box w="500px">
+                <Box>
                     {!isProcessing && !isReady ?
                         <Center>
                             <Box>

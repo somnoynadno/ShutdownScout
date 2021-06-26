@@ -2,9 +2,10 @@ import axios from 'axios'
 import {apiAddress} from "../config";
 
 export class API {
-    GetIPLookup() {
+    GetIPLookup(ip="") {
+        let query = ip ? "?ip=" + ip : '';
         return new Promise((resolve, reject) => {
-            axios.get(apiAddress + `/ip_lookup`,)
+            axios.get(apiAddress + `/ip_lookup${query}`,)
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         })
@@ -26,15 +27,16 @@ export class API {
         })
     }
 
-    SendResult(pingResult) {
+    SendResult(ip, pingResult) {
+        let query = ip ? "?ip=" + ip : '';
         return new Promise((resolve, reject) => {
-            axios.post(apiAddress + `/send_result`, pingResult)
+            axios.post(apiAddress + `/send_result${query}`, pingResult)
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         })
     }
 
-    GetLastResults(limit = 5, region=undefined, ip=undefined) {
+    GetLastResults(limit = 5, region = undefined, ip = undefined) {
         ip = (ip ? `&ip=${ip}` : '');
         region = (region ? `&region=${region}` : '');
         return new Promise((resolve, reject) => {
@@ -44,7 +46,7 @@ export class API {
         })
     }
 
-    Tracert(ip="8.8.8.8") {
+    Tracert(ip = "8.8.8.8") {
         return new Promise((resolve, reject) => {
             axios.post(apiAddress + `/tracert`, {"Address": ip})
                 .then(response => resolve(response.data))
@@ -52,9 +54,17 @@ export class API {
         })
     }
 
-    PingFromLocal(timeout=60) {
+    PingFromLocal(timeout = 60) {
         return new Promise((resolve, reject) => {
             axios.post(apiAddress + `/ping_from_local`, {"Timeout": timeout})
+                .then(response => resolve(response.data))
+                .catch(error => reject(error));
+        })
+    }
+
+    Proxy(ip = "93.184.216.34", port = 80, timeout = 60) {
+        return new Promise((resolve, reject) => {
+            axios.post(apiAddress + `/proxy`, {"IP": ip, "Port": port, "Timeout": timeout})
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         })

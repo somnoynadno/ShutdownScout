@@ -4,7 +4,7 @@ import threading
 from bs4 import BeautifulSoup
 from random import choice
 
-TIMEOUT = 3
+TIMEOUT = 2
 DEBUG = False
 
 
