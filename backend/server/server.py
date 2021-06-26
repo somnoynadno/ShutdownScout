@@ -126,7 +126,7 @@ def ping_from_local():
     else:
         timeout = 120
     filename = "ping.json"
-    p = subprocess.Popen(["python3", "ping_util.py", filename])
+    p = subprocess.Popen(["python3", "ping_util.py", "-o", filename])
     p.communicate(timeout=timeout)
     with open(filename) as f:
         return jsonify(json.load(f))
