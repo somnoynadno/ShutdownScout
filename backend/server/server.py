@@ -102,6 +102,10 @@ def test_proxy():
     inp = request.get_json()
     ip = inp["IP"]
     port = inp["Port"]
+    should_save = True
+    if "ShouldSave" in inp:
+        should_save = inp["ShouldSave"]==1
+
     inp_filename = DEFAULT_POOL_FILENAME
     sites_was_customized = "Sites" in inp
     if sites_was_customized:
@@ -125,7 +129,7 @@ def test_proxy():
     ts = datetime.datetime.now(datetime.timezone.utc)
     with open(output_filename) as f:
         proxy_ping_res = json.load(f)
-        if not sites_was_customized:
+        if not sites_was_customized and should_save:
             for country in proxy_ping_res:
                 record = proxy_ping_res[country]
                 r = ProxyPingRecord(ts, "https", ip, port, region, country_name, record["Ping"], record["Availability"])
