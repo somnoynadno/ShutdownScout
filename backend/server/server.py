@@ -86,6 +86,7 @@ def select_records():
     results_list = PingRecord.select_records(ip, region, limit)
     ans_dict = defaultdict(dict)
     for rec in results_list:
+        # if it is first rec for this IP - we fill it. else - just add results to dict
         if "IP" not in ans_dict[str(rec.timestamp)].keys():
             ans_dict[str(rec.timestamp)]["Results"] = {}
             ans_dict[str(rec.timestamp)]["IP"] = rec.user_ip
@@ -95,6 +96,29 @@ def select_records():
     print(ans_dict)
     return jsonify(ans_dict)
 
+
+@app.route('/api/last_proxy_results')
+@cross_origin()
+def select_proxy_records():
+    ip = request.args.get("ip")
+    port = request.args.get("port")
+    region = request.args.get("region")
+    country = request.args.get("country")
+    limit = request.args.get("limit")
+    print(ip, region, limit)
+    results_list = ProxyPingRecord.select_records(ip, port, region, country, limit)
+    ans_dict = defaultdict(dict)
+    for rec in results_list:
+        if "IP" not in ans_dict[str(rec.timestamp)].keys():
+            ans_dict[str(rec.timestamp)]["Results"] = {}
+            ans_dict[str(rec.timestamp)]["IP"] = rec.proxy_ip
+            ans_dict[str(rec.timestamp)]["Port"] = rec.proxy_port
+            ans_dict[str(rec.timestamp)]["Region"] = rec.proxy_region
+            ans_dict[str(rec.timestamp)]["Country"] = rec.proxy_country
+        ans_dict[str(rec.timestamp)]["Results"][rec.pinged_county] = {"Ping": rec.ping,
+                                                                      "Availability": rec.availability}
+    print(ans_dict)
+    return jsonify(ans_dict)
 
 @app.route("/api/proxy", methods=["POST"])
 @cross_origin()
