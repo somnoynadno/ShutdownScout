@@ -94,6 +94,7 @@ def select_records():
 
 
 @app.route("/api/proxy", methods=["POST"])
+@cross_origin()
 def test_proxy():
     inp = request.get_json()
     ip = inp["IP"]
@@ -114,6 +115,7 @@ def test_proxy():
 
 
 @app.route("/api/ping_from_local", methods=["POST"])
+@cross_origin()
 def ping_from_local():
     inp = request.get_json()
     if "Timeout" in inp:
@@ -128,6 +130,7 @@ def ping_from_local():
 
 
 @app.route("/api/tracert", methods=["POST"])
+@cross_origin()
 def tracert():
     dest_name = request.get_json()["Address"]
     dest_addr = socket.gethostbyname(dest_name)
@@ -152,6 +155,7 @@ def tracert():
 
 
 @app.route("/api/get_proxy_list")
+@cross_origin()
 def get_proxy_list():
     html = pp.load()
     proxies = pp.parse(html)
