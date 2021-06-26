@@ -1,14 +1,18 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Box, Button, Center, Heading, Progress, Text} from "@chakra-ui/react"
+import {Box, Button, Center, Heading, Link, Progress, Text} from "@chakra-ui/react"
 import {api} from "../http/API";
 import {getPingStats} from "../services/PingService";
 import {PingResultPage} from "./PingResultPage";
 import {maxPingListSize} from "../config";
+import {AdviceAlert} from "../components/AdviceAlert";
+import {useBreakpointValue} from "@chakra-ui/media-query";
+import {fadeIn} from 'react-animations';
+import { StyleSheet, css } from 'aphrodite';
 
 
 export const BrowserScanPage = () => {
     let [webPool, setWebPool] = useState({});
-    let [lookup, setLookup] = useState({});
+    let [lookup, setLookup] = useState(null);
 
     let [pingResult, setPingResult] = useState({});
     let [currentCountry, setCurrentCountry] = useState("");
@@ -16,6 +20,8 @@ export const BrowserScanPage = () => {
 
     let [isProcessing, setIsProcessing] = useState(false);
     let [isReady, setIsReady] = useState(false);
+
+    const adaptiveW = useBreakpointValue({base: "100%", xl: "60%", lg: "75%", md: "85%"});
 
     const updateResult = useCallback((country, result) => {
         pingResult[country] = result;
@@ -74,36 +80,52 @@ export const BrowserScanPage = () => {
                     {!isProcessing && !isReady ?
                         <Center>
                             <Box>
-                                {lookup ? <Box>
-                                    <Text align="center">IP-адрес: {lookup["ip"]}</Text>
-                                    <Text align="center">Местоположение: {lookup["country_name"]}, {lookup["city"]}</Text>
-                                    <Text align="center">Часовой пояс: {lookup["timezone"]} ({lookup["utc_offset"]})</Text>
-                                    <Text align="center">Геометка: {lookup["longitude"]}, {lookup["latitude"]}</Text>
-                                    <br/>
-                                </Box> : ''}
-                                <Button disabled={webPool === {} || isProcessing} size={"lg"}
-                                        onClick={() => pingWebPool()}>Начать сканирование</Button>
+                                <Box maxW={"24em"}>
+                                    <Text className={css(styles.fadeIn1)} align={"center"}>
+                                        Вы в шаге от того, чтобы начать сканирование доступности веб-ресурсов из своей
+                                        сети.
+                                    </Text>
+                                    <Text className={css(styles.fadeIn2)} align={"center"}>
+                                        Мы делаем это средствами Вашего браузера, поэтом процесс может быть долгим
+                                        (пора запастись чаем!) и несколько неточным.
+                                    </Text>
+                                    <Text className={css(styles.fadeIn3)} align={"center"}>
+                                        Если вы хотите улучшить результат, скачайте и запустите версию <Link
+                                        href="https://github.com/somnoynadno/ShutdownScout" color={"blue.500"}>Shutdown
+                                        Scout</Link> на своей локальной машине.
+                                    </Text>
+                                    {lookup ?
+                                        <Center mt={2}>
+                                            <Box className={css(styles.fadeIn2)} m={4}>
+                                                <Text color="gray">IP-адрес: {lookup["ip"]}</Text>
+                                                <Text
+                                                    color="gray">Местоположение: {lookup["country_name"]}, {lookup["city"]}</Text>
+                                                <br/>
+                                                <Button disabled={webPool === {} || isProcessing} size={"lg"}
+                                                        colorScheme={"blue"}
+                                                        onClick={() => pingWebPool()}>Начать сканирование</Button>
+                                            </Box>
+                                        </Center> : ''}
+                                </Box>
                             </Box>
                         </Center> : ''
                     }
                     {isProcessing ?
-                        <Box>
-                            <br/>
-                            <Heading size={"md"} align={"center"}>Текущая страна: {currentCountry}</Heading>
-                            <br/>
-                            <Text align={"center"}>
-                                Это не быстрый процесс: можете сходить перекусить.
-                            </Text>
-                            <Text align={"center"}>
-                                Мы стараемся не сжечь Ваш компьютер =)
-                            </Text>
-                            <br/>
-                            <Progress value={progress}/>
-                            <br/>
-                            <Text align={"center"} color="gray.300">
-                                P.S. Желательно не переключать данную вкладку
-                            </Text>
-                        </Box> : ''
+                        <Center>
+                            <Box w={adaptiveW}>
+                                <br/>
+                                <Heading size={"md"} align={"center"}>Текущая страна: {currentCountry}</Heading>
+                                <br/>
+                                <Text align={"center"} mb={2}>
+                                    Не переключайте данную
+                                    вкладку{adaptiveW !== "100%" && ' для более точного результата'}.
+                                </Text>
+                                <Progress value={progress}/>
+                                <br/>
+                                <AdviceAlert/>
+                            </Box>
+                        </Center>
+                        : ''
                     }
                 </Box>
             </Center>
@@ -113,3 +135,19 @@ export const BrowserScanPage = () => {
         </Box>
     )
 }
+
+
+const styles = StyleSheet.create({
+    fadeIn1: {
+        animationName: fadeIn,
+        animationDuration: '0.5s'
+    },
+    fadeIn2: {
+        animationName: fadeIn,
+        animationDuration: '1s'
+    },
+    fadeIn3: {
+        animationName: fadeIn,
+        animationDuration: '2s'
+    },
+})

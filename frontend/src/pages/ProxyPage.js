@@ -23,6 +23,9 @@ import {useBreakpointValue} from "@chakra-ui/media-query";
 import {CheckIcon, SearchIcon} from '@chakra-ui/icons'
 import {PingResultPage} from "./PingResultPage";
 import {AdviceAlert} from "../components/AdviceAlert";
+import {fadeIn} from 'react-animations';
+import {css, StyleSheet} from 'aphrodite';
+
 
 
 export const ProxyPage = () => {
@@ -154,7 +157,7 @@ export const ProxyPage = () => {
                                         </Thead>
                                         <Tbody>
                                             {proxyList.map((p, i) => {
-                                                return <Tr key={i}>
+                                                return <Tr className={css(styles.fadeIn)} key={i}>
                                                     {adaptiveSize !== "sm" ? <Td>HTTP/HTTPS</Td> : ''}
                                                     <Td>{p["IP"]}</Td>
                                                     <Td>{p["Port"]}</Td>
@@ -171,7 +174,7 @@ export const ProxyPage = () => {
                                         </Tbody>
                                     </Table>
                                 </Box> :
-                                <Box>
+                                <Box className={css(styles.fadeIn)}>
                                     <Progress mb={3} isIndeterminate/>
                                     <Text colorScheme="gray">Загружаем для вас лучшие прокси, подождите...</Text>
                                 </Box>
@@ -184,11 +187,15 @@ export const ProxyPage = () => {
     )
 }
 
-const styles = {
+const styles = StyleSheet.create({
     tableStyle: {
         maxWidth: 800,
     },
     inputStyle: {
         maxWidth: 450,
-    }
-}
+    },
+    fadeIn: {
+        animationName: fadeIn,
+        animationDuration: '2s'
+    },
+});
