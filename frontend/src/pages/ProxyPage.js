@@ -42,7 +42,7 @@ export const ProxyPage = () => {
     let [errorText, setErrorText] = useState("");
 
     const adaptiveSize = useBreakpointValue({base: "sm", xl: "lg", lg: "md", md: "md"});
-    const adaptiveW = useBreakpointValue({base: "100%", xl: "60%", lg: "75%", md: "85%"});
+    const adaptiveW = useBreakpointValue({base: "100%", xl: "65%", lg: "75%", md: "85%"});
 
     const tryProxy = async () => {
         setErrorText('');
@@ -77,7 +77,6 @@ export const ProxyPage = () => {
         await api.Proxy(ip, port, timeout).then((res) => {
             setPingResult(res);
             setIsReady(true);
-            api.SendResult(res, ip).then((res) => console.log(res)).catch((err) => console.log(err));
         }).catch((err) => {
             console.log(err);
             setErrorText("К сожалению, результат не был получен, попробуйте другой адрес");
@@ -107,14 +106,14 @@ export const ProxyPage = () => {
     return (
         <Box>
             <Center>
-                <Box>
+                <Box w={adaptiveW}>
                     {errorText && <Alert status="error">
                         <AlertIcon/>
                         {errorText}
                     </Alert>}
-                    <HStack mb={isReady ? 4 : 12} mt={isReady ? 1 : 4} justify={"center"}>
+                    <HStack mb={isReady ? 4 : 12} mt={isReady ? 1 : 4} justify={"center"} >
                         <Input value={proxyAddress} onChange={(event) => setProxyAddress(event.target.value)}
-                               style={styles.inputStyle} size={adaptiveSize}
+                               style={styles.inputStyle} size={adaptiveSize} w={adaptiveW}
                                placeholder="Адрес прокси-сервера (IP:порт)"/>
                         <Button size={adaptiveSize} leftIcon={adaptiveSize !== "sm" ? <SearchIcon/> : ''}
                                 colorScheme="blue" onClick={() => tryProxy()}>
@@ -122,7 +121,7 @@ export const ProxyPage = () => {
                         </Button>
                     </HStack>
                     {isReady && <Box>
-                        <PingResultPage lookup={lookup} result={pingResult}/>
+                        <PingResultPage proxyUsed={true} lookup={lookup} result={pingResult}/>
                         <Button onClick={() => tryAnotherProxy()}>Попробовать другой сервер</Button>
                     </Box>
                     }
@@ -176,7 +175,7 @@ export const ProxyPage = () => {
                                 </Box> :
                                 <Box className={css(styles.fadeIn)}>
                                     <Progress mb={3} isIndeterminate/>
-                                    <Text colorScheme="gray">Загружаем для вас лучшие прокси, подождите...</Text>
+                                    <Text align="center" colorScheme="gray">Загружаем для вас лучшие прокси, подождите...</Text>
                                 </Box>
                         }
                     </Box>

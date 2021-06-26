@@ -130,7 +130,7 @@ export const BrowserScanPage = () => {
                 </Box>
             </Center>
             {
-                (isReady ? <PingResultPage lookup={lookup} result={pingResult}/> : '')
+                (isReady ? <PingResultPage proxyUsed={false} lookup={lookup} result={pingResult}/> : '')
             }
         </Box>
     )

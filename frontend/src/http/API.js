@@ -46,6 +46,17 @@ export class API {
         })
     }
 
+    GetLastProxyResults(limit = 5, region = undefined, ip = undefined, port = undefined) {
+        ip = (ip ? `&ip=${ip}` : '');
+        region = (region ? `&region=${region}` : '');
+        port = (port ? `&port=${port}` : '');
+        return new Promise((resolve, reject) => {
+            axios.get(apiAddress + `/last_proxy_results?limit=${limit}${ip}${region}${port}`)
+                .then(response => resolve(response.data))
+                .catch(error => reject(error));
+        })
+    }
+
     Tracert(ip = "8.8.8.8") {
         return new Promise((resolve, reject) => {
             axios.post(apiAddress + `/tracert`, {"Address": ip})

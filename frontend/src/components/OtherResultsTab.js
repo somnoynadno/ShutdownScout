@@ -27,6 +27,7 @@ import {groupPingResultsForGeoChart} from "../services/helpers";
 
 export const OtherResultsTab = (props) => {
     const lookup = props.lookup;
+    const proxyUsed = props.proxyUsed;
 
     let [lastResults, setLastResults] = useState({});
     let [resultsByRegion, setResultsByRegion] = useState({});
@@ -47,14 +48,24 @@ export const OtherResultsTab = (props) => {
     }
 
     useEffect(() => {
-        api.GetLastResults(6)
-            .then((res) => setLastResults(res))
-            .catch((err) => console.log(err))
+        if (proxyUsed) {
+            api.GetLastProxyResults(6)
+                .then((res) => setLastResults(res))
+                .catch((err) => console.log(err))
 
-        api.GetLastResults(6, lookup.region)
-            .then((res) => setResultsByRegion(res))
-            .catch((err) => console.log(err))
-    }, [lookup]);
+            api.GetLastProxyResults(6, lookup.region)
+                .then((res) => setResultsByRegion(res))
+                .catch((err) => console.log(err))
+        } else {
+            api.GetLastResults(6)
+                .then((res) => setLastResults(res))
+                .catch((err) => console.log(err))
+
+            api.GetLastResults(6, lookup.region)
+                .then((res) => setResultsByRegion(res))
+                .catch((err) => console.log(err))
+        }
+    }, [lookup, proxyUsed]);
 
     return <Box>
         <Heading size={"lg"}>Последние запросы</Heading>
@@ -67,7 +78,7 @@ export const OtherResultsTab = (props) => {
                 return <ListItem key={i}>
                     <ListIcon as={SearchIcon} color="blue.500"/>
                     <Link onClick={() => prepareAndShowCharts(payload["Results"])}>
-                        {payload["Region"]} ({payload["IP"]})</Link> <Tag size={"sm"}>{date}</Tag>
+                        {payload["Region"]} ({payload["IP"]}{proxyUsed && `:${payload["Port"]}`})</Link> <Tag size={"sm"}>{date}</Tag>
                 </ListItem>
             })}
         </List>
@@ -83,7 +94,7 @@ export const OtherResultsTab = (props) => {
                     return <ListItem key={i}>
                         <ListIcon as={SearchIcon} color="blue.500"/>
                         <Link onClick={() => prepareAndShowCharts(payload["Results"])}>
-                            {payload["Region"]} ({payload["IP"]})</Link> <Tag size={"sm"}>{date}</Tag>
+                            {payload["Region"]} ({payload["IP"]}{proxyUsed && `:${payload["Port"]}`})</Link> <Tag size={"sm"}>{date}</Tag>
                     </ListItem>
                 })}
             </List>
