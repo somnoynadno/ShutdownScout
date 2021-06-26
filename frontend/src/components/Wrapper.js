@@ -29,6 +29,7 @@ import {useBreakpointValue} from "@chakra-ui/media-query";
 import history from "../history";
 import {BrowserScanPage} from "../pages/BrowserScanPage";
 import {ProxyPage} from "../pages/ProxyPage";
+import {IndexPage} from "../pages/IndexPage";
 
 
 export const Wrapper = () => {
@@ -61,12 +62,13 @@ export const Wrapper = () => {
                 </Stack>
                 <Spacer/>
                 {adaptiveAlign === "stretch" && <Stack direction={"row"} m={3}>
-                    <Button onClick={onOpen}>О сервисе</Button>
+                    <Button onClick={onOpen}>Помощь</Button>
                 </Stack>}
             </Flex>
             <Divider mb={5}/>
 
             <Box>
+                <Route exact path="/" component={IndexPage}/>
                 <Route exact path="/scan" component={BrowserScanPage}/>
                 <Route exact path="/proxy" component={ProxyPage}/>
             </Box>

@@ -39,7 +39,7 @@ export const ProxyPage = () => {
     let [errorText, setErrorText] = useState("");
 
     const adaptiveSize = useBreakpointValue({base: "sm", xl: "lg", lg: "md", md: "md"});
-    const adaptiveW = useBreakpointValue({base: "100%", xl: "50%", lg: "65%", md: "80%"});
+    const adaptiveW = useBreakpointValue({base: "100%", xl: "60%", lg: "75%", md: "85%"});
 
     const tryProxy = async () => {
         setErrorText('');
