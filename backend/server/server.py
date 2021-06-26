@@ -61,8 +61,11 @@ def ip_lookup():
 @app.route('/api/send_result', methods=["POST"])
 @cross_origin()
 def send_result():
+    ip = request.args.get("ip")
+    if not ip:
+        ip = request.headers.get('X-Real-IP')
+
     ts = datetime.datetime.now(datetime.timezone.utc)
-    ip = request.headers.get('X-Real-IP')
     region = lookup(ip)["region"]
     results = request.get_json()
     for country in results:
