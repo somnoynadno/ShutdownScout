@@ -103,7 +103,8 @@ def test_proxy():
     ip = inp["IP"]
     port = inp["Port"]
     inp_filename = DEFAULT_POOL_FILENAME
-    if "Sites" in inp:
+    sites_was_customized = "Sites" in inp
+    if sites_was_customized:
         sites_dict = {site:[site] for site in inp["Sites"]}
         inp_filename = f"/tmp/{generate_random_str()}.json"
         with open(inp_filename, "w") as f:
@@ -124,10 +125,11 @@ def test_proxy():
     ts = datetime.datetime.now(datetime.timezone.utc)
     with open(output_filename) as f:
         proxy_ping_res = json.load(f)
-        for country in proxy_ping_res:
-            record = proxy_ping_res[country]
-            r = ProxyPingRecord(ts, "https", ip, port, region, country_name, record["Ping"], record["Availability"])
-            r.save_to_db()
+        if not sites_was_customized:
+            for country in proxy_ping_res:
+                record = proxy_ping_res[country]
+                r = ProxyPingRecord(ts, "https", ip, port, region, country_name, record["Ping"], record["Availability"])
+                r.save_to_db()
         return jsonify(proxy_ping_res)
 
 
