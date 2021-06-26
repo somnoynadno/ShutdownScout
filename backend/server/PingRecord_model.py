@@ -54,4 +54,5 @@ class ProxyPingRecord:
         ans = []
         for r in recs:
             ans.append(ProxyPingRecord(*r))
+        print(ans)
         return ans
