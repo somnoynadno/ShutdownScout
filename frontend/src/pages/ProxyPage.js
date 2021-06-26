@@ -72,7 +72,7 @@ export const ProxyPage = () => {
         await api.Proxy(ip, port, timeout).then((res) => {
             setPingResult(res);
             setIsReady(true);
-            api.SendResult(ip, res).then((res) => console.log(res)).catch((err) => console.log(err));
+            api.SendResult(res, ip).then((res) => console.log(res)).catch((err) => console.log(err));
         }).catch((err) => {
             console.log(err);
             setErrorText("К сожалению, результат не был получен, попробуйте другой адрес");

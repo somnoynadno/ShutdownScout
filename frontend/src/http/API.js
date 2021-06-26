@@ -27,7 +27,7 @@ export class API {
         })
     }
 
-    SendResult(ip, pingResult) {
+    SendResult(pingResult, ip) {
         let query = ip ? "?ip=" + ip : '';
         return new Promise((resolve, reject) => {
             axios.post(apiAddress + `/send_result${query}`, pingResult)
