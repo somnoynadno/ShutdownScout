@@ -30,6 +30,8 @@ def lookup(ip):
     print(ans)
     return ans
 
+def fake_lookup(ip):
+    return json.loads("{'ip': '92.63.69.9', 'version': 'IPv4', 'city': 'Tomsk', 'region': 'Tomsk Oblast', 'region_code': 'TOM', 'country': 'RU', 'country_name': 'Russia', 'country_code': 'RU', 'country_code_iso3': 'RUS', 'country_capital': 'Moscow', 'country_tld': '.ru', 'continent_code': 'EU', 'in_eu': False, 'postal': '634028', 'latitude': 56.4911, 'longitude': 84.9949, 'timezone': 'Asia/Tomsk', 'utc_offset': '+0700', 'country_calling_code': '+7', 'currency': 'RUB', 'currency_name': 'Ruble', 'languages': 'ru,tt,xal,cau,ady,kv,ce,tyv,cv,udm,tut,mns,bua,myv,mdf,chm,ba,inh,tut,kbd,krc,av,sah,nog', 'country_area': 17100000.0, 'country_population': 144478050.0, 'asn': 'AS8510', 'org': 'Tomsk State University'}")
 
 def init_db():
     with open('init_db/web_pool.json', "r") as f:
@@ -115,7 +117,7 @@ def test_proxy():
     else:
         timeout = 120
     proxies = f"{ip}:{port}"
-    lookup_res = lookup(ip)
+    lookup_res = fake_lookup(ip)
     region = lookup_res["region"]
     country_name = lookup_res["country_name"]
     # protocols = ';'.join(inp["Protocol"])
