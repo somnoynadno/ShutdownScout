@@ -22,6 +22,7 @@ import {api} from "../http/API";
 import {useBreakpointValue} from "@chakra-ui/media-query";
 import {CheckIcon, SearchIcon} from '@chakra-ui/icons'
 import {PingResultPage} from "./PingResultPage";
+import {AdviceAlert} from "../components/AdviceAlert";
 
 
 export const ProxyPage = () => {
@@ -38,6 +39,7 @@ export const ProxyPage = () => {
     let [errorText, setErrorText] = useState("");
 
     const adaptiveSize = useBreakpointValue({base: "sm", xl: "lg", lg: "md", md: "md"});
+    const adaptiveW = useBreakpointValue({base: "100%", xl: "50%", lg: "65%", md: "80%"});
 
     const tryProxy = async () => {
         setErrorText('');
@@ -83,6 +85,7 @@ export const ProxyPage = () => {
     };
 
     const tryAnotherProxy = async () => {
+        setErrorText('');
         setIsReady(false);
         setProxyAddress('');
         setLookup({});
@@ -120,10 +123,15 @@ export const ProxyPage = () => {
                         <Button onClick={() => tryAnotherProxy()}>Попробовать другой сервер</Button>
                     </Box>
                     }
-                    {isProcessing && <Box>
-                        <Progress mb={3}value={progress}/>
-                        <Text colorScheme="gray">Проверяем этот сервер, это займёт примерно {timeout} секунд...</Text>
-                    </Box>
+                    {isProcessing && <Center>
+                        <Box w={adaptiveW}>
+                            <Center>
+                                <Text mb={2} colorScheme="gray">Проверяем этот сервер{adaptiveSize !== "sm" ? `, это займёт примерно ${timeout} секунд` : ''}...</Text>
+                            </Center>
+                            <Progress mb={3} value={progress}/>
+                            <AdviceAlert/>
+                        </Box>
+                    </Center>
                     }
                     {!isReady && !isProcessing && <Box>
                         {
