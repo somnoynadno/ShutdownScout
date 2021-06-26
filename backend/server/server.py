@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 import threading
 import requests
 from CountryTopSites_model import CountryTopSites
-from PingRecord_model import PingRecord
+from PingRecord_model import PingRecord, ProxyPingRecord
 from flask_cors import cross_origin
 import datetime
 from collections import defaultdict
@@ -17,6 +17,8 @@ import proxy_parser as pp
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
+DEFAULT_POOL_FILENAME = "init_db/web_pool.json"
+
 
 def generate_random_str(n=12):
     return ''.join(random.choices(string.ascii_letters, k=n))
@@ -24,7 +26,7 @@ def generate_random_str(n=12):
 
 def lookup(ip):
     url = f"https://ipapi.co/{ip}/json/"
-    ans = requests.get(url).json()
+    ans = requests.get(url, proxies="213.230.90.106:3128").json()
     print(ans)
     return ans
 
@@ -102,33 +104,53 @@ def test_proxy():
     inp = request.get_json()
     ip = inp["IP"]
     port = inp["Port"]
+    inp_filename = DEFAULT_POOL_FILENAME
+    if "Sites" in inp:
+        sites_dict = {site:[site] for site in inp["Sites"]}
+        inp_filename = f"/tmp/{generate_random_str()}.json"
+        with open(inp_filename, "w") as f:
+            json.dump(sites_dict, f)
     if "Timeout" in inp:
         timeout = inp["Timeout"]
     else:
         timeout = 120
     proxies = f"{ip}:{port}"
-    # region = lookup(ip)["region"]
+    lookup_res = lookup(ip)
+    region = lookup_res["region"]
+    country_name = lookup_res["country_name"]
     # protocols = ';'.join(inp["Protocol"])
     # ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
-    filename = f"{generate_random_str()}.json"
-    p = subprocess.Popen(["python3", "ping_util.py", filename, f"{proxies}"])
+    output_filename = f"/tmp/{generate_random_str()}.json"
+    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename,"-o", output_filename, "-p", f"{proxies}"])
     p.communicate(timeout=timeout)
-    with open(filename) as f:
-        return jsonify(json.load(f))
+    ts = datetime.datetime.now(datetime.timezone.utc)
+    with open(output_filename) as f:
+        proxy_ping_res = json.load(f)
+        for country in proxy_ping_res:
+            record = proxy_ping_res[country]
+            r = ProxyPingRecord(ts, "https", ip, port, region, country_name, record["Ping"], record["Availability"])
+            r.save_to_db()
+        return jsonify(proxy_ping_res)
 
 
 @app.route("/api/ping_from_local", methods=["POST"])
 @cross_origin()
 def ping_from_local():
     inp = request.get_json()
+    inp_filename = DEFAULT_POOL_FILENAME
+    if "Sites" in inp:
+        sites_dict = {site:[site] for site in inp["Sites"]}
+        inp_filename = f"/tmp/{generate_random_str()}.json"
+        with open(inp_filename, "w") as f:
+            json.dump(sites_dict, f)
     if "Timeout" in inp:
         timeout = inp["Timeout"]
     else:
         timeout = 120
-    filename = "ping.json"
-    p = subprocess.Popen(["python3", "ping_util.py", filename])
+    output_filename = f"/tmp/{generate_random_str()}.json"
+    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename,"-o", output_filename])
     p.communicate(timeout=timeout)
-    with open(filename) as f:
+    with open(output_filename) as f:
         return jsonify(json.load(f))
 
 
@@ -170,5 +192,5 @@ def get_proxy_list():
 
 
 if __name__ == "__main__":
-    init_db()
+    #init_db()
     app.run(port=3113, host='0.0.0.0')
