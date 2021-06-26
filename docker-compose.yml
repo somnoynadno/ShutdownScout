@@ -4,7 +4,6 @@ services:
   backend:
     build: ./backend/server
     restart: always
-    container_name: backend
     stop_grace_period: 10s
     depends_on:
       - postgres
@@ -13,14 +12,12 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: frontend
     restart: always
     ports:
       - "5050:5050"
 
   postgres:
     image: postgres:13.1-alpine
-    container_name: postgres
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
@@ -33,7 +30,6 @@ services:
 
   adminer:
     image: adminer
-    container_name: adminer
     restart: always 
     ports:
       - "12121:8080"
