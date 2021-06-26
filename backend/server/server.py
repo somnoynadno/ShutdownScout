@@ -12,6 +12,7 @@ import random
 import string
 import socket
 import tracert_util as tu
+import proxy_parser as pp
 
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
@@ -141,6 +142,17 @@ def tracert():
             ttl += 1
         else:
             break
+    return jsonify(ans)
+
+
+@app.route("/api/get_proxy_list")
+def get_proxy_list():
+    html = pp.load()
+    proxies = pp.parse(html)
+    ans = []
+    for p in proxies:
+        if p.is_valid and p.protocol == "https":
+            ans.append({"IP":p.ip, "Port":p.port, "Country":p.country, "Protocol":p.protocol})
     return jsonify(ans)
 
 
