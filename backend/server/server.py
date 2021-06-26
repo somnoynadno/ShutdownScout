@@ -26,7 +26,7 @@ def generate_random_str(n=12):
 
 def lookup(ip):
     url = f"https://ipapi.co/{ip}/json/"
-    ans = requests.get(url, proxies="213.230.90.106:3128").json()
+    ans = requests.get(url, proxies={"213.230.90.106":"3128"}).json()
     print(ans)
     return ans
 
