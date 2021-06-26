@@ -121,7 +121,7 @@ def test_proxy():
     output_filename = f"/tmp/{generate_random_str()}.json"
     p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename,"-o", output_filename, "-p", f"{proxies}"])
     p.communicate(timeout=timeout)
-    with open(filename) as f:
+    with open(output_filename) as f:
         return jsonify(json.load(f))
 
 
