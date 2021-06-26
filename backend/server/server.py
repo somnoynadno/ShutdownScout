@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 import threading
 import requests
 from CountryTopSites_model import CountryTopSites
-from PingRecord_model import PingRecord
+from PingRecord_model import PingRecord, ProxyPingRecord
 from flask_cors import cross_origin
 import datetime
 from collections import defaultdict
@@ -115,14 +115,20 @@ def test_proxy():
     else:
         timeout = 120
     proxies = f"{ip}:{port}"
-    # region = lookup(ip)["region"]
+    region = lookup(ip)["region"]
     # protocols = ';'.join(inp["Protocol"])
     # ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
     output_filename = f"/tmp/{generate_random_str()}.json"
     p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename,"-o", output_filename, "-p", f"{proxies}"])
     p.communicate(timeout=timeout)
+    ts = datetime.datetime.now(datetime.timezone.utc)
     with open(output_filename) as f:
-        return jsonify(json.load(f))
+        proxy_ping_res = json.load(f)
+        for country in proxy_ping_res:
+            record = proxy_ping_res[country]
+            r = ProxyPingRecord(ts, ip, region, "Unknown", record["Ping"], record["Availability"])
+            r.save_to_db()
+        return jsonify(proxy_ping_res)
 
 
 @app.route("/api/ping_from_local", methods=["POST"])
