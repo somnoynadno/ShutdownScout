@@ -50,10 +50,10 @@ def ping_site(url):
 
 def scan_site(site):
     ts = datetime.datetime.now()
-    time_delta = 0
+    time_delta = 3
     cur_av = ping_site(site)
     if cur_av == 1:
-        time_delta = (datetime.datetime.now() - ts).total_seconds()*10**3
+        time_delta = (datetime.datetime.now() - ts).total_seconds()
     with ping_result_lock:
         ping_site_res[site] = {"Ping":time_delta, "Availability":cur_av}
 
