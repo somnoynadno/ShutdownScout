@@ -19,6 +19,12 @@ We recommend using docker-compose for deployment:
 
 NOTICE: to change default configuration update ```docker-compose.yml``` file in this directory.
 
+## Features
+
+- network test (run in browser)
+- proxy test (run on server)
+- free proxy list (each proxy is tested before response is sent)
+
 ## Troubleshooting
 
 Contact me: @somnoynadno
