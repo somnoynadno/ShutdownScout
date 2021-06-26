@@ -29,6 +29,7 @@ def lookup(ip):
     print(ans)
     return ans
 
+
 def init_db():
     with open('init_db/web_pool.json', "r") as f:
         top_sites_dict = json.load(f)
@@ -118,6 +119,7 @@ def select_proxy_records():
     print(ans_dict)
     return jsonify(ans_dict)
 
+
 @app.route("/api/proxy", methods=["POST"])
 @cross_origin()
 def test_proxy():
@@ -126,12 +128,12 @@ def test_proxy():
     port = inp["Port"]
     should_save = True
     if "ShouldSave" in inp:
-        should_save = inp["ShouldSave"]==1
+        should_save = inp["ShouldSave"] == 1
 
     inp_filename = DEFAULT_POOL_FILENAME
     sites_was_customized = "Sites" in inp
     if sites_was_customized:
-        sites_dict = {site:[site] for site in inp["Sites"]}
+        sites_dict = {site: [site] for site in inp["Sites"]}
         inp_filename = f"/tmp/{generate_random_str()}.json"
         with open(inp_filename, "w") as f:
             json.dump(sites_dict, f)
@@ -145,7 +147,7 @@ def test_proxy():
     # protocols = ';'.join(inp["Protocol"])
     # ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
     output_filename = f"/tmp/{generate_random_str()}.json"
-    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename,"-o", output_filename, "-p", f"{proxies}"])
+    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename, "-o", output_filename, "-p", f"{proxies}"])
     p.communicate(timeout=timeout)
     ts = datetime.datetime.now(datetime.timezone.utc)
     with open(output_filename) as f:
@@ -164,7 +166,7 @@ def ping_from_local():
     inp = request.get_json()
     inp_filename = DEFAULT_POOL_FILENAME
     if "Sites" in inp:
-        sites_dict = {site:[site] for site in inp["Sites"]}
+        sites_dict = {site: [site] for site in inp["Sites"]}
         inp_filename = f"/tmp/{generate_random_str()}.json"
         with open(inp_filename, "w") as f:
             json.dump(sites_dict, f)
@@ -173,7 +175,7 @@ def ping_from_local():
     else:
         timeout = 120
     output_filename = f"/tmp/{generate_random_str()}.json"
-    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename,"-o", output_filename])
+    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename, "-o", output_filename])
     p.communicate(timeout=timeout)
     with open(output_filename) as f:
         return jsonify(json.load(f))
@@ -217,5 +219,5 @@ def get_proxy_list():
 
 
 if __name__ == "__main__":
-    #init_db()
+    # init_db()
     app.run(port=3113, host='0.0.0.0')

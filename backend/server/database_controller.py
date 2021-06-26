@@ -87,7 +87,7 @@ class DatabaseClient:
             values.append(port)
         if limit:
             condition_statements.append(
-                f"timestamp in (select distinct timestamp from public.PingRecord order by timestamp desc limit {limit})")
+                f"timestamp in (select distinct timestamp from public.ProxyPingRecord order by timestamp desc limit {limit})")
         query = f"SELECT * FROM public.ProxyPingRecord"
         if len(condition_statements):
             condition = " AND ".join(condition_statements)
