@@ -17,6 +17,8 @@ import proxy_parser as pp
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
+DEFAULT_POOL_FILENAME = "init_db/web_pool.json"
+
 
 def generate_random_str(n=12):
     return ''.join(random.choices(string.ascii_letters, k=n))
@@ -102,6 +104,12 @@ def test_proxy():
     inp = request.get_json()
     ip = inp["IP"]
     port = inp["Port"]
+    inp_filename = DEFAULT_POOL_FILENAME
+    if "Sites" in inp:
+        sites_dict = {site:[site] for site in inp["Sites"]}
+        inp_filename = f"/tmp/{generate_random_str()}.json"
+        with open(inp_filename, "w") as f:
+            json.dump(sites_dict, f)
     if "Timeout" in inp:
         timeout = inp["Timeout"]
     else:
@@ -110,8 +118,8 @@ def test_proxy():
     # region = lookup(ip)["region"]
     # protocols = ';'.join(inp["Protocol"])
     # ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
-    filename = f"{generate_random_str()}.json"
-    p = subprocess.Popen(["python3", "ping_util.py", filename, f"{proxies}"])
+    output_filename = f"/tmp/{generate_random_str()}.json"
+    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename,"-o", output_filename, "-p", f"{proxies}"])
     p.communicate(timeout=timeout)
     with open(filename) as f:
         return jsonify(json.load(f))
@@ -121,14 +129,20 @@ def test_proxy():
 @cross_origin()
 def ping_from_local():
     inp = request.get_json()
+    inp_filename = DEFAULT_POOL_FILENAME
+    if "Sites" in inp:
+        sites_dict = {site:[site] for site in inp["Sites"]}
+        inp_filename = f"/tmp/{generate_random_str()}.json"
+        with open(inp_filename, "w") as f:
+            json.dump(sites_dict, f)
     if "Timeout" in inp:
         timeout = inp["Timeout"]
     else:
         timeout = 120
-    filename = "ping.json"
-    p = subprocess.Popen(["python3", "ping_util.py", "-o", filename])
+    output_filename = f"/tmp/{generate_random_str()}.json"
+    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename,"-o", output_filename])
     p.communicate(timeout=timeout)
-    with open(filename) as f:
+    with open(output_filename) as f:
         return jsonify(json.load(f))
 
 
@@ -170,5 +184,5 @@ def get_proxy_list():
 
 
 if __name__ == "__main__":
-    init_db()
+    #init_db()
     app.run(port=3113, host='0.0.0.0')
