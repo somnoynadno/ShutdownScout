@@ -27,10 +27,11 @@ import {
 import {useBreakpointValue} from "@chakra-ui/media-query";
 
 import history from "../history";
-import {IndexPage} from "../pages/IndexPage";
+import {ScanPage} from "../pages/ScanPage";
 
 
 export const Wrapper = () => {
+    const adaptiveDirection = useBreakpointValue({base: "column", sm: "row"});
     const adaptiveAlign = useBreakpointValue({base: "center", sm: "stretch"});
 
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -43,6 +44,20 @@ export const Wrapper = () => {
                     <Heading color="gray.700" size="lg">Shutdown</Heading>
                     <Heading color="blue.500" size="lg">Scout</Heading>
                 </Stack>
+                <Stack direction={adaptiveDirection} spacing={4} align={adaptiveAlign}>
+                    <Button colorScheme="blue" onClick={() => history.push('/scan')}
+                            variant="link" isActive={window.location.pathname === '/scan'}>
+                        Сканирование
+                    </Button>
+                    <Button colorScheme="blue" onClick={() => history.push('/proxy')}
+                            variant="link" isActive={window.location.pathname === '/proxy'}>
+                        Проверка прокси
+                    </Button>
+                    <Button colorScheme="blue" onClick={() => history.push('/host')}
+                            variant="link" isActive={window.location.pathname === '/host'}>
+                        Проверка ресурса
+                    </Button>
+                </Stack>
                 <Spacer/>
                 <Stack direction={"row"} m={3}>
                     <Button onClick={onOpen}>О сервисе</Button>
@@ -51,7 +66,7 @@ export const Wrapper = () => {
             <Divider mb={5}/>
 
             <Box>
-                <Route exact path="/" component={IndexPage}/>
+                <Route exact path="/scan" component={ScanPage}/>
             </Box>
 
             <Modal isOpen={isOpen} onClose={onClose}>

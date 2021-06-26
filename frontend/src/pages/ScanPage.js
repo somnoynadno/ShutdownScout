@@ -6,7 +6,7 @@ import {PingResultPage} from "./PingResultPage";
 import {maxPingListSize} from "../config";
 
 
-export const IndexPage = () => {
+export const ScanPage = () => {
     let [webPool, setWebPool] = useState({});
     let [lookup, setLookup] = useState({});
 

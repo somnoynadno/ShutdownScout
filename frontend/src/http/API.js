@@ -18,6 +18,14 @@ export class API {
         })
     }
 
+    GetProxyList() {
+        return new Promise((resolve, reject) => {
+            axios.get(apiAddress + `/get_proxy_list`,)
+                .then(response => resolve(response.data))
+                .catch(error => reject(error));
+        })
+    }
+
     SendResult(pingResult) {
         return new Promise((resolve, reject) => {
             axios.post(apiAddress + `/send_result`, pingResult)
@@ -31,6 +39,22 @@ export class API {
         region = (region ? `&region=${region}` : '');
         return new Promise((resolve, reject) => {
             axios.get(apiAddress + `/last_results?limit=${limit}${ip}${region}`)
+                .then(response => resolve(response.data))
+                .catch(error => reject(error));
+        })
+    }
+
+    Tracert(ip="8.8.8.8") {
+        return new Promise((resolve, reject) => {
+            axios.post(apiAddress + `/tracert`, {"Address": ip})
+                .then(response => resolve(response.data))
+                .catch(error => reject(error));
+        })
+    }
+
+    PingFromLocal(timeout=60) {
+        return new Promise((resolve, reject) => {
+            axios.post(apiAddress + `/ping_from_local`, {"Timeout": timeout})
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         })
