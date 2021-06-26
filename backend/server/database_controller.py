@@ -95,7 +95,7 @@ class DatabaseClient:
         self.cursor.execute(query, values)
         return self.cursor.fetchall()
 
-    def insert_proxy_record(self, timestamp, ip, port, region, country, ping, availability, proto):
+    def insert_proxy_record(self, timestamp, proto, ip, port, region, country, ping, availability):
         self.cursor.execute(
             "INSERT INTO public.ProxyPingRecord (timestamp, proxy_protocol, proxy_ip, proxy_port, proxy_region, pinged_county, ping, availability) VALUES(%s,%s,%s,%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING;",
             (timestamp, proto, ip, port, region, country, ping, availability))
