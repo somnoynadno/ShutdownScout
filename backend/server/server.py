@@ -66,7 +66,7 @@ def send_result():
         ip = request.headers.get('X-Real-IP')
 
     ts = datetime.datetime.now(datetime.timezone.utc)
-    region = lookup(ip)["region"]
+    region = lookup(ip)["region_name"]
     results = request.get_json()
     for country in results:
         measure = results[country]
@@ -114,7 +114,7 @@ def test_proxy():
         timeout = 120
     proxies = f"{ip}:{port}"
     lookup_res = lookup(ip)
-    region = lookup_res["region"]
+    region = lookup_res["region_name"]
     country_name = lookup_res["country_name"]
     # protocols = ';'.join(inp["Protocol"])
     # ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
