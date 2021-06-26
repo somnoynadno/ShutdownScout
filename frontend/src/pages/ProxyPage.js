@@ -139,7 +139,7 @@ export const ProxyPage = () => {
                         {
                             (proxyList.length > 0) ? <Box>
                                     <Center>
-                                        <Heading mb={4} size={adaptiveSize}>Подобрали для вас лучшие
+                                        <Heading mb={4} size={adaptiveSize}>Подобрали для Вас лучшие
                                             прокси-серверы</Heading>
                                     </Center>
                                     <Table style={styles.tableStyle} size={adaptiveSize} variant="striped"
@@ -175,7 +175,7 @@ export const ProxyPage = () => {
                                 </Box> :
                                 <Box className={css(styles.fadeIn)}>
                                     <Progress mb={3} isIndeterminate/>
-                                    <Text align="center" colorScheme="gray">Загружаем для вас лучшие прокси, подождите...</Text>
+                                    <Text align="center" colorScheme="gray">Загружаем для Вас наши лучшие прокси, подождите...</Text>
                                 </Box>
                         }
                     </Box>

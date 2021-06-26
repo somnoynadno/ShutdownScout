@@ -65,9 +65,13 @@ export class API {
         })
     }
 
-    PingFromLocal(timeout = 60) {
+    PingFromLocal(timeout = 60, sites=[]) {
         return new Promise((resolve, reject) => {
-            axios.post(apiAddress + `/ping_from_local`, {"Timeout": timeout})
+            let data = {"Timeout": timeout};
+            if (sites.length > 0) {
+                data["Sites"] = sites;
+            }
+            axios.post(apiAddress + `/ping_from_local`, data)
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         })

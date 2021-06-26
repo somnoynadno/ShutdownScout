@@ -30,6 +30,7 @@ import history from "../history";
 import {BrowserScanPage} from "../pages/BrowserScanPage";
 import {ProxyPage} from "../pages/ProxyPage";
 import {IndexPage} from "../pages/IndexPage";
+import {TracertPage} from "../pages/TracertPage";
 
 
 export const Wrapper = () => {
@@ -55,8 +56,8 @@ export const Wrapper = () => {
                             variant="link" isActive={window.location.pathname === '/proxy'}>
                         Проверка прокси
                     </Button>
-                    <Button colorScheme="blue" onClick={() => history.push('/host')}
-                            variant="link" isActive={window.location.pathname === '/host'}>
+                    <Button colorScheme="blue" onClick={() => history.push('/trace')}
+                            variant="link" isActive={window.location.pathname === '/trace'}>
                         Проверка ресурса
                     </Button>
                 </Stack>
@@ -71,6 +72,7 @@ export const Wrapper = () => {
                 <Route exact path="/" component={IndexPage}/>
                 <Route exact path="/scan" component={BrowserScanPage}/>
                 <Route exact path="/proxy" component={ProxyPage}/>
+                <Route exact path="/trace" component={TracertPage}/>
             </Box>
 
             <Modal isOpen={isOpen} onClose={onClose}>
