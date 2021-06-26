@@ -37,7 +37,7 @@ export const AdviceAlert = () => {
     let [advice, setAdvice] = useState(advices[Math.floor(Math.random()*advices.length)]);
 
     useEffect(() => {
-        setTimeout(() => {
+        setInterval(() => {
             const a = advices[Math.floor(Math.random()*advices.length)];
             setAdvice(a);
         }, 8000);
