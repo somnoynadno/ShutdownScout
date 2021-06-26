@@ -73,7 +73,7 @@ class DatabaseClient:
             "INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_county, ping, availability) VALUES(%s,%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING;",
             (timestamp, ip, region, country, ping, availability))
 
-    def select_proxy_records(self, ip=None, port=None, region=None, country=None, limit=None):
+    def select_proxy_records(self, ip=None, port=None, region=None, limit=None):
         condition_statements = []
         values = []
         if ip:
@@ -82,9 +82,6 @@ class DatabaseClient:
         if region:
             condition_statements.append("proxy_region=%s")
             values.append(region)
-        if country:
-            condition_statements.append("proxy_country=%s")
-            values.append(country)
         if port:
             condition_statements.append("proxy_port=%s")
             values.append(port)

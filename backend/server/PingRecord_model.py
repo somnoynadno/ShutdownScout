@@ -48,9 +48,9 @@ class ProxyPingRecord:
                                    self.proxy_region, self.pinged_county, self.ping, self.availability)
 
     @classmethod
-    def select_records(self, ip=None, port=None, region=None, country=None, limit=None):
+    def select_records(self, ip=None, port=None, region=None, limit=None):
         with DatabaseClient() as db:
-            recs = db.select_proxy_records(ip, port, region, country, limit)
+            recs = db.select_proxy_records(ip, port, region, limit)
         ans = []
         for r in recs:
             ans.append(ProxyPingRecord(*r))

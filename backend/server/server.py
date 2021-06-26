@@ -103,10 +103,9 @@ def select_proxy_records():
     ip = request.args.get("ip")
     port = request.args.get("port")
     region = request.args.get("region")
-    country = request.args.get("country")
     limit = request.args.get("limit")
     print(ip, region, limit)
-    results_list = ProxyPingRecord.select_records(ip, port, region, country, limit)
+    results_list = ProxyPingRecord.select_records(ip, port, region, limit)
     ans_dict = defaultdict(dict)
     for rec in results_list:
         if "IP" not in ans_dict[str(rec.timestamp)].keys():
@@ -114,7 +113,6 @@ def select_proxy_records():
             ans_dict[str(rec.timestamp)]["IP"] = rec.proxy_ip
             ans_dict[str(rec.timestamp)]["Port"] = rec.proxy_port
             ans_dict[str(rec.timestamp)]["Region"] = rec.proxy_region
-            ans_dict[str(rec.timestamp)]["Country"] = rec.proxy_country
         ans_dict[str(rec.timestamp)]["Results"][rec.pinged_county] = {"Ping": rec.ping,
                                                                       "Availability": rec.availability}
     print(ans_dict)
@@ -144,7 +142,6 @@ def test_proxy():
     proxies = f"{ip}:{port}"
     lookup_res = lookup(ip)
     region = lookup_res["region_name"]
-    country_name = lookup_res["country_name"]
     # protocols = ';'.join(inp["Protocol"])
     # ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
     output_filename = f"/tmp/{generate_random_str()}.json"
@@ -156,7 +153,7 @@ def test_proxy():
         if not sites_was_customized and should_save:
             for country in proxy_ping_res:
                 record = proxy_ping_res[country]
-                r = ProxyPingRecord(ts, "https", ip, port, region, country_name, record["Ping"], record["Availability"])
+                r = ProxyPingRecord(ts, "https", ip, port, region, country, record["Ping"], record["Availability"])
                 r.save_to_db()
         return jsonify(proxy_ping_res)
 
