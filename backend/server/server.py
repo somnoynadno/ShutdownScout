@@ -18,6 +18,7 @@ app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
 DEFAULT_POOL_FILENAME = "init_db/web_pool.json"
+CACHED_PROXIES = None
 
 
 def generate_random_str(n=12):
@@ -209,12 +210,18 @@ def tracert():
 @app.route("/api/get_proxy_list")
 @cross_origin()
 def get_proxy_list():
+    global CACHED_PROXIES
+    if CACHED_PROXIES:
+        return jsonify(CACHED_PROXIES)
+
     html = pp.load()
     proxies = pp.parse(html)
     ans = []
     for p in proxies:
         if p.is_valid and p.protocol == "https":
             ans.append({"IP": p.ip, "Port": p.port, "Country": p.country, "Protocol": p.protocol})
+
+    CACHED_PROXIES = ans
     return jsonify(ans)
 
 
