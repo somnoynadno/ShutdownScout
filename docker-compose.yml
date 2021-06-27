@@ -17,8 +17,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile-local
     restart: always
-    ports:
-      - "5050:5050"
+    network_mode: host
 
   postgres:
     image: postgres:13.1-alpine
