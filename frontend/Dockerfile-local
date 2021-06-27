@@ -2,8 +2,6 @@
 FROM node:14.15.0-alpine3.12 as builder
 MAINTAINER "Alexander Zorkin"
 
-ENV REACT_APP_HOST_ENV LOCAL
-
 WORKDIR /app
 COPY package.json package-lock.json ./
 
@@ -14,6 +12,8 @@ RUN npm run build
 
 # Stage 2 - release
 FROM node:14.15.0-alpine3.12 AS release
+
+ENV REACT_APP_HOST_ENV LOCAL
 
 WORKDIR /app
 COPY --from=builder /app/build ./build
