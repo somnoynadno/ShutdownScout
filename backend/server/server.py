@@ -19,6 +19,7 @@ db_changing_lock = threading.Lock()
 
 DEFAULT_POOL_FILENAME = "init_db/web_pool.json"
 CACHED_PROXIES = None
+CACHE_COUNTER = 0
 
 
 def generate_random_str(n=12):
@@ -211,7 +212,14 @@ def tracert():
 @cross_origin()
 def get_proxy_list():
     global CACHED_PROXIES
+    global CACHE_COUNTER
+
+    if CACHE_COUNTER > 5:
+        CACHE_COUNTER = 0
+        CACHED_PROXIES = None
+
     if CACHED_PROXIES:
+        CACHE_COUNTER += 1
         return jsonify(CACHED_PROXIES)
 
     html = pp.load()
