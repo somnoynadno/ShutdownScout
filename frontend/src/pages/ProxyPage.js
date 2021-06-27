@@ -116,7 +116,7 @@ export const ProxyPage = () => {
                                style={styles.inputStyle} size={adaptiveSize} w={adaptiveW}
                                placeholder="Адрес прокси-сервера (IP:порт)"/>
                         <Button size={adaptiveSize} leftIcon={adaptiveSize !== "sm" ? <SearchIcon/> : ''}
-                                colorScheme="blue" onClick={() => tryProxy()}>
+                                colorScheme="blue" onClick={() => tryProxy()} disabled={isProcessing}>
                             Проверить
                         </Button>
                     </HStack>

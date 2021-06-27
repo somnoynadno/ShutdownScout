@@ -21,7 +21,7 @@ export const BrowserScanPage = () => {
     let [isProcessing, setIsProcessing] = useState(false);
     let [isReady, setIsReady] = useState(false);
 
-    const adaptiveW = useBreakpointValue({base: "100%", xl: "60%", lg: "75%", md: "85%"});
+    const adaptiveW = useBreakpointValue({base: "100%", xl: "65%", lg: "75%", md: "85%"});
 
     const updateResult = useCallback((country, result) => {
         pingResult[country] = result;
@@ -76,7 +76,7 @@ export const BrowserScanPage = () => {
     return (
         <Box>
             <Center>
-                <Box>
+                <Box w={adaptiveW}>
                     {!isProcessing && !isReady ?
                         <Center>
                             <Box>
@@ -110,14 +110,14 @@ export const BrowserScanPage = () => {
                             </Box>
                         </Center> : ''
                     }
-                    {isProcessing ?
+                    {isProcessing &&
                         <Center>
                             <Box w={adaptiveW}>
                                 <br/>
                                 <Heading size={"md"} align={"center"}>Текущая страна: {currentCountry}</Heading>
                                 <br/>
                                 <Text align={"center"} mb={2}>
-                                    Не переключайте данную
+                                    Не переключайте
                                     вкладку{adaptiveW !== "100%" && ' для более точного результата'}.
                                 </Text>
                                 <Progress value={progress}/>
@@ -125,7 +125,6 @@ export const BrowserScanPage = () => {
                                 <AdviceAlert/>
                             </Box>
                         </Center>
-                        : ''
                     }
                 </Box>
             </Center>
