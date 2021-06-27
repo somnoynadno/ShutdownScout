@@ -1,5 +1,6 @@
 version: '3'
 
+
 services:
   backend:
     build: ./backend/server
@@ -9,12 +10,17 @@ services:
       - postgres
     ports:
       - "3113:3113"
+    networks:
+      - default
+      - internal_network
 
   frontend:
     build: ./frontend
     restart: always
     ports:
       - "5050:5050"
+    networks:
+      - default
 
   postgres:
     image: postgres:13.1-alpine
@@ -28,15 +34,15 @@ services:
     restart: always
     ports:
       - "3114:5432"
-
-  adminer:
-    image: adminer
-    restart: always 
-    ports:
-      - "12121:8080"
-    depends_on:
-      - postgres
+    networks:
+      - internal_network
 
 
 volumes:
   postgres-data:
+
+
+networks:
+  default:
+  internal_network:
+    internal: true
