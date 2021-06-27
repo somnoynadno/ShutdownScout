@@ -4,7 +4,7 @@ services:
   backend:
     build: 
       context: ./backend/server
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-local
     restart: always
     stop_grace_period: 10s
     depends_on:
