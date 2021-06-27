@@ -8,7 +8,15 @@ import {
     Divider,
     Heading,
     HStack,
-    Input, Progress,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Progress,
     Table,
     TableCaption,
     Tbody,
@@ -18,6 +26,7 @@ import {
     Th,
     Thead,
     Tr,
+    useDisclosure,
     VStack
 } from "@chakra-ui/react";
 import {CheckIcon, CloseIcon, SearchIcon, ViewIcon} from '@chakra-ui/icons';
@@ -41,6 +50,8 @@ export const TracertPage = () => {
 
     const adaptiveSize = useBreakpointValue({base: "sm", xl: "lg", lg: "md", md: "md"});
     const adaptiveW = useBreakpointValue({base: "100%", xl: "65%", lg: "75%", md: "85%"});
+
+    const {isOpen, onOpen, onClose} = useDisclosure();
 
     const pingMultiple = async () => {
         setPingIsProcessing(true);
@@ -106,7 +117,8 @@ export const TracertPage = () => {
             {isProcessing && <Center>
                 <Box w={adaptiveW}>
                     <Center>
-                        <Text mb={2} colorScheme="gray">Трассируем пакет{adaptiveSize !== "sm" ? `, это займёт пару минут` : ''}...</Text>
+                        <Text mb={2} colorScheme="gray">Трассируем
+                            пакет{adaptiveSize !== "sm" ? `, это займёт пару минут` : ''}...</Text>
                     </Center>
                     <Progress mb={3} isIndeterminate/>
                 </Box>
@@ -115,19 +127,19 @@ export const TracertPage = () => {
 
             <Center mb={4}>
                 {traceRoute.length > 0 && <VStack className={css(styles.fadeIn)}>
-            <Chart
-                width={'500px'}
-                height={'300px'}
-                chartType="GeoChart"
-                data={traceCoordinates}
-                options={{
-                    sizeAxis: { minValue: 0, maxValue: 100 },
-                    colorAxis: { colors: ['#4374e0', '#e7711c'] }, // blue to orange
-                    tooltip: {textStyle: {color: '#444444'}}
-                }}
-            />
-            <Button>Полный путь</Button>
-                </VStack> }
+                    <Chart
+                        width={'500px'}
+                        height={'300px'}
+                        chartType="GeoChart"
+                        data={traceCoordinates}
+                        options={{
+                            sizeAxis: {minValue: 0, maxValue: 100},
+                            colorAxis: {colors: ['#4374e0', '#e7711c']}, // blue to orange
+                            tooltip: {textStyle: {color: '#444444'}}
+                        }}
+                    />
+                    <Button onClick={onOpen}>Полный путь</Button>
+                </VStack>}
             </Center>
 
             <Divider mb={6}/>
@@ -178,6 +190,47 @@ export const TracertPage = () => {
                 </Tbody>
             </Table>
         </Box>
+
+        <Modal size={"4xl"} isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay/>
+            <ModalContent>
+                <ModalHeader>Подробная маршрутизация</ModalHeader>
+                <ModalCloseButton/>
+                <ModalBody>
+                    <Table size={"sm"} className={css(styles.fadeInLong)} size={adaptiveSize} variant="striped"
+                           colorScheme="blue">
+                        <TableCaption>Путешествие пакета по магистральным маршрутизаторам</TableCaption>
+                        <Thead>
+                            <Tr>
+                                <Th>IP</Th>
+                                <Th>Местоположение</Th>
+                                {adaptiveSize !== "sm" && <Th>Часовой пояс</Th>}
+                                {adaptiveSize !== "sm" && <Th>Геометка</Th>}
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {traceRoute.map((t, i) => {
+                                if (t && t.IP) {
+                                    return <Tr className={css(styles.fadeIn)} key={i}>
+                                        <Td>{t["Info"]?.ip}</Td>
+                                        <Td>{t["Info"]?.country_name}{t["Info"]?.city && `, ${t["Info"]?.city}`}</Td>
+                                        {adaptiveSize !== "sm" && <Td>{t["Info"]?.time_zone}</Td>}
+                                        {adaptiveSize !== "sm" &&
+                                        <Td>({t["Info"]?.latitude}, {t["Info"]?.longitude})</Td>}
+                                    </Tr>
+                                } else return '';
+                            })}
+                        </Tbody>
+                    </Table>
+                </ModalBody>
+
+                <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={onClose}>
+                        Закрыть
+                    </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
     </Center>
 }
 
