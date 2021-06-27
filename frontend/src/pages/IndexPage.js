@@ -17,7 +17,7 @@ export const IndexPage = () => {
                 setLookup(res);
             });
         }
-    }, [isLocal]);
+    }, []);
 
     return <>
         <Box maxW="52rem">
