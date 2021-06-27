@@ -5,16 +5,19 @@ import history from "../history";
 import {api} from "../http/API";
 import {fadeIn} from 'react-animations';
 import {css, StyleSheet} from 'aphrodite';
+import {isLocal} from "../config";
 
 
 export const IndexPage = () => {
     let [lookup, setLookup] = useState({});
 
     useEffect(() => {
-        api.GetIPLookup().then((res) => {
-            setLookup(res);
-        })
-    }, []);
+        if (!isLocal) {
+            api.GetIPLookup().then((res) => {
+                setLookup(res);
+            });
+        }
+    }, [isLocal]);
 
     return <>
         <Box maxW="52rem">
@@ -46,27 +49,32 @@ export const IndexPage = () => {
                 </ol>
             </Text>
             <Divider variant="dashed" colorScheme="gray" mb={6}/>
-            <Heading size="lg" mb={4}>Мы выступаем за приватность</Heading>
-            <Text className={css(styles.fadeIn)} fontSize="xl" mb={4}>
-                Ваша конфиденциальность — это наша ценность.
-            </Text>
-            <Text className={css(styles.fadeIn)} fontSize="xl" mb={4}>
-                Сервис не собирает о вас никакой дополнительной информации,
-                кроме общедоступной: вашего публичного IP-адреса ({lookup["ip"]}),
-                региона точки доступа ({lookup["country_name"]}, {lookup["city"]}),
-                часового пояса ({lookup["time_zone"]})
-                и геометки ({lookup["longitude"]}, {lookup["latitude"]}).
-            </Text>
-            <Text className={css(styles.fadeIn)} fontSize="xl" mb={4} color="gray">
-                <i>Когда вы начнёте использовать прокси-сервер, эти данные будут подменены.</i>
-            </Text>
-            <Text className={css(styles.fadeIn)} fontSize="xl" mb={4}>
-                Наш проект имеет полностью <Link color="blue.500" href='https://github.com/somnoynadno/ShutdownScout'>открытый
-                исходный код</Link>, и вы можете внести свой вклад в его дальнейшее развитие.
-            </Text>
+            {!isLocal && <Box>
+                <Heading size="lg" mb={4}>Мы выступаем за приватность</Heading>
+                <Text className={css(styles.fadeIn)} fontSize="xl" mb={4}>
+                    Ваша конфиденциальность — это наша ценность.
+                </Text>
+                <Text className={css(styles.fadeIn)} fontSize="xl" mb={4}>
+                    Сервис не собирает о вас никакой дополнительной информации,
+                    кроме общедоступной: вашего публичного IP-адреса ({lookup["ip"]}),
+                    региона точки доступа ({lookup["country_name"]}, {lookup["city"]}),
+                    часового пояса ({lookup["time_zone"]})
+                    и геометки ({lookup["longitude"]}, {lookup["latitude"]}).
+                </Text>
+                <Text className={css(styles.fadeIn)} fontSize="xl" mb={4} color="gray">
+                    <i>Когда вы начнёте использовать прокси-сервер, эти данные будут подменены.</i>
+                </Text>
+                <Text className={css(styles.fadeIn)} fontSize="xl" mb={4}>
+                    Наш проект имеет полностью <Link color="blue.500"
+                                                     href='https://github.com/somnoynadno/ShutdownScout'>открытый
+                    исходный код</Link>, и вы можете внести свой вклад в его дальнейшее развитие.
+                </Text>
+            </Box>
+            }
         </Box>
         <Center>
-            <Button className={css(styles.fadeInLong)} onClick={() => history.push('/scan')} size="lg" colorScheme="green" mt={6} mb={6}
+            <Button className={css(styles.fadeInLong)} onClick={() => history.push('/scan')} size="lg"
+                    colorScheme="green" mt={6} mb={6}
                     rightIcon={<ArrowRightIcon/>}>
                 Перейти к сканированию
             </Button>

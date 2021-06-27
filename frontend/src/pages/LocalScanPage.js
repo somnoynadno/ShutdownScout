@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Alert, AlertIcon, Box, Button, Center, Heading, Progress, Text} from "@chakra-ui/react"
 import {api} from "../http/API";
 import {PingResultPage} from "./PingResultPage";
@@ -9,7 +9,16 @@ import {css, StyleSheet} from 'aphrodite';
 
 
 export const LocalScanPage = () => {
-    let [lookup, setLookup] = useState(null);
+    const lookup = {
+        "ip": "127.0.0.1",
+        "region_name": "[Unknown]",
+        "country_name": "[Unknown]",
+        "city": "[Unknown]",
+        "time_zone": "[Unknown]",
+        "latitude": 0,
+        "longitude": 0,
+    }
+
     let [pingResult, setPingResult] = useState({});
     let [errorText, setErrorText] = useState("");
 
@@ -28,13 +37,6 @@ export const LocalScanPage = () => {
 
         setIsProcessing(false);
     }
-
-    useEffect(() => {
-        api.GetIPLookup().then((res) => {
-            console.log(res);
-            setLookup(res);
-        })
-    }, []);
 
     return (
         <Box>
@@ -63,7 +65,7 @@ export const LocalScanPage = () => {
                                             <Box className={css(styles.fadeIn2)} m={4}>
                                                 <Text color="gray">IP-адрес: {lookup["ip"]}</Text>
                                                 <Text
-                                                    color="gray">Местоположение: {lookup["country_name"]}, {lookup["city"]}</Text>
+                                                    color="gray">Местоположение: {lookup["country_name"]}</Text>
                                                 <br/>
                                                 <Button size={"lg"}
                                                         colorScheme={"blue"}
