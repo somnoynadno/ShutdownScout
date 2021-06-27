@@ -145,7 +145,7 @@ def test_proxy():
         timeout = 120
     proxies = f"{ip}:{port}"
     lookup_res = lookup(ip)
-    region = lookup_res["region_name"]
+    region = lookup_res["country_name"]
     # protocols = ';'.join(inp["Protocol"])
     # ans = {"IP":ip, "Port":port, "Protocol":protocols, "Region":region, "Results":{}}
     output_filename = f"/tmp/{generate_random_str()}.json"

@@ -53,7 +53,7 @@ export const OtherResultsTab = (props) => {
                 .then((res) => setLastResults(res))
                 .catch((err) => console.log(err))
 
-            api.GetLastProxyResults(6, lookup.region_name)
+            api.GetLastProxyResults(6, lookup.country_name)
                 .then((res) => setResultsByRegion(res))
                 .catch((err) => console.log(err))
         } else {
