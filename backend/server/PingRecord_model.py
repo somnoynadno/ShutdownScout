@@ -24,7 +24,7 @@ class PingRecord:
     @classmethod
     def select_records(self, ip=None, region=None, limit=None):
         with DatabaseClient() as db:
-            recs = db.select_records(ip, region, limit)
+            recs = db.select_records(ip=ip, region=region, limit=limit)
         ans = []
         for r in recs:
             ans.append(PingRecord(*r))
@@ -50,7 +50,7 @@ class ProxyPingRecord:
     @classmethod
     def select_records(self, ip=None, port=None, region=None, limit=None):
         with DatabaseClient() as db:
-            recs = db.select_proxy_records(ip, port, region, limit)
+            recs = db.select_proxy_records(ip=ip, port=port, region=region, limit=limit)
         ans = []
         for r in recs:
             ans.append(ProxyPingRecord(*r))
