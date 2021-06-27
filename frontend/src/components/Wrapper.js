@@ -75,25 +75,59 @@ export const Wrapper = () => {
                 <Route exact path="/trace" component={TracertPage}/>
             </Box>
 
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal size={"xl"} isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay/>
                 <ModalContent>
-                    <ModalHeader>О сервисе</ModalHeader>
+                    <ModalHeader>FAQ</ModalHeader>
                     <ModalCloseButton/>
                     <ModalBody>
+                        <Heading size="sm">
+                            Q: Могут ли интернет-провайдеры блокировать веб-сайты?
+                        </Heading>
                         <Text>
-                            <strong>Shutdown Scout</strong> позволяет оценить доступность
-                            сайтов стран всего мира из вашей локальной сети.
+                            A: Да, они правда могут это делать. Провайдер без труда может решать, какими сайтами вам разрешено пользоваться, а какими нет.
                         </Text>
                         <br/>
+                        <Heading size="sm">
+                            Q: Как обойти блокировку сайта?
+                        </Heading>
                         <Text>
-                            Проверяйте скорость вашей текущей точки доступа
-                            и сравнивайте с результатами других пользователей.
+                            A: Существует несколько способов. Наиболее простые и популярные: использование VPN или прокси-сервера.
                         </Text>
                         <br/>
+                        <Heading size="sm">
+                            Q: Что такое прокси-сервер?
+                        </Heading>
                         <Text>
-                            Не дайте вашему провайдеру вас обмануть!
+                            A: Прокси выполняет роль посредника между вами и ресурсом, к которому вы хотите обратиться, тем самым скрывая это обращение от глаз провайдера.
+                            <br/>
+                            С подробной схемой работы можно ознакомиться <Link color="blue.500" href="https://proglib.io/p/kak-rabotaet-proksi-server-maksimalno-prostoe-obyasnenie-2020-08-21">в статье</Link>.
                         </Text>
+                        <br/>
+                        <Heading size="sm">
+                            Q: Как мне использовать прокси-сервер?
+                        </Heading>
+                        <Text>
+                            A: Порядок установки прокси сервера зависит от вашего браузера и операционной системы.
+                            <br/>
+                            Можно ознакомиться с несколькими
+                            гайдами <Link color="blue.500" href="https://lifehacker.ru/kak-nastroit-svoj-proksi-server/">здесь</Link>,
+                             <Link color="blue.500" href="https://best-proxies.ru/kb/kak-nastroit-proksi-v-google-chrome/"> здесь</Link>,
+                            и <Link color="blue.500" href="https://proxyline.net/instrukcija-legkaja-nastrojka-proksi-v-android-za-30-sekund">здесь</Link>.
+                        </Text>
+                        <br/>
+                        <Heading size="sm">
+                            Q: У меня нет прокси-сервера. Что делать?
+                        </Heading>
+                        <Text>
+                            A: Используя <Link color="blue.500" onClick={() => {
+                                onClose();
+                                history.push('/proxy');
+                        }}>наш веб-сервис</Link>,
+                            можно найти неплохие открытые прокси-сервера, но если он
+                            вам нужен на постоянной основе, то желательно найти и приобрести хороший сервер в интернете.
+                        </Text>
+
                         <Divider m={4}/>
                         <Text fontSize="sm">Разработчики:
                             <UnorderedList>

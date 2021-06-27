@@ -263,9 +263,8 @@ export const TracertPage = () => {
                             <Text>Координаты: ({lookup["latitude"]}, {lookup["longitude"]})</Text>
                             <br/>
                             <Button onClick={() => {
-                                onCloseLookup();
                                 setAddress(lookup.ip);
-                                tracert();
+                                onCloseLookup();
                             }}>Построить маршрут</Button>
                         </Box>
                     </ModalBody>
