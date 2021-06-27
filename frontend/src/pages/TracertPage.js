@@ -38,6 +38,7 @@ import Chart from "react-google-charts";
 
 
 export const TracertPage = () => {
+    let [lookup, setLookup] = useState(null);
     let [address, setAddress] = useState("");
     let [resources, setResources] = useState("");
     let [pingResult, setPingResult] = useState(null);
@@ -51,7 +52,12 @@ export const TracertPage = () => {
     const adaptiveSize = useBreakpointValue({base: "sm", xl: "lg", lg: "md", md: "md"});
     const adaptiveW = useBreakpointValue({base: "100%", xl: "65%", lg: "75%", md: "85%"});
 
-    const {isOpen, onOpen, onClose} = useDisclosure();
+    const lookupDisclosure = useDisclosure();
+    const isLookupOpen = lookupDisclosure.isOpen;
+    const onOpenLookup =  lookupDisclosure.onOpen;
+    const onCloseLookup = lookupDisclosure.onClose;
+
+    let {isOpen, onOpen, onClose} = useDisclosure();
 
     const pingMultiple = async () => {
         setPingIsProcessing(true);
@@ -60,9 +66,18 @@ export const TracertPage = () => {
         let sites = resources.split('\n');
         await api.PingFromLocal(60, sites).then((res) => {
             setPingResult(res);
-        }).catch((err) => setErrorText("Произошла ошибка, попробуйте позже."));
+        }).catch((err) => setErrorText("Произошла непредвиденная ошибка, попробуйте позже."));
 
         setPingIsProcessing(false);
+    }
+
+    const makeLookup = async (address) => {
+        setErrorText("");
+
+        api.GetIPLookup(address).then((res) => {
+            setLookup(res);
+            onOpenLookup();
+        });
     }
 
     const tracert = async () => {
@@ -181,7 +196,9 @@ export const TracertPage = () => {
                             <Td isNumeric>{p["Availability"] !== 0 ? p["Ping"] : '-'}</Td>
                             <Td>
                                 <Button size="sm" leftIcon={<ViewIcon/>}
-                                        colorScheme="blue" variant="solid" disabled>
+                                        colorScheme="blue" variant="solid" onClick={() => {
+                                            makeLookup(address);
+                                }}>
                                     {adaptiveSize !== "sm" ? "Подробнее" : ""}
                                 </Button>
                             </Td>
@@ -191,13 +208,14 @@ export const TracertPage = () => {
             </Table>
         </Box>
 
+        {/*Full traceroute modal*/}
         <Modal size={"4xl"} isOpen={isOpen} onClose={onClose}>
             <ModalOverlay/>
             <ModalContent>
                 <ModalHeader>Подробная маршрутизация</ModalHeader>
                 <ModalCloseButton/>
                 <ModalBody>
-                    <Table size={"sm"} className={css(styles.fadeInLong)} size={adaptiveSize} variant="striped"
+                    <Table size={"sm"} className={css(styles.fadeInLong)} variant="striped"
                            colorScheme="blue">
                         <TableCaption>Путешествие пакета по магистральным маршрутизаторам</TableCaption>
                         <Thead>
@@ -223,9 +241,37 @@ export const TracertPage = () => {
                         </Tbody>
                     </Table>
                 </ModalBody>
-
                 <ModalFooter>
                     <Button colorScheme="blue" mr={3} onClick={onClose}>
+                        Закрыть
+                    </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
+
+        {/*Lookup modal*/}
+        <Modal isOpen={isLookupOpen} onClose={onCloseLookup}>
+            <ModalOverlay/>
+            <ModalContent>
+                <ModalHeader>Подробности</ModalHeader>
+                <ModalCloseButton/>
+                    {lookup && <ModalBody>
+                        <Box className={css(styles.fadeIn)} m={4}>
+                            <Text>IP-адрес: {lookup["ip"]}</Text>
+                            <Text>Местоположение: {lookup["country_name"]}, {lookup["city"]}</Text>
+                            <Text>Часвой пояс: {lookup["time_zone"]}</Text>
+                            <Text>Координаты: ({lookup["latitude"]}, {lookup["longitude"]})</Text>
+                            <br/>
+                            <Button onClick={() => {
+                                onCloseLookup();
+                                setAddress(lookup.ip);
+                                tracert();
+                            }}>Построить маршрут</Button>
+                        </Box>
+                    </ModalBody>
+                    }
+                <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={onCloseLookup}>
                         Закрыть
                     </Button>
                 </ModalFooter>
