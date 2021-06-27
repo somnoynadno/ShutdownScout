@@ -50,10 +50,10 @@ class DatabaseClient:
         condition_statements = []
         values = []
         if ip:
-            condition_statements.append("user_ip='%s'")
+            condition_statements.append("user_ip=%s")
             values.append(ip)
         if region:
-            condition_statements.append("user_region='%s'")
+            condition_statements.append("user_region=%s")
             values.append(region)
         if limit:
             condition_statements.append(
@@ -77,13 +77,13 @@ class DatabaseClient:
         condition_statements = []
         values = []
         if ip:
-            condition_statements.append("proxy_ip='%s'")
+            condition_statements.append("proxy_ip=%s")
             values.append(ip)
         if region:
-            condition_statements.append("proxy_region='%s'")
+            condition_statements.append("proxy_region=%s")
             values.append(region)
         if port:
-            condition_statements.append("proxy_port='%s'")
+            condition_statements.append("proxy_port=%s")
             values.append(port)
         if limit:
             condition_statements.append(
