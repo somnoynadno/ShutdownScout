@@ -2,7 +2,7 @@
 FROM node:14.15.0-alpine3.12 as builder
 MAINTAINER "Alexander Zorkin"
 
-ENV REACT_APP_HOST_ENV PRODUCTION
+ENV REACT_APP_HOST_ENV LOCAL
 
 WORKDIR /app
 COPY package.json package-lock.json ./

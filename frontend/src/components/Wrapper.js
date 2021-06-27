@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route} from "react-router-dom";
+import {Route, Redirect} from "react-router-dom";
 
 import {
     Box,
@@ -31,6 +31,8 @@ import {BrowserScanPage} from "../pages/BrowserScanPage";
 import {ProxyPage} from "../pages/ProxyPage";
 import {IndexPage} from "../pages/IndexPage";
 import {TracertPage} from "../pages/TracertPage";
+import {LocalScanPage} from "../pages/LocalScanPage";
+import {isLocal} from "../config";
 
 
 export const Wrapper = () => {
@@ -49,7 +51,8 @@ export const Wrapper = () => {
                 </Stack>
                 <Stack direction={adaptiveDirection} spacing={4} align={adaptiveAlign}>
                     <Button colorScheme="blue" onClick={() => history.push('/scan')}
-                            variant="link" isActive={window.location.pathname === '/scan'}>
+                            variant="link"
+                            isActive={window.location.pathname === '/scan/browser' || window.location.pathname === '/scan/local'}>
                         Сканирование
                     </Button>
                     <Button colorScheme="blue" onClick={() => history.push('/proxy')}
@@ -70,7 +73,9 @@ export const Wrapper = () => {
 
             <Box>
                 <Route exact path="/" component={IndexPage}/>
-                <Route exact path="/scan" component={BrowserScanPage}/>
+                <Route exact path="/scan" component={ChooseScanType}/>
+                <Route exact path="/scan/browser" component={BrowserScanPage}/>
+                <Route exact path="/scan/local" component={LocalScanPage}/>
                 <Route exact path="/proxy" component={ProxyPage}/>
                 <Route exact path="/trace" component={TracertPage}/>
             </Box>
@@ -147,3 +152,7 @@ export const Wrapper = () => {
         </Container>
     );
 };
+
+function ChooseScanType() {
+    return <Redirect to={isLocal ? '/scan/local' : '/scan/browser'}/>
+}

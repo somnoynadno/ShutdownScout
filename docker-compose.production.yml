@@ -2,9 +2,7 @@ version: '3'
 
 services:
   backend:
-    build: 
-      context: ./backend/server
-      dockerfile: Dockerfile
+    build: ./backend/server
     restart: always
     stop_grace_period: 10s
     depends_on:
@@ -13,9 +11,7 @@ services:
       - "3113:3113"
 
   frontend:
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile-local
+    build: ./frontend
     restart: always
     ports:
       - "5050:5050"
@@ -32,6 +28,15 @@ services:
     restart: always
     ports:
       - "3114:5432"
+
+  adminer:
+    image: adminer
+    restart: always 
+    ports:
+      - "12121:8080"
+    depends_on:
+      - postgres
+
 
 volumes:
   postgres-data:
