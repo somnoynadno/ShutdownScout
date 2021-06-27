@@ -226,5 +226,5 @@ def get_proxy_list():
 
 
 if __name__ == "__main__":
-    # init_db()
+    init_db()
     app.run(port=3113, host='0.0.0.0')

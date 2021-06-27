@@ -13,4 +13,4 @@ COPY requirements.txt ./
 RUN pip3 install -r requirements.txt
 COPY . .
 
-CMD [ "gunicorn", "--bind", "0.0.0.0:3113", "--worker-class", "gevent", "--worker-connections", "1000", "--workers", "3", "--log-level", "INFO", "--timeout", "120", "--graceful-timeout", "60", "max_requests", "6", "server:app" ]
+CMD [ "gunicorn", "--bind", "0.0.0.0:3113", "--worker-class", "gevent", "--worker-connections", "1000", "--workers", "3", "--log-level", "INFO", "--timeout", "120", "--graceful-timeout", "60", "--max_requests", "6", "server:app" ]
