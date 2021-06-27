@@ -94,7 +94,7 @@ class DatabaseClient:
             query += f" where {condition}"
         query += " order by timestamp desc"
 
-        print(query)
+        print(query, values)
         self.cursor.execute(query, values)
         return self.cursor.fetchall()
 
