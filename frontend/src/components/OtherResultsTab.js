@@ -53,7 +53,7 @@ export const OtherResultsTab = (props) => {
                 .then((res) => setLastResults(res))
                 .catch((err) => console.log(err))
 
-            api.GetLastProxyResults(6, lookup.region)
+            api.GetLastProxyResults(6, lookup.region_name)
                 .then((res) => setResultsByRegion(res))
                 .catch((err) => console.log(err))
         } else {
@@ -61,7 +61,7 @@ export const OtherResultsTab = (props) => {
                 .then((res) => setLastResults(res))
                 .catch((err) => console.log(err))
 
-            api.GetLastResults(6, lookup.region)
+            api.GetLastResults(6, lookup.region_name)
                 .then((res) => setResultsByRegion(res))
                 .catch((err) => console.log(err))
         }
@@ -83,7 +83,7 @@ export const OtherResultsTab = (props) => {
             })}
         </List>
         <Divider m={4}/>
-        <Heading size={"lg"}>Запросы с вашего региона</Heading>
+        <Heading size={"lg"}>Запросы с {proxyUsed ? 'этого' : 'вашего'} региона</Heading>
         <br/>
         <List spacing={3}>
             <List spacing={3}>
