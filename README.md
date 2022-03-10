@@ -36,9 +36,9 @@ If you want to have an instance of this application on your own remote server:
 
 0. Clone this repository: ``` $ git clone https://github.com/somnoynadno/ShutdownScout.git```
 
-1. Set suitable configuration in ``` ./docker-compose.production.yml``` and set your own domain in ```./frontend/src/config.js```
+1. Set suitable configuration in ``` ./docker-compose.yml``` and set your own domain in ```./frontend/src/config.js```
 
-2. Start dockerized project by ``` $ docker-compose -f docker-compose.production.yml up --build -d```
+2. Start dockerized project by ``` $ docker-compose -f docker-compose.yml up --build -d```
 
 3. Open your web browser, visit http://<your_ip_or_domain>:5050 and start using it for free
 
