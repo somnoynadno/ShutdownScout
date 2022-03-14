@@ -5,11 +5,12 @@ import requests
 from itertools import zip_longest
 import re
 import socket
+import whois
 
 UNIS_INPUT_JSON = "unis.json"
-UNI_SITES_CHECKED_FILENAME = "web_pool_unis.json"
-IP_INFO = []
-IP_SCAN_LOCK = threading.Lock()
+UNI_SITES_CHECKED_FILENAME = "web_pool_unis_whois_all.json"
+IP_INFO = {}
+IP_INFO_LOCK = threading.Lock()
 HTTP_REGEXP = re.compile(r"(?<=http://).+")
 HTTPS_REGEXP = re.compile(r"(?<=https://).+")
 
@@ -19,18 +20,18 @@ def grouper(iterable, n, fillvalue=None):
     return list(zip_longest(*args, fillvalue=fillvalue))
 
 
-def scan_ip(domain):
-    # hosts = HTTP_REGEXP.findall(website) + HTTPS_REGEXP.findall(website)
-    #if hosts:
-    ip = socket.gethostbyname(domain)
-    ip_info = get_ip_info(ip)
-    with IP_SCAN_LOCK:
-        IP_INFO.append(ip_info)
+def scan_ip(host):
+    country_code = get_country_code(host)
+    if not country_code:
+        return
+    with IP_INFO_LOCK:
+        if country_code not in IP_INFO:
+            IP_INFO[country_code] = []
+        IP_INFO[country_code].append(host)
 
 
-def get_ip_info(ip):
-    r = requests.get(f"https://freegeoip.app/json/{ip}")
-    return r.json()
+def get_country_code(host):
+    return whois.whois(host).country
 
 
 def parse_multithread(uni_dict_list):
@@ -61,6 +62,6 @@ def parse_multithread(uni_dict_list):
 with open(UNIS_INPUT_JSON) as json_file:
     uni_data = json.load(json_file)
 
-parse_multithread(uni_data[:5])
+parse_multithread(uni_data)
 with open(UNI_SITES_CHECKED_FILENAME, 'w') as f:
     json.dump(IP_INFO, f)
