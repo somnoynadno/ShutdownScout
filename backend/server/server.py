@@ -17,7 +17,7 @@ import proxy_parser as pp
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
-DEFAULT_POOL_FILENAME = "init_db/web_pool.json"
+DEFAULT_POOL_FILENAME = "init_db/web_pool_united.json"
 CACHED_PROXIES = None
 CACHE_COUNTER = 0
 
@@ -33,7 +33,7 @@ def lookup(ip):
 
 
 def init_db():
-    with open('init_db/web_pool.json', "r") as f:
+    with open(DEFAULT_POOL_FILENAME, "r") as f:
         top_sites_dict = json.load(f)
     for country in top_sites_dict:
         cts = CountryTopSites(country, top_sites_dict[country])
