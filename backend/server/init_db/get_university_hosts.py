@@ -8,7 +8,7 @@ import socket
 import whois
 
 UNIS_INPUT_JSON = "unis.json"
-UNI_SITES_CHECKED_FILENAME = "web_pool_unis_whois_all.json"
+UNI_SITES_CHECKED_FILENAME = "web_pool_unis_whois_all_vpn.json"
 IP_INFO = {}
 IP_INFO_LOCK = threading.Lock()
 HTTP_REGEXP = re.compile(r"(?<=http://).+")
