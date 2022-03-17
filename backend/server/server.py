@@ -39,6 +39,17 @@ def init_db():
         cts = CountryTopSites(country, top_sites_dict[country])
         cts.save_to_db()
 
+@app.route('/api/init_db')
+@cross_origin()
+def init_db_if_it_is_empty():
+    cts_list = CountryTopSites.get_all_records()
+    was_loaded_again = False
+    if not cts_list:
+        init_db()
+        was_loaded_again = True
+    cts_list = CountryTopSites.get_all_records()
+    return jsonify({"reinit": was_loaded_again, "current_count": len(cts_list)})
+
 
 @app.route('/api/web_pool')
 @cross_origin()
