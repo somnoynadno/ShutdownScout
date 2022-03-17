@@ -17,7 +17,7 @@ import proxy_parser as pp
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
-DEFAULT_POOL_FILENAME = "init_db/web_pool.json"
+DEFAULT_POOL_FILENAME = "init_db/web_pool_united_2.json"
 CACHED_PROXIES = None
 CACHE_COUNTER = 0
 
