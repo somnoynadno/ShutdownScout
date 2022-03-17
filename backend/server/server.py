@@ -143,8 +143,8 @@ def test_proxy():
     if "ShouldSave" in inp:
         should_save = inp["ShouldSave"] == 1
 
+    inp_filename = DEFAULT_POOL_FILENAME
     # Very stange code... Need to fix it after
-    # inp_filename = DEFAULT_POOL_FILENAME
     # sites_was_customized = "Sites" in inp
     # if sites_was_customized:
     #     sites_dict = {site: [site] for site in inp["Sites"]}
