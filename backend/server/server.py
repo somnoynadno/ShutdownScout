@@ -143,13 +143,14 @@ def test_proxy():
     if "ShouldSave" in inp:
         should_save = inp["ShouldSave"] == 1
 
-    inp_filename = DEFAULT_POOL_FILENAME
-    sites_was_customized = "Sites" in inp
-    if sites_was_customized:
-        sites_dict = {site: [site] for site in inp["Sites"]}
-        inp_filename = f"/tmp/{generate_random_str()}.json"
-        with open(inp_filename, "w") as f:
-            json.dump(sites_dict, f)
+    # Very stange code... Need to fix it after
+    # inp_filename = DEFAULT_POOL_FILENAME
+    # sites_was_customized = "Sites" in inp
+    # if sites_was_customized:
+    #     sites_dict = {site: [site] for site in inp["Sites"]}
+    #     inp_filename = f"/tmp/{generate_random_str()}.json"
+    #     with open(inp_filename, "w") as f:
+    #         json.dump(sites_dict, f)
     if "Timeout" in inp:
         timeout = inp["Timeout"]
     else:
