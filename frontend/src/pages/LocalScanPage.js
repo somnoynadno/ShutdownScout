@@ -30,7 +30,7 @@ export const LocalScanPage = () => {
     const pingWebPool = async () => {
         setIsProcessing(true);
 
-        await api.PingFromLocal(60).then((res) => {
+        await api.PingFromLocal(150).then((res) => {
             setPingResult(res);
             setIsReady(true);
         }).catch((err) => setErrorText("Произошла непредвиденная ошибка, попробуйте позже."));
