@@ -38,30 +38,29 @@ def grouper(iterable, n, fillvalue=None):
     return list(zip_longest(*args, fillvalue=fillvalue))
 
 
-def ping_site(url):
+def ping_site(proto, url, proxies):
     try:
-        global proxies
-        resp = requests.get(f"{args.proto}://{url}", proxies=proxies, timeout=3)
+        resp = requests.get(f"{proto}://{url}", proxies=proxies, timeout=3)
         # print(resp.ok)
         if resp.ok:
             return 1
         return 0
-    except Exception:
+    except Exception as e:
         return 0
     return 0
 
 
-def scan_site(site):
+def scan_site(proto, site, proxies):
     ts = datetime.datetime.now()
     time_delta = 3
-    cur_av = ping_site(site)
+    cur_av = ping_site(proto, site, proxies)
     if cur_av == 1:
         time_delta = (datetime.datetime.now() - ts).total_seconds()
     with ping_result_lock:
         ping_site_res[site] = {"Ping": time_delta, "Availability": cur_av}
 
 
-def scan_multithread(revert_dict):
+def scan_multithread(proto, revert_dict, proxies):
     threads = []
     open_files_os_limit = resource.getrlimit(resource.RLIMIT_NOFILE)[0]
     print(f"I will run only {int(open_files_os_limit / 2)} threads at once, because of openfile limit")
@@ -72,7 +71,7 @@ def scan_multithread(revert_dict):
         for item in part:
             if item is None:
                 break
-            thread = threading.Thread(target=scan_site, args=(item[0],))
+            thread = threading.Thread(target=scan_site, args=(proto, item[0], proxies))
             threads.append(thread)
             print(f"start thread for {item[0]}")
             thread.start()
@@ -97,28 +96,32 @@ def fill_ping_res():
         ping_res[country]["Ping"] = ping_res[country]["Ping"] / len(top_sites[country])
         ping_res[country]["Availability"] = ping_res[country]["Availability"] / len(top_sites[country])
 
+def main():
+    args = get_parsed_args()
+    proxies = {}
+    if args.proxy:
+        p_list = args.proxy.split(':')
+        proxies = {p_list[0]: p_list[1]}
 
-args = get_parsed_args()
-if args.proxy:
-    p_list = args.proxy.split(':')
-    proxies = {p_list[0]: p_list[1]}
+    with open(args.input_filename, "r") as f:
+        top_sites = json.load(f)
 
-with open(args.input_filename, "r") as f:
-    top_sites = json.load(f)
+    print(f"I will scan {top_sites.keys()}")
 
-print(f"I will scan {top_sites.keys()}")
+    revert_dict = {}
+    for country in top_sites:
+        for site in top_sites[country]:
+            revert_dict[site] = country
 
-revert_dict = {}
-for country in top_sites:
-    for site in top_sites[country]:
-        revert_dict[site] = country
+    print("Dict reverted")
 
-print("Dict reverted")
+    scan_multithread(args.proto, revert_dict, proxies)
 
-scan_multithread(revert_dict)
+    init_ping_res(top_sites.keys())
+    fill_ping_res()
 
-init_ping_res(top_sites.keys())
-fill_ping_res()
-
-with open(args.output_filename, 'w') as f:
-    json.dump(ping_res, f)
+    with open(args.output_filename, 'w') as f:
+        json.dump(ping_res, f)
+    
+if __name__ == "__main__":
+    main()
