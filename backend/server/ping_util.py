@@ -60,26 +60,29 @@ def scan_site(proto, site, proxies):
         ping_site_res[site] = {"Ping": time_delta, "Availability": cur_av}
 
 
-def scan_multithread(proto, revert_dict, proxies):
+def scan_multithread(proto, sites_list, proxies={}):
+    global ping_site_res
+    ping_site_res = {}
     threads = []
     open_files_os_limit = resource.getrlimit(resource.RLIMIT_NOFILE)[0]
     print(f"I will run only {int(open_files_os_limit / 2)} threads at once, because of openfile limit")
-    items_parts = grouper(revert_dict.items(), int(open_files_os_limit / 2))
+    items_parts = grouper(sites_list, int(open_files_os_limit / 2))
     print(f"So there will be {len(items_parts)} parts of threads")
     # print(f"partition is {items_parts}")
     for part in items_parts:
-        for item in part:
-            if item is None:
+        for site in part:
+            if site is None:
                 break
-            thread = threading.Thread(target=scan_site, args=(proto, item[0], proxies))
+            thread = threading.Thread(target=scan_site, args=(proto, site, proxies))
             threads.append(thread)
-            print(f"start thread for {item[0]}")
+            print(f"start thread for {site}")
             thread.start()
         for t in threads:
             if t is None:
                 break
             print(f"thread finished")
             t.join()
+    return ping_site_res
 
 
 def init_ping_res(country_list):
@@ -87,7 +90,7 @@ def init_ping_res(country_list):
         ping_res[country] = {"Ping": 0, "Availability": 0}
 
 
-def fill_ping_res():
+def fill_ping_res(ping_site_res, revert_dict):
     for site in ping_site_res:
         country = revert_dict[site]
         ping_res[country]["Ping"] += ping_site_res[site]["Ping"]
@@ -115,7 +118,7 @@ def main():
 
     print("Dict reverted")
 
-    scan_multithread(args.proto, revert_dict, proxies)
+    scan_multithread(args.proto, revert_dict.keys(), proxies)
 
     init_ping_res(top_sites.keys())
     fill_ping_res()
