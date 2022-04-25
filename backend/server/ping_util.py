@@ -20,6 +20,7 @@ ping_site_res = {}
 
 proxies = {}
 
+TIMEOUT = 5
 
 def get_parsed_args():
     parser = argparse.ArgumentParser(description="ping <3")
@@ -40,7 +41,7 @@ def grouper(iterable, n, fillvalue=None):
 
 def ping_site(proto, url, proxies):
     try:
-        resp = requests.get(f"{proto}://{url}", proxies=proxies, timeout=3)
+        resp = requests.get(f"{proto}://{url}", proxies=proxies, timeout=TIMEOUT)
         # print(resp.ok)
         if resp.ok:
             return 1
@@ -75,13 +76,14 @@ def scan_multithread(proto, sites_list, proxies={}):
                 break
             thread = threading.Thread(target=scan_site, args=(proto, site, proxies))
             threads.append(thread)
-            print(f"start thread for {site}")
+            #print(f"start thread for {site}")
             thread.start()
         for t in threads:
             if t is None:
                 break
-            print(f"thread finished")
+            #print(f"thread finished")
             t.join()
+    print("threads finished")
     return ping_site_res
 
 
@@ -90,7 +92,7 @@ def init_ping_res(country_list):
         ping_res[country] = {"Ping": 0, "Availability": 0}
 
 
-def fill_ping_res(ping_site_res, revert_dict):
+def fill_ping_res(ping_site_res, revert_dict, top_sites):
     for site in ping_site_res:
         country = revert_dict[site]
         ping_res[country]["Ping"] += ping_site_res[site]["Ping"]
@@ -118,10 +120,10 @@ def main():
 
     print("Dict reverted")
 
-    scan_multithread(args.proto, revert_dict.keys(), proxies)
+    ping_site_res = scan_multithread(args.proto, revert_dict.keys(), proxies)
 
     init_ping_res(top_sites.keys())
-    fill_ping_res()
+    fill_ping_res(ping_site_res, revert_dict, top_sites)
 
     with open(args.output_filename, 'w') as f:
         json.dump(ping_res, f)

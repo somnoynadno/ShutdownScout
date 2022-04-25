@@ -17,7 +17,7 @@ import proxy_parser as pp
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
-DEFAULT_POOL_FILENAME = "init_db/web_pool_united_2.json"
+DEFAULT_POOL_FILENAME = "init_db/speedtest_available_from_europe.json"
 CACHED_PROXIES = None
 CACHE_COUNTER = 0
 
@@ -184,12 +184,17 @@ def ping_from_local():
         inp_filename = f"/tmp/{generate_random_str()}.json"
         with open(inp_filename, "w") as f:
             json.dump(sites_dict, f)
+    elif "Sites_dict" in inp:
+        sites_dict = inp["Sites_dict"]
+        inp_filename = f"/tmp/{generate_random_str()}.json"
+        with open(inp_filename, "w") as f:
+            json.dump(sites_dict, f)
     if "Timeout" in inp:
         timeout = inp["Timeout"]
     else:
         timeout = 120
     output_filename = f"/tmp/{generate_random_str()}.json"
-    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename, "-o", output_filename])
+    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename, "-o", output_filename, '--proto', 'http' ])
     p.communicate(timeout=timeout)
     with open(output_filename) as f:
         return jsonify(json.load(f))

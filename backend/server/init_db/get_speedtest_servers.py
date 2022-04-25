@@ -57,8 +57,8 @@ def main():
                 m.group('id'),
                 )
         sites_to_record_dict[cr.address] = cr   
-    filename = 'speedtest_ping_res.json'
-    #fill_ping_res_file(sites_to_record_dict.keys(), filename)
+    filename = 'speedtest_ping_res_2.json'
+    fill_ping_res_file(sites_to_record_dict.keys(), filename)
     with open(filename) as f:
         ping_records_dict = json.loads(f.read())
     
@@ -67,7 +67,7 @@ def main():
         if ping_records_dict[site]["Availability"] == 1:
             cr = sites_to_record_dict[site]
             good_sites_by_country[cr.country_name].append(site)
-    with open('speedtest_available_from_home.json', 'w', encoding='utf-8') as f:
+    with open('speedtest_available_2.json', 'w', encoding='utf-8') as f:
         json.dump(good_sites_by_country, f, ensure_ascii=False, indent=4)
 
 
