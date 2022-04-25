@@ -12,7 +12,7 @@ import { StyleSheet, css } from 'aphrodite';
 
 export const BrowserScanPage = () => {
     let [webPool, setWebPool] = useState({});
-    let [lookup, setLookup] = useState(null);
+    // let [lookup, setLookup] = useState(null);
 
     let [pingResult, setPingResult] = useState({});
     let [currentCountry, setCurrentCountry] = useState("");
@@ -67,10 +67,10 @@ export const BrowserScanPage = () => {
             console.log(err);
         })
 
-        api.GetIPLookup().then((res) => {
-            console.log(res);
-            setLookup(res);
-        })
+        // api.GetIPLookup().then((res) => {
+        //     console.log(res);
+        //     setLookup(res);
+        // })
     }, []);
 
     return (
@@ -94,18 +94,18 @@ export const BrowserScanPage = () => {
                                         href="https://github.com/somnoynadno/ShutdownScout" color={"blue.500"}>Shutdown
                                         Scout</Link> на своей локальной машине.
                                     </Text>
-                                    {lookup ?
+                                    {/* {lookup ? */}
                                         <Center mt={2}>
                                             <Box className={css(styles.fadeIn2)} m={4}>
-                                                <Text color="gray">IP-адрес: {lookup["ip"]}</Text>
+                                                {/* <Text color="gray">IP-адрес: {lookup["ip"]}</Text>
                                                 <Text
                                                     color="gray">Местоположение: {lookup["country_name"]}, {lookup["city"]}</Text>
-                                                <br/>
+                                                <br/> */}
                                                 <Button disabled={webPool === {} || isProcessing} size={"lg"}
                                                         colorScheme={"blue"}
                                                         onClick={() => pingWebPool()}>Начать сканирование</Button>
                                             </Box>
-                                        </Center> : ''}
+                                        </Center> {/* : ''} */}
                                 </Box>
                             </Box>
                         </Center> : ''
@@ -129,7 +129,8 @@ export const BrowserScanPage = () => {
                 </Box>
             </Center>
             {
-                (isReady ? <PingResultPage proxyUsed={false} lookup={lookup} result={pingResult}/> : '')
+                // (isReady ? <PingResultPage proxyUsed={false} lookup={lookup} result={pingResult}/> : '')
+                (isReady ? <PingResultPage proxyUsed={false} result={pingResult}/> : '')
             }
         </Box>
     )
