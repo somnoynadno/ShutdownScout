@@ -36,6 +36,15 @@ services:
       - "3114:5432"
     networks:
       - internal_network
+      
+  adminer:
+    image: adminer:latest
+    restart: always 
+    ports:
+      - 8085:8080
+    networks:
+      - default
+      - internal_network
 
 
 volumes:
