@@ -27,7 +27,7 @@ def generate_random_str(n=12):
 
 
 def lookup(ip):
-    ans = requests.get(f"https://freegeoip.app/json/{ip}").json()
+    ans = requests.get(f"https://ipinfo.io/{ip}/json").json()
     print(ans)
     return ans
 
