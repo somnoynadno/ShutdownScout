@@ -46,7 +46,7 @@ class DatabaseClient:
             "INSERT INTO public.CountryTopSites (country_name, top_sites) VALUES(%s, %s) ON CONFLICT DO NOTHING;",
             (country_name, top_sites_str))
 
-    def select_records(self, ip=None, region=None, limit=None, timestamp=None):
+    def select_records(self, ip=None, region=None, limit=None, timestamp=None, provider=None):
         condition_statements = []
         values = []
         if ip:
@@ -61,6 +61,9 @@ class DatabaseClient:
         if timestamp:
             condition_statements.append("timestamp=%s")
             values.append(timestamp)
+        if provider:
+            condition_statements.append("provider=%s")
+            values.append(provider)
         query = f"SELECT * FROM public.PingRecord"
         if len(condition_statements):
             condition = " AND ".join(condition_statements)
@@ -71,10 +74,10 @@ class DatabaseClient:
         self.cursor.execute(query, values)
         return self.cursor.fetchall()
 
-    def insert_record(self, timestamp, ip, region, country, ping, availability):
+    def insert_record(self, timestamp, ip, region, country, ping, availability, provider):
         self.cursor.execute(
-            "INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_county, ping, availability) VALUES(%s,%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING;",
-            (timestamp, ip, region, country, ping, availability))
+            "INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_county, ping, availability, provider) VALUES(%s,%s,%s,%s,%s,%s, %s) ON CONFLICT DO NOTHING;",
+            (timestamp, ip, region, country, ping, availability, provider))
 
     def select_proxy_records(self, ip=None, port=None, region=None, limit=None):
         condition_statements = []

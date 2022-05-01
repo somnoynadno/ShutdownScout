@@ -80,11 +80,13 @@ def send_result():
         ip = request.headers.get('X-Real-IP')
 
     ts = datetime.datetime.now(datetime.timezone.utc)
-    region = lookup(ip)["region_name"]
+    ip_lookup_res = lookup(ip)
+    region = ip_lookup_res["region"]
+    provider = ip_lookup_res["org"]
     results = request.get_json()
     for country in results:
         measure = results[country]
-        r = PingRecord(ts, ip, region, country, measure["Ping"], measure["Availability"])
+        r = PingRecord(ts, ip, region, country, measure["Ping"], measure["Availability"], provider)
         r.save_to_db()
     return "ok", 200
 

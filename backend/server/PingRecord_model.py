@@ -8,23 +8,24 @@ from database_controller import DatabaseClient
 # }
 
 class PingRecord:
-    def __init__(self, timestamp, ip, region, country, ping, availability):
+    def __init__(self, timestamp, ip, region, country, ping, availability, provider="unknown"):
         self.timestamp = timestamp
         self.user_ip = ip
         self.user_region = region
         self.pinged_county = country
         self.ping = ping
         self.availability = availability
+        self.provider = provider
 
     def save_to_db(self):
         with DatabaseClient() as db:
             db.insert_record(self.timestamp, self.user_ip, self.user_region, self.pinged_county, self.ping,
-                             self.availability)
+                             self.availability, self.provider)
 
     @classmethod
-    def select_records(self, ip=None, region=None, limit=None, timestamp=None):
+    def select_records(self, ip=None, region=None, limit=None, timestamp=None, provider=None):
         with DatabaseClient() as db:
-            recs = db.select_records(ip=ip, region=region, limit=limit, timestamp=timestamp)
+            recs = db.select_records(ip=ip, region=region, limit=limit, timestamp=timestamp, provider=provider)
         ans = []
         for r in recs:
             ans.append(PingRecord(*r))
