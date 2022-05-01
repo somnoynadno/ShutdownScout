@@ -8,7 +8,7 @@ import {groupPingResultsForGeoChart} from "../services/helpers";
 
 export const PingResultPage = (props) => {
     let result = props.result;
-    // let lookup = props.lookup;
+    let lookup = props.lookup;
     let proxyUsed = props.proxyUsed;
 
     let pingData = groupPingResultsForGeoChart(result, "Ping");
@@ -29,9 +29,9 @@ export const PingResultPage = (props) => {
                     <TabPanel>
                         <GeoChart colors={[mapColors.red, mapColors.yellow, mapColors.green]} data={availabilityData}/>
                     </TabPanel>
-                    {/* <TabPanel>
+                    <TabPanel>
                         <OtherResultsTab proxyUsed={proxyUsed} lookup={lookup}/>
-                    </TabPanel> */}
+                    </TabPanel>
                 </TabPanels>
             </Tabs>
         </Box>
