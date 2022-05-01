@@ -96,8 +96,9 @@ def select_records():
     ip = request.args.get("ip")
     region = request.args.get("region")
     limit = request.args.get("limit")
+    timestamp = request.args.get("timestamp")
     print(ip, region, limit)
-    results_list = PingRecord.select_records(ip, region, limit)
+    results_list = PingRecord.select_records(ip, region, limit, timestamp)
     ans_dict = defaultdict(dict)
     for rec in results_list:
         # if it is first rec for this IP - we fill it. else - just add results to dict

@@ -46,7 +46,7 @@ class DatabaseClient:
             "INSERT INTO public.CountryTopSites (country_name, top_sites) VALUES(%s, %s) ON CONFLICT DO NOTHING;",
             (country_name, top_sites_str))
 
-    def select_records(self, ip=None, region=None, limit=None):
+    def select_records(self, ip=None, region=None, limit=None, timestamp=None):
         condition_statements = []
         values = []
         if ip:
@@ -58,6 +58,9 @@ class DatabaseClient:
         if limit:
             condition_statements.append(
                 f"timestamp in (select distinct timestamp from public.PingRecord order by timestamp desc limit {limit})")
+        if timestamp:
+            condition_statements.append("timestamp=%s")
+            values.append(timestamp)
         query = f"SELECT * FROM public.PingRecord"
         if len(condition_statements):
             condition = " AND ".join(condition_statements)
