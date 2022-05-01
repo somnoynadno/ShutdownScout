@@ -22,9 +22,9 @@ class PingRecord:
                              self.availability)
 
     @classmethod
-    def select_records(self, ip=None, region=None, limit=None):
+    def select_records(self, ip=None, region=None, limit=None, timestamp=None):
         with DatabaseClient() as db:
-            recs = db.select_records(ip=ip, region=region, limit=limit)
+            recs = db.select_records(ip=ip, region=region, limit=limit, timestamp=timestamp)
         ans = []
         for r in recs:
             ans.append(PingRecord(*r))
