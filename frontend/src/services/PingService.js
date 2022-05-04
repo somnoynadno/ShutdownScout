@@ -1,4 +1,4 @@
-const MAX_TIMEOUT = 5000;
+const MAX_TIMEOUT = 1000;
 
 export async function getPingStats(countryPool) {
     return new Promise(resolve => {
@@ -7,8 +7,9 @@ export async function getPingStats(countryPool) {
 
         let promises = [];
         for (let host of countryPool) {
-            promises.push(ping(`http://${host}/`));
-            // promises.push(pingUsingImage(`http://${host}/favicon.ico`));
+            // promises.push(ping(`http://${host}/`));
+            promises.push(pingUsingOptions(`https://${host}/`));
+            //promises.push(pingUsingImage(`http://${host}/favicon.ico`));
         }
 
         Promise.all(promises).then((res) => {
@@ -54,6 +55,48 @@ function ping(url, multiplier = 1) {
         };
 
         fetch(url).then(() => {
+            response()
+        }).catch(() => {
+            resolve(-1);
+        });
+
+        setTimeout(function () {
+            resolve(-1);
+        }, MAX_TIMEOUT);
+    });
+}
+
+function requestOptions(url) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("OPTIONS", url);
+
+        xhr.setRequestHeader("Access-Control-Request-Method", "POST");
+        xhr.setRequestHeader("Access-Control-Request-Headers", "content-type");
+        //xhr.setRequestHeader("Origin", "https://reqbin.com");
+
+        xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            //console.log(xhr.status);
+            resolve(xhr.responseText);
+        }};
+
+        xhr.send();
+        setTimeout(() => reject(new Error("Timeout")), MAX_TIMEOUT);
+    });
+}
+
+function pingUsingOptions(url, multiplier = 1) {
+
+    return new Promise(function (resolve, reject) {
+        let start = (new Date()).getTime();
+        let response = function () {
+            let delta = ((new Date()).getTime() - start);
+            delta *= multiplier;
+            resolve(delta);
+        };
+
+        requestOptions(url).then(() => {
             response()
         }).catch(() => {
             resolve(-1);

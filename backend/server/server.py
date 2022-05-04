@@ -17,7 +17,7 @@ import proxy_parser as pp
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
-DEFAULT_POOL_FILENAME = "init_db/speedtest_favicon_available_from_europe_2_small.json"
+DEFAULT_POOL_FILENAME = "init_db/speedtest_available_from_europe_2_small.json"
 CACHED_PROXIES = None
 CACHE_COUNTER = 0
 
