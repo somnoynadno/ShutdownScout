@@ -74,8 +74,8 @@ def make_pool_smaller(ping_res_filename, favicon_sites_filename, small_pool_file
                 favicon_sites[country],
                 ping_records_dict
             )
-    with open(small_pool_filename) as f:
-        favicon_sites = json.dumps(small_good_sites_by_country)
+    with open(small_pool_filename, 'w') as f:
+        favicon_sites = json.dump(small_good_sites_by_country, f, ensure_ascii=False, indent=4)
 
 
 def get_best_sites_for_each_country(sites_list, ping_records_dict):
@@ -124,7 +124,7 @@ def main():
     available_sites_filename = 'speedtest_available_from_europe.json'
     #available_sites_filename = "test.json"
     favicon_sites_filename = "speedtest_favicon_available_from_europe_2.json"
-    small_pool_filename = "speedtest_favicon_available_from_europe_2.json"
+    small_pool_filename = "speedtest_favicon_available_from_europe_2_small.json"
 
     #fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
     print("ping res filled")
