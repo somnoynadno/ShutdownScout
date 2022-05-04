@@ -1,4 +1,4 @@
-const maxTimeout = 5000;
+const MAX_TIMEOUT = 5000;
 
 export async function getPingStats(countryPool) {
     return new Promise(resolve => {
@@ -7,7 +7,8 @@ export async function getPingStats(countryPool) {
 
         let promises = [];
         for (let host of countryPool) {
-            promises.push(ping("http://" + host + "/favicon.ico"));
+            promises.push(ping(`http://${host}/`));
+            // promises.push(pingUsingImage(`http://${host}/favicon.ico`));
         }
 
         Promise.all(promises).then((res) => {
@@ -23,12 +24,11 @@ export async function getPingStats(countryPool) {
                 pingAverage = Math.round(pingAverage / isAvailable);
             }
 
-            if (pingAverage === 0) pingAverage = maxTimeout;
+            if (pingAverage === 0) pingAverage = MAX_TIMEOUT;
             resolve({"Ping": pingAverage, "Availability": availability});
         });
     })
 }
-
 
 function requestImage(url) {
     return new Promise(function (resolve, reject) {
@@ -40,12 +40,32 @@ function requestImage(url) {
             reject(err);
         };
         img.src = url + '?random-no-cache=' + Math.floor((1 + Math.random()) * 0x10000).toString(16);
-        setTimeout(() => reject(new Error("Timeout")), maxTimeout);
+        setTimeout(() => reject(new Error("Timeout")), MAX_TIMEOUT);
     });
 }
 
-
 function ping(url, multiplier = 1) {
+    return new Promise(function (resolve, reject) {
+        let start = (new Date()).getTime();
+        let response = function () {
+            let delta = ((new Date()).getTime() - start);
+            delta *= multiplier;
+            resolve(delta);
+        };
+
+        fetch(url).then(() => {
+            response()
+        }).catch(() => {
+            resolve(-1);
+        });
+
+        setTimeout(function () {
+            resolve(-1);
+        }, MAX_TIMEOUT);
+    });
+}
+
+function pingUsingImage(url, multiplier = 1) {
     return new Promise(function (resolve, reject) {
         let start = (new Date()).getTime();
         let response = function () {
@@ -60,9 +80,8 @@ function ping(url, multiplier = 1) {
             resolve(-1);
         });
 
-        // Set a timeout for max-pings, 3s.
         setTimeout(function () {
             resolve(-1);
-        }, maxTimeout);
+        }, MAX_TIMEOUT);
     });
 }
