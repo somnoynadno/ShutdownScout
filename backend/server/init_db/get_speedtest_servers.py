@@ -111,6 +111,7 @@ def get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favic
         sites = available_sites[country]
         sites_list += sites
     ping_res = scan_multithread('http', sites_list, target_func=ping_site_like_browser)
+    #print(sites_list, ping_res)
     favicon_ping_res_filename = "speedtest_favicon_pingres.json"
     with open(favicon_ping_res_filename, 'w', encoding='utf-8') as f:
         json.dump(ping_res, f, ensure_ascii=False, indent=4)
@@ -126,11 +127,11 @@ def main():
     favicon_sites_filename = "speedtest_favicon_available_from_europe_2.json"
     small_pool_filename = "speedtest_favicon_available_from_europe_2_small.json"
 
-    #fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
-    print("ping res filled")
-    #fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename)
-    print("webpool filled")
-    #get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favicon_sites_filename)
+    # fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
+    # print("ping res filled")
+    # fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename)
+    # print("webpool filled")
+    get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favicon_sites_filename)
     print("filtered by favicon")
     make_pool_smaller(ping_res_filename, favicon_sites_filename, small_pool_filename)
     print("got smaller")

@@ -54,8 +54,8 @@ def ping_site(proto, url, proxies):
 def ping_site_like_browser(proto, url, proxies):
     path = f"{proto}://{url}/favicon.ico"
     try:
-        resp = requests.get(f"{proto}://{url}/favicon.ico", proxies=proxies, timeout=TIMEOUT)
-        #print(resp.ok)
+        resp = requests.get(path, proxies=proxies, timeout=TIMEOUT)
+        #print(path, resp.ok)
         if resp.ok:
             return 1
         return 0
@@ -65,7 +65,7 @@ def ping_site_like_browser(proto, url, proxies):
     return 0
 
 
-def scan_site(proto, site, proxies, func=ping_site):
+def scan_site(proto, site, proxies, func):
     ts = datetime.datetime.now()
     time_delta = 3
     cur_av = func(proto, site, proxies)
@@ -74,7 +74,7 @@ def scan_site(proto, site, proxies, func=ping_site):
         time_delta = (datetime.datetime.now() - ts).total_seconds()
     with ping_result_lock:
         ping_site_res[site] = {"Ping": time_delta, "Availability": cur_av}
-        #print(ping_site_res[site])
+        #print(site, ping_site_res[site])
 
 
 def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}):
@@ -90,7 +90,7 @@ def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}):
         for site in part:
             if site is None:
                 break
-            thread = threading.Thread(target=scan_site, args=(proto, site, proxies, ping_site))
+            thread = threading.Thread(target=scan_site, args=(proto, site, proxies, target_func))
             threads.append(thread)
             #print(f"start thread for {site}")
             thread.start()

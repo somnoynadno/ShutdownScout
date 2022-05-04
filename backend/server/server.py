@@ -17,7 +17,7 @@ import proxy_parser as pp
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
-DEFAULT_POOL_FILENAME = "init_db/speedtest_available_from_europe.json"
+DEFAULT_POOL_FILENAME = "init_db/speedtest_favicon_available_from_europe_2_small.json"
 CACHED_PROXIES = None
 CACHE_COUNTER = 0
 
@@ -39,12 +39,12 @@ def init_db():
         cts = CountryTopSites(country, top_sites_dict[country])
         cts.save_to_db()
 
-@app.route('/api/init_db')
+@app.route('/api/init_db', methods=["POST"])
 @cross_origin()
-def init_db_if_it_is_empty():
+def init_db_if_it_is_empty_or_force():
     cts_list = CountryTopSites.get_all_records()
     was_loaded_again = False
-    if not cts_list:
+    if not cts_list or request.args.get("force"):
         init_db()
         was_loaded_again = True
     cts_list = CountryTopSites.get_all_records()
