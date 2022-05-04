@@ -4,6 +4,7 @@ import sys
 import os
 import json
 from collections import defaultdict
+from functools import cmp_to_key
 
 sys.path.append(os.getcwd() + '/..')
 from ping_util import ping_site, scan_multithread, ping_site_like_browser
@@ -18,6 +19,7 @@ country_site_regex = re.compile(
     r'</tr>'
 )
 
+SITES_MAX_COUNT = 5
 
 class CountryRecord:
     def __init__(self, country_name, city, provider, address, id):
@@ -58,6 +60,36 @@ def parse_list_of_sites():
     return sites_to_record_dict
 
 
+def make_pool_smaller(ping_res_filename, favicon_sites_filename, small_pool_filename):
+    with open(ping_res_filename) as f:
+        ping_records_dict = json.loads(f.read())
+    with open(favicon_sites_filename) as f:
+        favicon_sites = json.loads(f.read())
+    small_good_sites_by_country = {}
+    for country in favicon_sites:
+        if len(favicon_sites[country]) <= SITES_MAX_COUNT:
+            small_good_sites_by_country[country] = favicon_sites[country]
+        else:
+            small_good_sites_by_country[country] = get_best_sites_for_each_country(
+                favicon_sites[country],
+                ping_records_dict
+            )
+    with open(small_pool_filename) as f:
+        favicon_sites = json.dumps(small_good_sites_by_country)
+
+
+def get_best_sites_for_each_country(sites_list, ping_records_dict):
+    if len(sites_list) <= SITES_MAX_COUNT:
+        return sites_list 
+    sorted_sites_list = sorted(
+        sites_list,
+        key=cmp_to_key(
+            lambda site_a, site_b: 1 if ping_records_dict[site_a]["Ping"] > ping_records_dict[site_b]["Ping"] else -1
+        )
+    )
+    return sorted_sites_list[:SITES_MAX_COUNT]
+
+
 def fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename):
     with open(ping_res_filename) as f:
         ping_records_dict = json.loads(f.read())
@@ -66,6 +98,7 @@ def fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available
         if ping_records_dict[site]["Availability"] == 1:
             cr = sites_to_record_dict[site]
             good_sites_by_country[cr.country_name].append(site)
+
     with open(available_sites_filename, 'w', encoding='utf-8') as f:
         json.dump(good_sites_by_country, f, ensure_ascii=False, indent=4)
 
@@ -87,15 +120,20 @@ def get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favic
 def main():
     sites_to_record_dict = parse_list_of_sites()
   
-    # ping_res_filename = 'speedtest_ping_res_2.json'
+    ping_res_filename = 'speedtest_ping_res.json'
     available_sites_filename = 'speedtest_available_from_europe.json'
     #available_sites_filename = "test.json"
     favicon_sites_filename = "speedtest_favicon_available_from_europe_2.json"
+    small_pool_filename = "speedtest_favicon_available_from_europe_2.json"
 
     #fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
+    print("ping res filled")
     #fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename)
-
-    get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favicon_sites_filename)
+    print("webpool filled")
+    #get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favicon_sites_filename)
+    print("filtered by favicon")
+    make_pool_smaller(ping_res_filename, favicon_sites_filename, small_pool_filename)
+    print("got smaller")
 
     
     
