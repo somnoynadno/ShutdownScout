@@ -7,7 +7,7 @@ export async function getPingStats(countryPool) {
 
         let promises = [];
         for (let host of countryPool) {
-            promises.push(ping("http://" + host + "/favicon.ico"));
+            promises.push(ping("http://" + host));
         }
 
         Promise.all(promises).then((res) => {
