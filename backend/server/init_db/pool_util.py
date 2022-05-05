@@ -37,12 +37,12 @@ class CountryRecord:
 
 
 def fill_ping_res_file(sites_list, filename):
-    ping_res = scan_multithread('http', sites_list, target_func=ping_site_like_browser)
+    ping_res = scan_multithread('https', sites_list, target_func=ping_site)
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(ping_res, f, ensure_ascii=False, indent=4)  
 
 
-def parse_list_of_sites():
+def parse_list_of_speedtest():
     r = requests.get('https://williamyaps.github.io/wlmjavascript/servercli.html')
 
     matches = country_site_regex.finditer(r.text)
@@ -119,21 +119,20 @@ def get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favic
 
 
 def main():
-    sites_to_record_dict = parse_list_of_sites()
+    sites_to_record_dict = parse_list_of_speedtest()
   
     ping_res_filename = 'speedtest_ping_res.json'
-    available_sites_filename = 'speedtest_available_from_europe.json'
-    #available_sites_filename = "test.json"
-    favicon_sites_filename = "speedtest_favicon_available_from_europe_2.json"
-    small_pool_filename = "speedtest_favicon_available_from_europe_2_small.json"
+    available_sites_filename = 'speedtest_available_from_europe_https.json'
+    #favicon_sites_filename = "speedtest_favicon_available_from_europe_https.json"
+    small_pool_filename = "speedtest_available_from_europe_https_small.json"
 
-    # fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
-    # print("ping res filled")
-    # fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename)
-    # print("webpool filled")
-    get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favicon_sites_filename)
-    print("filtered by favicon")
-    make_pool_smaller(ping_res_filename, favicon_sites_filename, small_pool_filename)
+    fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
+    print("ping res filled")
+    fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename)
+    print("webpool filled")
+    # get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favicon_sites_filename)
+    # print("filtered by favicon")
+    make_pool_smaller(ping_res_filename, available_sites_filename, small_pool_filename)
     print("got smaller")
 
     

@@ -60,7 +60,7 @@ def ping_site_like_browser(proto, url, proxies):
             return 1
         return 0
     except Exception as e:
-        print(path, e)
+        #print(path, e)
         return 0
     return 0
 
