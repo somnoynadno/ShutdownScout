@@ -36,6 +36,48 @@ class CountryRecord:
         return f"{self.country_name} : {self.address}"
 
 
+def _parse_domains_json():
+    ans = {}
+    with open("domain_info.json", "r") as f:
+        di = json.loads(f.read())
+    for dik in di:
+        if dik["type"] == "country-code":
+            county_name = dik["description"]
+            ans[dik["domain"]] = county_name
+    return ans
+
+
+# def unite_pools_for_country_codes_and_countries_names():
+#     russia = ["RU", "Russia", "Russian Federation"]
+#     argentina = ["AR", "Argentina"]
+#     australia = ["AU", "Australia"]
+#     brazil = ["BR", "Brasil", "Brazil"]
+#     switherland = ["CH", "Switzerland", "Swaziland"]
+#     china = ["CN", "China"]
+#     cameroon = ["CM"]
+#     germany = ["DE", "Germany"]
+#     denmark = ["DK", "Denmark"]
+#     spain = ["ES", "Spain"]
+#     united_kindom = ["GB", "Great Britain"]
+#     indonesia = ["ID", "Indonesia"]
+#     luxemburg = ["LU", "Luxembourg"]
+#     nicaragua = ["Nicaragua", "NI"]
+#     poland = ["PL", "Poland"]
+#     paraguay = ["Paraguay", "PY"]
+#     south_africa = ["ZA", "South Africa"]
+#     vietnam = ["Vietnam", "Viet Nam"]
+
+#     to_unite = [
+#         russia, argentina, australia, brazil,
+#         switherland, china, cameroon, germany,
+#         denmark, spain, united_kindom, indonesia,
+#         luxemburg, nicaragua, poland, paraguay,
+#         south_africa, vietnam
+#     ]
+
+    
+
+
 def fill_ping_res_file(sites_list, filename):
     ping_res = scan_multithread('https', sites_list, target_func=ping_site)
     with open(filename, 'w', encoding='utf-8') as f:
@@ -124,15 +166,15 @@ def main():
     ping_res_filename = 'speedtest_ping_res.json'
     available_sites_filename = 'speedtest_available_from_europe_https.json'
     #favicon_sites_filename = "speedtest_favicon_available_from_europe_https.json"
-    small_pool_filename = "speedtest_available_from_europe_https_small.json"
+    small_pool_filename = "speedtest_available_from_europe_https_small_united.json"
 
-    fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
-    print("ping res filled")
-    fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename)
-    print("webpool filled")
+    #fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
+    #print("ping res filled")
+    #fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename)
+    #print("webpool filled")
     # get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favicon_sites_filename)
     # print("filtered by favicon")
-    make_pool_smaller(ping_res_filename, available_sites_filename, small_pool_filename)
+    make_pool_smaller(ping_res_filename, "speedtest_available_from_europe_https_united.json", small_pool_filename)
     print("got smaller")
 
     

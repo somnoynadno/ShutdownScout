@@ -1,0 +1,912 @@
+{
+    "Algeria": [
+        "speedtest.ooredoo.dz:8080"
+    ],
+    "Albania": [
+        "speedtest.vodafone.al:8080"
+    ],
+    "AR": [
+        "speedtest.agilnet.com.ar:8080",
+        "speedtest.telpin.com.ar:8080",
+        "speedtestbue.cabase.org.ar:8080",
+        "speedtest.ecowifi.com.ar:8080"
+    ],
+    "Armenia": [
+        "sp1.rtarmenia.am:8080"
+    ],
+    "Australia": [
+        "st-bne-02.gcomm.com.au:8080",
+        "ade1.speedtest.telstra.net:8080",
+        "speedtest.exetel.com.au:8080",
+        "bne-speed.overthewire.com.au:8080",
+        "vic-speedtest.spirit.com.au:8080",
+        "cha1.speedtest.telstra.net:8080",
+        "ool1.speedtest.telstra.net:8080",
+        "brs1.speedtest.telstra.net:8080",
+        "cbr1.speedtest.telstra.net:8080",
+        "mel-speed.overthewire.com.au:8080",
+        "ws1-n1per.isp.foxtel.net.au:8080",
+        "drw1.speedtest.telstra.net:8080",
+        "hob1.speedtest.telstra.net:8080",
+        "mel1.speedtest.telstra.net:8080",
+        "ws1-n1mel.isp.foxtel.net.au:8080",
+        "per1.speedtest.telstra.net:8080",
+        "syd-speed.overthewire.com.au:8080",
+        "syd1.speedtest.telstra.net:8080",
+        "ws1.isp.foxtel.net.au:8080",
+        "win1.speedtest.telstra.net:8080",
+        "ws1-n1syd.isp.foxtel.net.au:8080",
+        "mcy1.speedtest.telstra.net:8080"
+    ],
+    "Austria": [
+        "speedtest.citycom-austria.com:8080",
+        "speedcheck.liwest.at:8080",
+        "speedtest.ama-networx.net:8080",
+        "speedtest.nextlayer.at:8080",
+        "speedtest0401.anexia-it.com:8080"
+    ],
+    "Bahrain": [
+        "speedtest.viacloud.com:8080",
+        "stest.bh.zain.com:8080"
+    ],
+    "Bangladesh": [
+        "speedtest.inspirebroadband.net:8080"
+    ],
+    "Belarus": [
+        "test.byfly.by:8080"
+    ],
+    "Bolivia": [
+        "test.entelnet.bo:8080"
+    ],
+    "BR": [
+        "speedtest.aju.g8.net.br:8080",
+        "speedtest-otc.experts.net.br:8080",
+        "speedtest.k2network.com.br:8080",
+        "speedtest.kasatech.net:8080",
+        "speedtestflo.virtex.com.br:8080",
+        "speedtest.ethtelecom.com.br:8080",
+        "sp1.dktelecom.net.br:8080",
+        "speedtest.bwnet.com.br:8080",
+        "velocimetro.mvdctelecom.com.br:8080",
+        "speedtest-cdn.redenetprovedor.com.br:8080",
+        "spd25.claro.com.br:8080",
+        "speed2.radarinternet.com.br:8080",
+        "speedtest.bktele.com.br:8080",
+        "speedtestookla.megavelocidadefibra.com.br:8080",
+        "sp1.spacenetse.com.br:8080",
+        "speedtest.foxxprovider.com.br:8080",
+        "speedtest.aranetinfo.com.br:8080",
+        "speedtest.wavemax.com.br:8080",
+        "speedtest.starnettelecom.com.br:8080",
+        "speedtest.bhe.g8.net.br:8080",
+        "speedtest.vivanet.net.br:8080",
+        "spd8.claro.com.br:8080",
+        "speedtest.temais.com.br:8080",
+        "spetstbhe01.timbrasil.com.br:8080",
+        "vel-bre.tvalphaville.com.br:8080",
+        "spd28.claro.com.br:8080",
+        "sp1.avianet.com.br:8080",
+        "speedtest.inforr.com.br:8080",
+        "spetstbsa01.timbrasil.com.br:8080",
+        "speedtest.telecomprovider.com.br:8080",
+        "speedtest.bdcnet.net.br:8080",
+        "spetstblm01.timbrasil.com.br:8080",
+        "vel-cjr.tvalphaville.com.br:8080",
+        "spd4.claro.com.br:8080",
+        "speedtest.cleannet.com.br:8080",
+        "spd16.claro.com.br:8080",
+        "speedtest-master.adllink.net.br:8080",
+        "speedtest.topnetms.com.br:8080",
+        "speedtest.netsystemcampos.com.br:8080",
+        "speedtest.k2telecom.net.br:8080",
+        "speedtest.suldigital.com.br:8080",
+        "speedtest.pvnet.net.br:8080",
+        "sp1.smartinternet.com.br:8080",
+        "speedtest.netcol.com.br:8080",
+        "speedtest.netvale.psi.br:8080",
+        "teste.viaon.net.br:8080",
+        "speedtest2.geeknet.com.br:8080",
+        "speedtest.foxnettelecom.net.br:8080",
+        "speedtest.n5telecom.com.br:8080",
+        "speedtest.dufibranet.com.br:8080",
+        "speedtest1.nicnet.com.br:8080",
+        "spd11.claro.com.br:8080",
+        "velocidade.experts.net.br:8080",
+        "speedtest.radarconnect.com.br:8080",
+        "minhaconexao.hokinet.com.br:8080",
+        "speedtest.triptecnologia.com.br:8080",
+        "speedtest.allconnect.net.br:8080",
+        "speed1.voxtech.com.br:8080",
+        "speedtest.fatimavideo.com.br:8080",
+        "speedtest3.connectja.com.br:8080",
+        "speedtest.gd.com.br:8080",
+        "speedtest.acenetbj.com.br:8080",
+        "ns1.fernandopolisnet.com.br:8080",
+        "spd1.claro.com.br:8080",
+        "speedtest.rnettelecom.net.br:8080",
+        "speedtest.speedconnect.net.br:8080",
+        "serv1.nossanettelecom.net.br:8080",
+        "speedtest.wmtelecom.com.br:8080",
+        "speedtest.interativanetworks.net.br:8080",
+        "speedtest.heliodora.com.br:8080",
+        "speedtest.ibsoltelecom.com.br:8080",
+        "speedtest.helptelecom.net.br:8080",
+        "sp1.jupiter.com.br:8080",
+        "test4.supernetes.com.br:8080",
+        "speedtest.wfnet.net.br:8080",
+        "teste.soniknet.com.br:8080",
+        "speedtest.pontocomprovedor.net.br:8080",
+        "speedtest.connectalagoas.com.br:8080",
+        "speedtest.davoiisp.com.br:8080",
+        "speedtest.inexa.com.br:8080",
+        "speedtestlrvookla.megavelocidadefibra.com.br:8080",
+        "test.pntelecom.com.br:8080",
+        "spd7.claro.com.br:8080",
+        "speedtest.isuper.com.br:8080",
+        "speedtest.onetelecom.psi.br:8080",
+        "sp1.clickturbo.com.br:8080",
+        "speedtest.cabotelecom.com.br:8080",
+        "speedtest.mcl.soumaster.com.br:8080",
+        "sp3.infonetsolucoes.com.br:8080",
+        "spd24.claro.com.br:8080",
+        "speedtestnfo1.sumicity.net.br:8080",
+        "speedtest.netmaisconnect.com.br:8080",
+        "speedtest.vipnetsul.com.br:8080",
+        "speedtest.dgnet.com.br:8080",
+        "velocimetro.frionline.com.br:8080",
+        "speedtest.hrvirtual.com.br:8080",
+        "spd19.claro.com.br:8080",
+        "speedtest.dbug.com.br:8080",
+        "speedtest.virtex.com.br:8080",
+        "speedtest.gigawebtecnologia.com.br:8080",
+        "speedtest.petropolis.newgrouptelecom.com.br:8080",
+        "speedtest.msnettelecom.com.br:8080",
+        "www.totalvia.com.br:8080",
+        "spd12.claro.com.br:8080",
+        "speedtest1.p4telecom.com.br:8080",
+        "spd18.claro.com.br:8080",
+        "speed1.netiontelecom.com.br:8080",
+        "sp1.glinknet.com.br:8080",
+        "speedtest.biazitelecom.com.br:8080",
+        "speedtest.primanet.net.br:8080",
+        "spd22.claro.com.br:8080",
+        "spetstrce01.timbrasil.com.br:8080",
+        "spd14.claro.com.br:8080",
+        "a.speedtest.uzzy.com.br:8080",
+        "spd3.claro.com.br:8080",
+        "teste.itsbrasil.net:8080",
+        "spd2.claro.com.br:8080",
+        "spd9.claro.com.br:8080",
+        "speedtest.planetinternetprovedor.com.br:8080",
+        "speed.newoeste.com.br:8080",
+        "speedtest.evoxtelecom.com.br:8080",
+        "speedtest.raimaxfibra.com.br:8080",
+        "speedtest.sp.g8.net.br:8080",
+        "test1.supernetes.com.br:8080",
+        "stmc.aliancanet.net.br:8080",
+        "sp1.housenet.net.br:8080",
+        "speedtest.elointernet.com.br:8080",
+        "speedtest1.hopnet.com.br:8080",
+        "sp.nobreinternet.com.br:8080",
+        "speedtest.speedenet.com.br:8080",
+        "velocidade.virtuax.com.br:8080",
+        "speedtest.fontetelecom.com.br:8080",
+        "speedtest.clickconnect.net.br:8080",
+        "speedtest.dunet.com.br:8080",
+        "speedtest.dstech.com.br:8080",
+        "sp1.brem.com.br:8080",
+        "spd23.claro.com.br:8080",
+        "speedtest.foxconect.com.br:8080",
+        "speedtest.ula.g8.net.br:8080",
+        "sp1.rmstelecom.net.br:8080",
+        "velocidade.algartelecom.com.br:8080",
+        "sp1.flylinktelecom.com.br:8080",
+        "speedtest.meganetwork.net.br:8080",
+        "velocimetro.sinaistelecom.com.br:8080",
+        "speedtest.starbyte.com.br:8080"
+    ],
+    "Bulgaria": [
+        "speedtest.unacs.bg:8080",
+        "speedtest.thezone.bg:8080",
+        "sp1.retecomtv.com:8080"
+    ],
+    "Cambodia": [
+        "speedtest.cellcard.com.kh:8080"
+    ],
+    "Canada": [
+        "sp1.hcetelecom.com:8080",
+        "speedtest.cg.shawcable.net:8080",
+        "speedtest.ed.shawcable.net:8080",
+        "speedtest.netflash.net:8080",
+        "speedtest.ok.shawcable.net:8080",
+        "newspeedtest.accesscomm.ca:8080",
+        "speedtest.vianet.ca:8080",
+        "speedtest.mnsi.net:8080",
+        "speedtest.hay.net:8080",
+        "west-speedtest.frontiernetworks.ca:8080",
+        "speedtest.wp.shawcable.net:8080",
+        "speedtest.vc.shawcable.net:8080",
+        "speedtest.gv.shawcable.net:8080"
+    ],
+    "Cayman Islands": [
+        "speedtest.c3.ky:8080"
+    ],
+    "Chile": [
+        "speedtest.wircom.cl:8080",
+        "speedtest.mifibra.cl:8080",
+        "speedtest.cablecolor.cl:8080",
+        "speedtest.masconectados.cl:8080"
+    ],
+    "CH": [
+        "speedcheck.solnet.ch:8080",
+        "speedtest.swisscenter.com:8080",
+        "speedtest.wingo.ch:8080",
+        "speedtest1.swazi.net:8080"
+    ],
+    "Croatia": [
+        "speedtest.ht.hr:8080"
+    ],
+    "Cyprus": [
+        "st1.extendbroadband.com:8080",
+        "speedtest.cablenetcy.net:8080",
+        "speedtestlim.cablenet.com.cy:8080",
+        "speedtest.cytanet.com.cy:8080"
+    ],
+    "Czech Republic": [
+        "ookla.netbox.cz:8080",
+        "speedtest.jaw.cz:8080",
+        "speedtest1.net-connect.cz:8080",
+        "rychlostinternetu.sk:8080",
+        "speedtest.vivo.cz:8080",
+        "speedtest-praha.dialtelecom.cz:8080",
+        "speedtest.sychrovnet.cz:8080"
+    ],
+    "CM": [
+        "speedtest1.orange.cm:8080"
+    ],
+    "CN": [
+        "speedtest1.ah163.com:8080",
+        "speedtest1.online.sh.cn:8080",
+        "speedtest1.online.sh.cn:8080"
+    ],
+    "DE": [
+        "warp.cronon.net:8080",
+        "speedtest.briteline.de:8080",
+        "speed.webseitenserver.com:8080",
+        "speedtest1.bc-networks.de:8080",
+        "speedtest.wtnet.de:8080",
+        "muc.speedtest.contabo.net:8080",
+        "speedtest.bc-networks.de:8080"
+    ],
+    "DK": [
+        "speedtest.bornfiber.dk:8080",
+        "ookla1.kviknet.dk:8080",
+        "linespeed3.nms.tele.dk:8080"
+    ],
+    "Djibouti": [
+        "speedtest.djiboutitelecom.dj:8080"
+    ],
+    "Dominican Republic": [
+        "speedtest.viva.com.do:8080"
+    ],
+    "ES": [
+        "speedtest.digimobil.es:8080",
+        "speedtest.wifiguay.es:8080",
+        "speedtestbarcelona.vodafone.es:8080",
+        "speedtest.apfutura.net:8080",
+        "speedtest.meswifi.com:8080",
+        "msibitnap.apfutura.net:8080",
+        "testvelocidad2.orange.es:8080",
+        "speedtestbarcelona2.vodafone.es:8080",
+        "speedtestgrancanaria.vodafone.es:8080",
+        "testdevelocidad.euskaltel.com:8080",
+        "testdevelocidad.crevision.es:8080",
+        "speedtest.iguana.cat:8080",
+        "testvelocidad1.orange.es:8080",
+        "speedtestmadrid.vodafone.es:8080",
+        "testdevelocidad.jazztel.com:8080",
+        "speedtest.conectabalear.com:8080",
+        "speedtestvalencia.vodafone.es:8080"
+    ],
+    "Estonia": [
+        "kiirustest.telia.ee:8080"
+    ],
+    "Ecuador": [
+        "speedtest1.netlife.ec:8080"
+    ],
+    "Finland": [
+        "nopeus.dna.fi:8080",
+        "speedtest.netplaza.fi:8080"
+    ],
+    "France": [
+        "douai.lafibre.info:8080",
+        "bordeaux.lafibre.info:8080",
+        "lyon.lafibre.info:8080",
+        "marseille.testdebit.info:8080",
+        "massy.testdebit.info:8080",
+        "reims.testdebit.info:8080"
+    ],
+    "GB": [
+        "speedtest.razorblue.net.uk:8080",
+        "speedtest-public1.ask4.net:8080"
+    ],
+    "Gibraltar": [
+        "speedtest.u-mee.com:8080"
+    ],
+    "Gabon": [
+        "speedtest.ga.airtel.com:8080"
+    ],
+    "Greece": [
+        "ooklaspeedtest.vodafone.gr:8080"
+    ],
+    "Hungary": [
+        "gyor-speedtest.zt.hu:8080",
+        "speedtest.telekom.hu:8080",
+        "speedtest.atw.hu:8080",
+        "speedtest.giganet.hu:8080",
+        "speedtest1.digi.hu:8080"
+    ],
+    "Iceland": [
+        "speedtest.siminn.is:8080"
+    ],
+    "Hong Kong": [
+        "ookla-speedtest.hgconair.hgc.com.hk:8080"
+    ],
+    "Guatemala": [
+        "speedtest1.tigo.net.gt:8080"
+    ],
+    "ID": [
+        "speedtest.desnet.id:8080",
+        "speedtest.unsyiah.ac.id:8080",
+        "speedtest-ix.idola.net.id:8080",
+        "speedtest.idola.net.id:8080",
+        "speedtest.angkasa.id:8080",
+        "speedtest.tachyon.net.id:8080",
+        "speedtest-jkt1.skyline.net.id:8080",
+        "sp1-jkt.wowrack.co.id:8080",
+        "speedtest.cyberplus.net.id:8080",
+        "speedtest.ub.ac.id:8080",
+        "test.neuviz.net.id:8080",
+        "speed.undip.ac.id:8080",
+        "sp1-sby.wowrack.co.id:8080",
+        "speedtest-1.wanxp.id:8080",
+        "speedtest.mtmbali.com:8080"
+    ],
+    "India": [
+        "speedtest.oceanicnet.in:8080",
+        "speedtestcbe.airtelbroadband.in:8080",
+        "speedtestfbd.tripleplay.in:8080",
+        "speedtestgzb.tripleplay.in:8080",
+        "speedtestblr.airtelbroadband.in:8080",
+        "speedtest.suncitybroadband.com:8080",
+        "speedtesthyd.airtelbroadband.in:8080",
+        "speedtestdel.airtelbroadband.in:8080",
+        "jodhpur1.denbroadband.in:8080",
+        "mangalore.ganeshcable.net:8080",
+        "speedtest.alegra.in:8080",
+        "speedtestmh.airtelbroadband.in:8080",
+        "speedtestchn.airtelbroadband.in:8080",
+        "speedtestdelhi.tripleplay.in:8080",
+        "speedtest.connectzone.in:8080",
+        "speedtest.gitipl.com:8080",
+        "speedtestsirsa.tripleplay.in:8080",
+        "st1.airtechbroadband.com:8080",
+        "solapur.ganeshcable.net:8080",
+        "speedtest.promptinfracom.com:8080"
+    ],
+    "Iran": [
+        "rhaspd2.mci.ir:8080"
+    ],
+    "Ireland": [
+        "perf.imagine.ie:8080"
+    ],
+    "Isle of Man": [
+        "speedtest.manx.net:8080"
+    ],
+    "Israel": [
+        "speedtest.ccc.net.il:8080",
+        "speed.cellcom.co.il:8080"
+    ],
+    "Italy": [
+        "speedtest.iptelecom.it:8080",
+        "speedtest.connectivia.it:8080",
+        "sp1.locontewifi.it:8080",
+        "test.eolo.it:8080",
+        "speed.dimensione.com:8080",
+        "speedtest.microservizi.com:8080",
+        "mi-speedtest.optimaitalia.com:8080",
+        "spd-pub-mi-01-01.fastwebnet.it:8080",
+        "na-speedtest.optimaitalia.com:8080",
+        "speedtest.wifi4all.it:8080",
+        "borg.micso.it:8080",
+        "rm-speedtest.optimaitalia.com:8080",
+        "speedtest1.uniconnect.it:8080",
+        "sp1.novanetworks.it:8080",
+        "spd-pub-rm-01-01.fastwebnet.it:8080",
+        "speedhost.isiline.it:8080",
+        "sp1.adalnetwork.com:8080",
+        "speedtest.bbbell.it:8080"
+    ],
+    "Jordan": [
+        "speedtest.damamax.jo:8080"
+    ],
+    "Kazakhstan": [
+        "test.ps.kz:8080",
+        "speedtest01.ttc.kz:8080"
+    ],
+    "Kuwait": [
+        "ookla.ooredoo.com.kw:8080",
+        "speedtest.ooredoo.com.kw:8080"
+    ],
+    "Latvia": [
+        "speedtest1.baltcom.lv:8080"
+    ],
+    "Liechtenstein": [
+        "speedtest.fl1.li:8080",
+        "speedtest.ton-net.com:8080"
+    ],
+    "Lithuania": [
+        "speedtest-vno.init.lt:8080",
+        "speedtest-01.cgates.lt:8080"
+    ],
+    "LU": [
+        "speedtest.tango.lu:8080",
+        "cabletest.eltrona.net:8080"
+    ],
+    "Lithuanua": [
+        "www.topnet.lt:8080"
+    ],
+    "Malta": [
+        "speedtest.gov.mt:8080"
+    ],
+    "Malaysia": [
+        "speedtest.u.com.my:8080",
+        "speedtest.ytlcomms.my:8080",
+        "speedtest-my.vqbn.com:8080",
+        "speed.time.com.my:8080"
+    ],
+    "Mexico": [
+        "speedtest.cln.megared.net.mx:8080",
+        "speedtest.hmo.megared.net.mx:8080",
+        "speedtest.leon.megared.net.mx:8080",
+        "speedtest.lpaz.megared.net.mx:8080",
+        "speedtest.nog.megared.net.mx:8080",
+        "speedtest.puebla.megared.net.mx:8080",
+        "speedtest.torreon.megared.net.mx:8080",
+        "speedtest.ver.megared.net.mx:8080",
+        "speedtest.tolu.megared.net.mx:8080"
+    ],
+    "Macao": [
+        "speedtest.mtel.mo:8080"
+    ],
+    "MG": [
+        "speedtest.telma.mg:8080"
+    ],
+    "MM": [
+        "mpt01.mpt.net.mm:8080"
+    ],
+    "Netherlands": [
+        "speedtest.redhosting.nl:8080",
+        "speedtest-ookla-prod-001-ams.ff.avast.com:8080",
+        "spt01.sdhd.hosting:8080",
+        "speedtest.zeelandnet.nl:8080",
+        "speedtest.caiw.net:8080",
+        "speedtest.datacomfort.net:8080",
+        "speedtest2.mnd.bulk.iss.as9143.net:8080",
+        "speedtest1.mnd.bulk.iss.as9143.net:8080"
+    ],
+    "Nepal": [
+        "speedtest.subisu.net.np:8080",
+        "speedtest.wlink.com.np:8080",
+        "speedtest-srv.classic.com.np:8080"
+    ],
+    "NI": [
+        "speedtest.tecomunica.com.ni:8080",
+        "speedtestserver.ibw.com.ni:8080"
+    ],
+    "New Zealand": [
+        "speedtest.lightwire.co.nz:8080",
+        "speedtest.unifone.net.nz:8080",
+        "speedtest1-mod.vygr.net:8080",
+        "speedtest.vpscity.co.nz:8080"
+    ],
+    "Norway": [
+        "speed1.mimer.no:8080",
+        "test.telenor.net:8080",
+        "stv-gm-speedtest1.altibox.net:8080",
+        "osl-ulv-speedtest1.altibox.net:8080",
+        "speedtest.pcsupport.no:8080"
+    ],
+    "New Caledonia": [
+        "speedtest.mls.nc:8080"
+    ],
+    "Oman": [
+        "speedtest.awasr.com:8080"
+    ],
+    "Pakistan": [
+        "speedtest.tes.com.pk:8080"
+    ],
+    "Panama": [
+        "speedtest.interfastpanama.com:8080"
+    ],
+    "Philippines": [
+        "sp1.nexlogic.ph:8080",
+        "speedtest-ilo.skybroadband.com.ph:8080",
+        "clk-srv04.convergeict.com:8080",
+        "speedtest-bgo.skybroadband.com.ph:8080",
+        "speedtest.infinivan.net:8080",
+        "speedtest-cbu.skybroadband.com.ph:8080",
+        "speedtest.ptt.net.ph:8080",
+        "speedtest.infinivan.com:8080"
+    ],
+    "Paraguay": [
+        "speedtest.tempusnet.com.py:8080",
+        "speedtest.dnsmasternet.com.py:8080"
+    ],
+    "Peru": [
+        "speedtest.bitel.com.pe:8080"
+    ],
+    "PL": [
+        "speedtest.air-net.com.pl:8080",
+        "s2.celcom.eu:8080",
+        "speedtest.petrus.pl:8080",
+        "speedtest.biall.net.pl:8080",
+        "speedtest1.provector.pl:8080",
+        "speedtest.systel.pl:8080",
+        "speedtest.kosakowo.net:8080",
+        "speedtest.jmdi.pl:8080",
+        "speedtest.emitel.pl:8080",
+        "speedtest.km-net.pl:8080"
+    ],
+    "Portugal": [
+        "speedtest.nosmadeira.com:8080"
+    ],
+    "Puerto Rico": [
+        "speedtest2.claropr.com:8080",
+        "speed.claropr.com:8080"
+    ],
+    "Qatar": [
+        "speedtest01.vodafone.com.qa:8080"
+    ],
+    "Romania": [
+        "speedtest1.rcs-rds.ro:8080",
+        "speedtest1.vodafone.ro:8080",
+        "speed.ines.ro:8080",
+        "speedtest.next-gen.ro:8080",
+        "bucharest.getstreamhosting.com:8080",
+        "speedtestcluj.vodafone.ro:8080",
+        "speedtest.nu-ip.ro:8080"
+    ],
+    "Republic of Singapore": [
+        "speedtest10.vqbn.com:8080"
+    ],
+    "Republic of Palau": [
+        "speedtest.pnccpalau.com:8080",
+        "speedtest.telco.pw:8080"
+    ],
+    "PY": [
+        "speedtest.fila.net.py:8080"
+    ],
+    "Singapore": [
+        "speedtest.singnet.com.sg:8080"
+    ],
+    "RU": [
+        "st.sunlink.ru:8080",
+        "spdtst1.farline.net:8080",
+        "speed.kamtv.ru:8080",
+        "speedtest.ab.ru:8080",
+        "speedtest.trytek.ru:8080",
+        "speedtest.barnaul.milecom.ru:8080",
+        "rapido.izhnt.ru:8080",
+        "speedtest.mosline.ru:8080",
+        "speedtest.polycomm.net:8080",
+        "sp.lt-nn.net:8080",
+        "speedtest.natanet.ru:8080",
+        "m-12v.ru:8080",
+        "speedtest-ookla1.weba.ru:8080",
+        "speedtest.pride-net.ru:8080",
+        "speedtest.timernet.ru:8080",
+        "speed.etherway.ru:8080",
+        "speedtest.city-line.org:8080",
+        "speedtest-eine.is74.ru:8080",
+        "speedtest.izhevsk.net:8080",
+        "speedtest1.itnet33.ru:8080",
+        "speedtest.citytelecom.ru:8080",
+        "speedtest.reconn.ru:8080",
+        "speedtest.setitagila.ru:8080",
+        "st.zaoitt.ru:8080",
+        "speed.global-x.ru:8080",
+        "sp1.interra.ru:8080",
+        "st.edinos.ru:8080",
+        "www.pskovline.ru:8080",
+        "speedtest.donnetwork.ru:8080",
+        "speedtest.elit-tv.ru:8080",
+        "sp.runnet.ru:8080",
+        "speedtest.selectel.ru:8080",
+        "speedtest.xtrim.ru:8080",
+        "speedtest.shadrinsk.net:8080",
+        "speedtest.sg.metro-set.ru:8080",
+        "sp1.ttnet.ru:8080",
+        "speedtest.zt68.net:8080",
+        "www.trub.net.ru:8080",
+        "speedtest.tm.metro-set.ru:8080",
+        "speedtest.vidnoe.net:8080",
+        "speedtest1.ttksever.ru:8080",
+        "speedtest.vosnet.ru:8080"
+    ],
+    "Serbia": [
+        "speedtest2.mts.rs:8080"
+    ],
+    "Saudi Arabia": [
+        "speedtest.saudi.net.sa:8080",
+        "ab-speedtest.saudi.net.sa:8080",
+        "jed-speedtest.saudi.net.sa:8080"
+    ],
+    "Saint Pierre and Miquelon": [
+        "speedtest.cheznoo.net:8080"
+    ],
+    "Slovakia": [
+        "speedmeter.orange.sk:8080",
+        "speedtest.netspace.sk:8080"
+    ],
+    "Somalia": [
+        "speedtest.somcable.com:8080",
+        "speedtest.hormuud.com:8080"
+    ],
+    "Sweden": [
+        "speedtest.no-ack.net:8080"
+    ],
+    "Taiwan": [
+        "chv3-1.speedtest.idv.tw:8080",
+        "cyv3-1.speedtest.idv.tw:8080",
+        "hcv3-1.speedtest.idv.tw:8080",
+        "ntv3-1.speedtest.idv.tw:8080",
+        "mlv3-1.speedtest.idv.tw:8080",
+        "ptv3-1.speedtest.idv.tw:8080",
+        "tcv3-1.speedtest.idv.tw:8080",
+        "ntpv3-1.speedtest.idv.tw:8080",
+        "ttv3-1.speedtest.idv.tw:8080",
+        "hyv3-1.speedtest.idv.tw:8080",
+        "hlv3-1.speedtest.idv.tw:8080",
+        "dlv3-1.speedtest.idv.tw:8080",
+        "ylv3-1.speedtest.idv.tw:8080",
+        "khv3-1.speedtest.idv.tw:8080",
+        "tyv3-1.speedtest.idv.tw:8080",
+        "tpv3-1.speedtest.idv.tw:8080",
+        "klv3-1.speedtest.idv.tw:8080"
+    ],
+    "Tanzania": [
+        "speedtest.simbanet.co.tz:8080"
+    ],
+    "Thailand": [
+        "speedtest.kku.ac.th:8080"
+    ],
+    "Turkey": [
+        "ant1speedtest.turktelekom.com.tr:8080",
+        "adn1speedtest.turktelekom.com.tr:8080",
+        "diyb01.hizinitestet.com:8080",
+        "brsa01.hizinitestet.com:8080",
+        "diy1speedtest.turktelekom.com.tr:8080",
+        "speedtest.yoncu.com:8080",
+        "medn01.hizinitestet.com:8080",
+        "brnv01.hizinitestet.com:8080",
+        "kysr01.hizinitestet.com:8080",
+        "trbz01.hizinitestet.com:8080",
+        "sam1speedtest.turktelekom.com.tr:8080",
+        "gun1speedtest.turktelekom.com.tr:8080",
+        "tra1speedtest.turktelekom.com.tr:8080"
+    ],
+    "Ukraine": [
+        "sp1.tkplazma.com.ua:8080",
+        "speedtest.mclaut.com:8080",
+        "kharkovspeedtest.vodafone.ua:8080",
+        "speedtest.gtu.net.ua:8080",
+        "speedtest2.gtu.net.ua:8080",
+        "speedtest.magicom.net.ua:8080",
+        "speedtest.status.ks.ua:8080",
+        "speedtest01.life.com.ua:8080",
+        "speedtest.imperial.net.ua:8080",
+        "speedtest.nashnet.ua:8080",
+        "luganet.ua:8080",
+        "speedtest.mageal.net:8080",
+        "speedtest.tenet.ua:8080",
+        "speedtest.blacksea.net.ua:8080",
+        "bgp.exstream.net.ua:8080",
+        "st01.kram.ua:8080",
+        "speedtest.knet-tele.com:8080",
+        "speedtest.besthosting.ua:8080"
+    ],
+    "Uganda": [
+        "speedtest.roketelkom.co.ug:8080"
+    ],
+    "United Kingdom": [
+        "speedtest.darklight.city:8080"
+    ],
+    "United Arab Emirates": [
+        "speedtest1.etisalat.ae:8080"
+    ],
+    "United States": [
+        "speedtest.rd.dc.cox.net:8080",
+        "speedtest.inoc.net:8080",
+        "albuquerque.speedtest.centurylink.net:8080",
+        "spt01aldlmi.aldl.mi.charter.com:8080",
+        "speedtest.rd.at.cox.net:8080",
+        "ashburn.va.speedtest.frontier.com:8080",
+        "ashburn02.speedtest.windstream.net:8080",
+        "speedtest.silverstar.com:8080",
+        "speedtest2.pvtn.net:8080",
+        "speedtest.tulix.com:8080",
+        "speedtest.atl.hivelocity.net:8080",
+        "speedtest.gci.net:8080",
+        "ossadcspeedtestsvr-2.gci.net:8080",
+        "atlanta02.speedtest.windstream.net:8080",
+        "speedtest.texas.rr.com:8080",
+        "speedtest.network.utexas.edu:8080",
+        "speedtest.rd.br.cox.net:8080",
+        "bismarck.speedtest.centurylink.net:8080",
+        "billings.speedtest.centurylink.net:8080",
+        "spt01blngmt.blng.mt.charter.com:8080",
+        "boi-speedtest.syringanetworks.net:8080",
+        "boise.speedtest.centurylink.net:8080",
+        "carlisle.speedtest.centurylink.net:8080",
+        "cedar-rapids.speedtest.centurylink.net:8080",
+        "spt01csprwy.cspr.wy.charter.com:8080",
+        "charlottesville2.speedtest.centurylink.net:8080",
+        "ookla.net.unc.edu:8080",
+        "cheyenne.speedtest.centurylink.net:8080",
+        "speedtest1.epbfi.com:8080",
+        "spt01chynwy.chyn.wy.charter.com:8080",
+        "chicago.il.speedtest.frontier.com:8080",
+        "chicago.speedtest.centurylink.net:8080",
+        "chicago02.speedtest.windstream.net:8080",
+        "cleveland.speedtest.centurylink.net:8080",
+        "columbia.speedtest.centurylink.net:8080",
+        "coloradosprings.speedtest.centurylink.net:8080",
+        "speedtest.stratusiq.com:8080",
+        "speedtest.pcisys.net:8080",
+        "speedtest.tctwest.net:8080",
+        "speedtest.conwaycorp.net:8080",
+        "speedtest.ohiordc.rr.com:8080",
+        "dallas02.speedtest.windstream.net:8080",
+        "davenport.speedtest.centurylink.net:8080",
+        "denver.speedtest.centurylink.net:8080",
+        "des-moines.speedtest.centurylink.net:8080",
+        "speedtest.ctctel.com:8080",
+        "duluth.speedtest.centurylink.net:8080",
+        "spt01euclwi.eucl.wi.charter.com:8080",
+        "speedtest.oit.duke.edu:8080",
+        "fargo.speedtest.centurylink.net:8080",
+        "spt01ftwotx.ftwo.tx.charter.com:8080",
+        "fort-myers2.speedtest.centurylink.net:8080",
+        "speedtest.dal.hivelocity.net:8080",
+        "fort-myers.speedtest.centurylink.net:8080",
+        "speedtest.it.ufl.edu:8080",
+        "speedtest.softcom.net:8080",
+        "speedtest.mysacredwind.com:8080",
+        "spt01gdjtco.gdjt.co.charter.com:8080",
+        "speedtest.myactv.net:8080",
+        "speedtest.versonetworks.net:8080",
+        "speedtest.rd.hr.cox.net:8080",
+        "helena.speedtest.centurylink.net:8080",
+        "Speed.rconnects.com:8080",
+        "sp1.aerux.com:8080",
+        "houston.speedtest.centurylink.net:8080",
+        "dallas.tx.speedtest.frontier.com:8080",
+        "idf-speedtest.syringanetworks.net:8080",
+        "idahofalls1.cabospeed.com:8080",
+        "indianapolis.speedtest.centurylink.net:8080",
+        "speedtest.fhsu.edu:8080",
+        "kansas-city.speedtest.centurylink.net:8080",
+        "speed.wiktel.com:8080",
+        "spt01krnyne.krny.ne.charter.com:8080",
+        "la-crosse.speedtest.centurylink.net:8080",
+        "killeen.speedtest.centurylink.net:8080",
+        "speedtest3.sbbnet.com:8080",
+        "speedtest.rd.lv.cox.net:8080",
+        "lasspeed.switch.com:8080",
+        "st-lnk-1.binary.net:8080",
+        "speedtest.zochnet.com:8080",
+        "stage01.speedtest.windstream.net:8080",
+        "little-rock.speedtest.centurylink.net:8080",
+        "speedtest.west.rr.com:8080",
+        "speedtest.race.com:8080",
+        "howfastwest1.atlanticmetro.net:8080",
+        "la02.speedtest.windstream.net:8080",
+        "losangeles.ca.speedtest.frontier.com:8080",
+        "lax1a-speedtest.webnx.com:8080",
+        "mansfield.speedtest.centurylink.net:8080",
+        "speedtest.tecinfo.net:8080",
+        "speedtest.serverpoint.com:8080",
+        "miami.fl.speedtest.frontier.com:8080",
+        "speedtest.oceanic.com:8080",
+        "spt01msslmt.mssl.mt.charter.com:8080",
+        "speedtest-ookla-prod-001-nyc.ff.avast.com:8080",
+        "speedtest.getstreamhosting.com:8080",
+        "howfast.atlanticmetro.net:8080",
+        "speedtest.nyc.rr.com:8080",
+        "sp01.seddt.net:8080",
+        "omaha.speedtest.centurylink.net:8080",
+        "speedtest.rd.ok.cox.net:8080",
+        "spt01olvemo.stls.mo.charter.com:8080",
+        "speedtest.rd.om.cox.net:8080",
+        "spt01oxfrma.oxfr.ma.charter.com:8080",
+        "orldp-speedtest-01.noc.bhn.net:8080",
+        "speedtest.rd.oc.cox.net:8080",
+        "speedtest1.ptd.net:8080",
+        "orlando.speedtest.centurylink.net:8080",
+        "speedtest.planters.net:8080",
+        "paloalto.ca.speedtest.frontier.com:8080",
+        "speedtest.alyrica.net:8080",
+        "speedtest.rd.ph.cox.net:8080",
+        "portland.speedtest.centurylink.net:8080",
+        "st-oma-1.binary.net:8080",
+        "speedtest.rd.ri.cox.net:8080",
+        "speedtest.catt.com:8080",
+        "web3.etv.net:8080",
+        "speedtest.nccray.com:8080",
+        "test.shastacoe.net:8080",
+        "windriverinternet.com:8080",
+        "spt01renonv.reno.nv.charter.com:8080",
+        "rochester.speedtest.centurylink.net:8080",
+        "rockymount.speedtest.centurylink.net:8080",
+        "rochester.ny.speedtest.frontier.com:8080",
+        "st-paul.speedtest.centurylink.net:8080",
+        "slc-speedtest.syringanetworks.net:8080",
+        "saltlakecity2.speedtest.centurylink.net:8080",
+        "speedtest.rd.sd.cox.net:8080",
+        "speedtest.sjc.sonic.net:8080",
+        "speedtest.unitedfiber.com:8080",
+        "speed-king.cybermesa.com:8080",
+        "seattle.speedtest.centurylink.net:8080",
+        "spt01snloca.snlo.ca.charter.com:8080",
+        "shreveport.speedtest.centurylink.net:8080",
+        "sioux-city.speedtest.centurylink.net:8080",
+        "sioux-falls.speedtest.centurylink.net:8080",
+        "speedtest.sdncommunications.com:8080",
+        "spt01slidla.slid.la.charter.com:8080",
+        "spokane.speedtest.centurylink.net:8080",
+        "st-cloud.speedtest.centurylink.net:8080",
+        "spt01stcdmn.stcd.mn.charter.com:8080",
+        "mcs.velocityonline.net:8080",
+        "spt01sghlga.sghl.ga.charter.com:8080",
+        "tallahassee2.speedtest.centurylink.net:8080",
+        "speedtest.tpa.hivelocity.net:8080",
+        "tampp-speedtest-01.noc.bhn.net:8080",
+        "speedtest.its.fsu.edu:8080",
+        "speedtest.nyroc.rr.com:8080",
+        "tallahassee.speedtest.centurylink.net:8080",
+        "tucson.speedtest.centurylink.net:8080",
+        "speedtest.casscomm.com:8080",
+        "speedtest-ookla-prod-001-sea.ff.avast.com:8080",
+        "wallingford.ct.speedtest.frontier.com:8080",
+        "warrensburg.speedtest.centurylink.net:8080",
+        "speedtest.rd.ks.cox.net:8080",
+        "speedtest.vtc.net:8080",
+        "winterpark.speedtest.centurylink.net:8080",
+        "speedtest.yadtel.net:8080",
+        "speedtest.noelcomm.com:8080"
+    ],
+    "Uruguay": [
+        "speedtest.movistar.com.uy:8080"
+    ],
+    "ZA": [
+        "speedtest.rain.co.za:8080",
+        "ctspeed.rain.co.za:8080",
+        "speedtest-pri.rsaweb.co.za:8080",
+        "speedtest.cpt.mweb.co.za:8080",
+        "jhbspeed.rain.co.za:8080",
+        "sp1.vanilla.co.za:8080",
+        "speedtest.jhb.mweb.co.za:8080",
+        "speedtest.dbn.mweb.co.za:8080"
+    ],
+    "Vanuatu": [
+        "speedtest.wantok.vu:8080"
+    ],
+    "US": [
+        "speedtest.bendtel.com:8080"
+    ],
+    "Vietnam": [
+        "speedtest5.vtn.com.vn:8080",
+        "speedtest.vietnamhost.vn:8080"
+    ]
+}
