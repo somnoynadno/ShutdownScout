@@ -14,6 +14,8 @@ import socket
 import tracert_util as tu
 import proxy_parser as pp
 
+from database_controller import DatabaseClient
+
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
@@ -26,9 +28,15 @@ def generate_random_str(n=12):
 
 
 def lookup(ip):
-    ans = requests.get(f"https://ipinfo.io/{ip}/json").json()
-    print(ans)
-    return ans
+    req = f"https://ipinfo.io/{ip}/json"
+    with DatabaseClient() as dbc:
+        res = dbc.get_lookup_res(ip)
+        if res:
+            return json.loads(res[1]) # lookup res
+        else:
+            lookup_info = requests.get(req).json()
+            dbc.save_lookup_res(ip, json.dumps(lookup_info), req)
+        return lookup_info
 
 
 def init_db():

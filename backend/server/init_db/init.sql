@@ -21,3 +21,9 @@ pinged_county varchar not null,
 ping integer not null,
 availability real not null);
 
+CREATE TABLE "public"."lookup" (
+    "IP" character varying NOT NULL,
+    "LookupRes" character varying NOT NULL,
+    "LookupServer" character varying NOT NULL
+) WITH (oids = false);
+

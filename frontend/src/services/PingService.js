@@ -1,4 +1,4 @@
-const MAX_TIMEOUT = 2000;
+const MAX_TIMEOUT = 3000;
 
 export async function getPingStats(countryPool) {
     return new Promise(resolve => {

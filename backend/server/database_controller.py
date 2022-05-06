@@ -108,3 +108,12 @@ class DatabaseClient:
         self.cursor.execute(
             "INSERT INTO public.ProxyPingRecord (timestamp, proxy_protocol, proxy_ip, proxy_port, proxy_region, pinged_county, ping, availability) VALUES(%s,%s,%s,%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING;",
             (timestamp, proto, ip, port, region, country, ping, availability))
+    
+    def get_lookup_res(self, ip):
+        self.cursor.execute('SELECT * FROM public.lookup WHERE \"IP\" = %s', (ip,))
+        return self.cursor.fetchone()
+    
+    def save_lookup_res(self, ip, lookup_str, lookup_server):
+        self.cursor.execute(
+            "INSERT INTO public.lookup (\"IP\", \"LookupRes\", \"LookupServer\") VALUES(%s, %s, %s) ON CONFLICT DO NOTHING;",
+            (ip, lookup_str, lookup_server))
