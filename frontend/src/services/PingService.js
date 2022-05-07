@@ -7,7 +7,6 @@ export async function getPingStats(countryPool) {
 
         let promises = [];
         for (let host of countryPool) {
-            // promises.push(ping(`http://${host}/`));
             promises.push(pingUsingOptions(`https://${host}/`));
             //promises.push(pingUsingImage(`http://${host}/favicon.ico`));
         }
@@ -45,30 +44,9 @@ function requestImage(url) {
     });
 }
 
-function ping(url, multiplier = 1) {
-    return new Promise(function (resolve, reject) {
-        let start = (new Date()).getTime();
-        let response = function () {
-            let delta = ((new Date()).getTime() - start);
-            delta *= multiplier;
-            resolve(delta);
-        };
-
-        fetch(url).then(() => {
-            response()
-        }).catch(() => {
-            resolve(-1);
-        });
-
-        setTimeout(function () {
-            resolve(-1);
-        }, MAX_TIMEOUT);
-    });
-}
-
 function requestOptions(url) {
     return new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.open("OPTIONS", url);
 
         xhr.setRequestHeader("Access-Control-Request-Method", "POST");
