@@ -36,13 +36,14 @@ export class API {
         })
     }
 
-    GetLastResults(limit = 5, region = undefined, ip = undefined) {
+    GetLastResults(limit = undefined, region = undefined, ip = undefined, timestamp = undefined) {
         limit = (limit ? `&limit=${limit}` : '');
         ip = (ip ? `&ip=${ip}` : '');
         region = (region ? `&region=${region}` : '');
+        timestamp = (timestamp ? `&timestamp=${timestamp}` : '');
 
         return new Promise((resolve, reject) => {
-            axios.get(apiAddress + `/last_results?${limit}${ip}${region}`)
+            axios.get(apiAddress + `/last_results?${limit}${ip}${region}${timestamp}`)
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         })

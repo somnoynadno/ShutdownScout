@@ -20,7 +20,7 @@ ping_site_res = {}
 
 proxies = {}
 
-TIMEOUT = 5
+TIMEOUT = 2
 
 def get_parsed_args():
     parser = argparse.ArgumentParser(description="ping <3")
@@ -136,7 +136,7 @@ def main():
 
     print("Dict reverted")
 
-    ping_site_res = scan_multithread(args.proto, revert_dict.keys(), proxies)
+    ping_site_res = scan_multithread(args.proto, revert_dict.keys(), ping_site, proxies)
 
     init_ping_res(top_sites.keys())
     fill_ping_res(ping_site_res, revert_dict, top_sites)

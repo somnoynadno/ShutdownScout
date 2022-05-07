@@ -16,6 +16,7 @@ import proxy_parser as pp
 
 from database_controller import DatabaseClient
 
+
 app = Flask(__name__)
 db_changing_lock = threading.Lock()
 
@@ -204,7 +205,7 @@ def ping_from_local():
     else:
         timeout = 120
     output_filename = f"/tmp/{generate_random_str()}.json"
-    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename, "-o", output_filename, '--proto', 'http' ])
+    p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename, "-o", output_filename, '--proto', 'https' ])
     p.communicate(timeout=timeout)
     with open(output_filename) as f:
         return jsonify(json.load(f))

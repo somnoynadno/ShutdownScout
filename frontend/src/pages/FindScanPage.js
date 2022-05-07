@@ -14,7 +14,7 @@ export const FindScanPage = () => {
     let [timestamp, setTimestamp] = useState("");
 
     const findResult = async () => {
-        api.GetLastProxyResults(undefined, undefined, undefined, undefined, timestamp)
+        api.GetLastResults(undefined, undefined, undefined, timestamp)
             .then((res) => prepareAndShowCharts(res))
             .catch((err) => setErrorText(err.toString()))
     }
