@@ -2,7 +2,7 @@ import axios from 'axios'
 import {apiAddress} from "../config";
 
 export class API {
-    GetIPLookup(ip="") {
+    GetIPLookup(ip = "") {
         let query = ip ? "?ip=" + ip : '';
         return new Promise((resolve, reject) => {
             axios.get(apiAddress + `/ip_lookup${query}`,)
@@ -37,21 +37,26 @@ export class API {
     }
 
     GetLastResults(limit = 5, region = undefined, ip = undefined) {
+        limit = (limit ? `&limit=${limit}` : '');
         ip = (ip ? `&ip=${ip}` : '');
         region = (region ? `&region=${region}` : '');
+
         return new Promise((resolve, reject) => {
-            axios.get(apiAddress + `/last_results?limit=${limit}${ip}${region}`)
+            axios.get(apiAddress + `/last_results?${limit}${ip}${region}`)
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         })
     }
 
-    GetLastProxyResults(limit = 5, region = undefined, ip = undefined, port = undefined) {
+    GetLastProxyResults(limit = 5, region = undefined, ip = undefined, port = undefined, timestamp = undefined) {
+        limit = (limit ? `&limit=${limit}` : '');
         ip = (ip ? `&ip=${ip}` : '');
         region = (region ? `&region=${region}` : '');
         port = (port ? `&port=${port}` : '');
+        timestamp = (timestamp ? `&timestamp=${timestamp}` : '');
+
         return new Promise((resolve, reject) => {
-            axios.get(apiAddress + `/last_proxy_results?limit=${limit}${ip}${region}${port}`)
+            axios.get(apiAddress + `/last_proxy_results?${limit}${ip}${region}${port}${timestamp}`)
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         })
@@ -65,7 +70,7 @@ export class API {
         })
     }
 
-    PingFromLocal(timeout = 60, sites=[]) {
+    PingFromLocal(timeout = 60, sites = []) {
         return new Promise((resolve, reject) => {
             let data = {"Timeout": timeout};
             if (sites.length > 0) {

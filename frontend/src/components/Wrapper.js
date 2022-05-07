@@ -33,6 +33,7 @@ import {IndexPage} from "../pages/IndexPage";
 import {TracertPage} from "../pages/TracertPage";
 import {LocalScanPage} from "../pages/LocalScanPage";
 import {isLocal} from "../config";
+import {FindScanPage} from "../pages/FindScanPage";
 
 
 export const Wrapper = () => {
@@ -76,6 +77,7 @@ export const Wrapper = () => {
                 <Route exact path="/scan" component={ChooseScanType}/>
                 <Route exact path="/scan/browser" component={BrowserScanPage}/>
                 <Route exact path="/scan/local" component={LocalScanPage}/>
+                <Route exact path="/scan/find" component={FindScanPage}/>
                 <Route exact path="/proxy" component={ProxyPage}/>
                 <Route exact path="/trace" component={TracertPage}/>
             </Box>
