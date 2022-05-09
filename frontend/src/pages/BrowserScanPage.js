@@ -17,7 +17,7 @@ export const BrowserScanPage = () => {
     let [pingResult, setPingResult] = useState({});
     let [currentCountry, setCurrentCountry] = useState("");
     let [progress, setProgress] = useState(0);
-    let [duration, setDuration] = useState(0);
+    let [scanDuration, setDuration] = useState(0);
 
     let [isProcessing, setIsProcessing] = useState(false);
     let [isReady, setIsReady] = useState(false);
@@ -35,7 +35,7 @@ export const BrowserScanPage = () => {
             setIsProcessing(false);
             setIsReady(true);
 
-            api.SendResult(pingResult, duration)
+            api.SendResult(pingResult, scanDuration)
                 .then((res) => console.log("Result saved"))
                 .catch((err) => console.log(err));
         }
@@ -43,19 +43,19 @@ export const BrowserScanPage = () => {
 
     const pingWebPool = async () => {
         setIsProcessing(true);
-        let start = (new Date()).getTime();
+        //let start = (new Date()).getTime();
 
         for (let [country, list] of Object.entries(webPool)) {
             list = list.slice(0, 10);
             let res = await getPingStats(list);
-            //setDuration(((new Date()).getTime() - start));
+            setDuration(100);
 
             setCurrentCountry(country);
             updateResult(country, res);
             console.log(country, res);
         }
         //let deltaMilliseconds = ((new Date()).getTime() - start);
-        setDuration(10);
+        setDuration(100);
     }
 
     useEffect(() => {
