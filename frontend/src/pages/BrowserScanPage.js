@@ -7,7 +7,7 @@ import {maxPingListSize} from "../config";
 import {AdviceAlert} from "../components/AdviceAlert";
 import {useBreakpointValue} from "@chakra-ui/media-query";
 import {fadeIn} from 'react-animations';
-import { StyleSheet, css } from 'aphrodite';
+import {css, StyleSheet} from 'aphrodite';
 
 
 export const BrowserScanPage = () => {
@@ -23,7 +23,7 @@ export const BrowserScanPage = () => {
 
     const adaptiveW = useBreakpointValue({base: "100%", xl: "65%", lg: "75%", md: "85%"});
 
-    const updateResult = useCallback((country, result) => {
+    const updateResult = useCallback((country, result, duration) => {
         pingResult[country] = result;
         setPingResult(pingResult);
 
@@ -34,22 +34,26 @@ export const BrowserScanPage = () => {
             setIsProcessing(false);
             setIsReady(true);
 
-            api.SendResult(pingResult)
-                .then((res) => console.log("Result saved"))
+            api.SendResult(pingResult, lookup["ip"], duration)
+                .then((res) => console.log(`Result saved: ${res}`))
                 .catch((err) => console.log(err));
         }
-    }, [pingResult, webPool]);
+    }, [lookup, pingResult, webPool]);
 
     const pingWebPool = async () => {
         setIsProcessing(true);
+        let start = (new Date()).getTime();
+
         for (let [country, list] of Object.entries(webPool)) {
             list = list.slice(0, 10);
             let res = await getPingStats(list);
+            let duration = ((new Date()).getTime() - start);
 
             setCurrentCountry(country);
-            updateResult(country, res);
+            updateResult(country, res, duration);
             console.log(country, res);
         }
+        
     }
 
     useEffect(() => {
@@ -111,20 +115,20 @@ export const BrowserScanPage = () => {
                         </Center> : ''
                     }
                     {isProcessing &&
-                        <Center>
-                            <Box w={adaptiveW}>
-                                <br/>
-                                <Heading size={"md"} align={"center"}>Текущая страна: {currentCountry}</Heading>
-                                <br/>
-                                <Text align={"center"} mb={2}>
-                                    Не переключайте
-                                    вкладку{adaptiveW !== "100%" && ' для более точного результата'}.
-                                </Text>
-                                <Progress value={progress}/>
-                                <br/>
-                                <AdviceAlert/>
-                            </Box>
-                        </Center>
+                    <Center>
+                        <Box w={adaptiveW}>
+                            <br/>
+                            <Heading size={"md"} align={"center"}>Текущая страна: {currentCountry}</Heading>
+                            <br/>
+                            <Text align={"center"} mb={2}>
+                                Не переключайте
+                                вкладку{adaptiveW !== "100%" && ' для более точного результата'}.
+                            </Text>
+                            <Progress value={progress}/>
+                            <br/>
+                            <AdviceAlert/>
+                        </Box>
+                    </Center>
                     }
                 </Box>
             </Center>
