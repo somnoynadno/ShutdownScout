@@ -76,7 +76,7 @@ class DatabaseClient:
 
     def insert_record(self, timestamp, ip, region, country, ping, availability, provider, scan_type, duration):
         self.cursor.execute(
-            "INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_county, ping, availability, provider, type, duration_seconds) VALUES(%s,%s,%s,%s,%s,%s, %s, %s, %s) ON CONFLICT DO NOTHING;",
+            "INSERT INTO public.PingRecord (timestamp, user_ip, user_region, pinged_county, ping, availability, provider, type, duration_milliseconds) VALUES(%s,%s,%s,%s,%s,%s, %s, %s, %s) ON CONFLICT DO NOTHING;",
             (timestamp, ip, region, country, ping, availability, provider, scan_type, duration))
 
     def select_proxy_records(self, ip=None, port=None, region=None, limit=None):

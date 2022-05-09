@@ -28,7 +28,7 @@ export class API {
     }
 
     SendResult(pingResult, ip, duration) {
-        let type = "?type=test";
+        let type = "?type=options";
         ip = ip ? `&ip=${ip}` : '';
         duration = duration ? `&duration=${duration}` : '';
         return new Promise((resolve, reject) => {

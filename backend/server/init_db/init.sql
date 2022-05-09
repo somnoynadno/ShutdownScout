@@ -11,7 +11,7 @@ ping integer not null,
 availability real not null,
 provider varchar,
 type varchar,
-duration_seconds integer not null);
+duration_milliseconds integer not null);
 
 CREATE TABLE IF NOT EXISTS public.ProxyPingRecord(
 timestamp timestamp NOT NULL DEFAULT NOW(),

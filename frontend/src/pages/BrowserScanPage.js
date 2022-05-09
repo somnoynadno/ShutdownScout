@@ -3,6 +3,7 @@ import {Box, Button, Center, Heading, Link, Progress, Text} from "@chakra-ui/rea
 import {api} from "../http/API";
 import {getPingStats} from "../services/PingService";
 import {PingResultPage} from "./PingResultPage";
+import {maxPingListSize} from "../config";
 import {AdviceAlert} from "../components/AdviceAlert";
 import {useBreakpointValue} from "@chakra-ui/media-query";
 import {fadeIn} from 'react-animations';
@@ -41,18 +42,18 @@ export const BrowserScanPage = () => {
 
     const pingWebPool = async () => {
         setIsProcessing(true);
-        //let start = (new Date()).getTime();
+        let start = (new Date()).getTime();
 
         for (let [country, list] of Object.entries(webPool)) {
             list = list.slice(0, 10);
             let res = await getPingStats(list);
-            let duration = 100;
+            let duration = ((new Date()).getTime() - start);
 
             setCurrentCountry(country);
             updateResult(country, res, duration);
             console.log(country, res);
         }
-        //let deltaMilliseconds = ((new Date()).getTime() - start);
+        
     }
 
     useEffect(() => {
@@ -61,10 +62,7 @@ export const BrowserScanPage = () => {
             let i = 0;
             for (const [country, list] of Object.entries(res)) {
                 p[country] = list;
-                // if (++i > maxPingListSize) {
-                //     break;
-                // }
-                if (++i > 2) {
+                if (++i > maxPingListSize) {
                     break;
                 }
             }
