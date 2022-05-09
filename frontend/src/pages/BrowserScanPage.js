@@ -33,7 +33,7 @@ export const BrowserScanPage = () => {
             setIsProcessing(false);
             setIsReady(true);
 
-            api.SendResult(pingResult, lookup["IP"], duration)
+            api.SendResult(pingResult, lookup["ip"], duration)
                 .then((res) => console.log(`Result saved: ${res}`))
                 .catch((err) => console.log(err));
         }
