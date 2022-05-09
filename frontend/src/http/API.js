@@ -30,7 +30,7 @@ export class API {
     SendResult(pingResult, duration) {
         // debug
         //let query = ip ? "?ip=" + ip + "&type=test" : "?type=test";
-        let query = "?type=test"
+        let query = "?type=options"
         let duration_query = duration ? "&duration=" + duration : '';
         return new Promise((resolve, reject) => {
             axios.post(apiAddress + `/send_result${query}${duration_query}`, pingResult)

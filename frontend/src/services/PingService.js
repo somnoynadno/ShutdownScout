@@ -44,6 +44,7 @@ function requestImage(url) {
     });
 }
 
+// scanType = options
 function requestOptions(url) {
     return new Promise(function (resolve, reject) {
         let xhr = new XMLHttpRequest();
