@@ -3,11 +3,10 @@ import {Box, Button, Center, Heading, Link, Progress, Text} from "@chakra-ui/rea
 import {api} from "../http/API";
 import {getPingStats} from "../services/PingService";
 import {PingResultPage} from "./PingResultPage";
-import {maxPingListSize} from "../config";
 import {AdviceAlert} from "../components/AdviceAlert";
 import {useBreakpointValue} from "@chakra-ui/media-query";
 import {fadeIn} from 'react-animations';
-import { StyleSheet, css } from 'aphrodite';
+import {css, StyleSheet} from 'aphrodite';
 
 
 export const BrowserScanPage = () => {
@@ -17,14 +16,13 @@ export const BrowserScanPage = () => {
     let [pingResult, setPingResult] = useState({});
     let [currentCountry, setCurrentCountry] = useState("");
     let [progress, setProgress] = useState(0);
-    let [scanDuration, setDuration] = useState(0);
 
     let [isProcessing, setIsProcessing] = useState(false);
     let [isReady, setIsReady] = useState(false);
 
     const adaptiveW = useBreakpointValue({base: "100%", xl: "65%", lg: "75%", md: "85%"});
 
-    const updateResult = useCallback((country, result) => {
+    const updateResult = useCallback((country, result, duration) => {
         pingResult[country] = result;
         setPingResult(pingResult);
 
@@ -35,11 +33,11 @@ export const BrowserScanPage = () => {
             setIsProcessing(false);
             setIsReady(true);
 
-            api.SendResult(pingResult, scanDuration)
-                .then((res) => console.log("Result saved"))
+            api.SendResult(pingResult, lookup["IP"], duration)
+                .then((res) => console.log(`Result saved: ${res}`))
                 .catch((err) => console.log(err));
         }
-    }, [pingResult, webPool]);
+    }, [lookup, pingResult, webPool]);
 
     const pingWebPool = async () => {
         setIsProcessing(true);
@@ -48,14 +46,13 @@ export const BrowserScanPage = () => {
         for (let [country, list] of Object.entries(webPool)) {
             list = list.slice(0, 10);
             let res = await getPingStats(list);
-            setDuration(100);
+            let duration = 100;
 
             setCurrentCountry(country);
-            updateResult(country, res);
+            updateResult(country, res, duration);
             console.log(country, res);
         }
         //let deltaMilliseconds = ((new Date()).getTime() - start);
-        setDuration(100);
     }
 
     useEffect(() => {
@@ -120,20 +117,20 @@ export const BrowserScanPage = () => {
                         </Center> : ''
                     }
                     {isProcessing &&
-                        <Center>
-                            <Box w={adaptiveW}>
-                                <br/>
-                                <Heading size={"md"} align={"center"}>Текущая страна: {currentCountry}</Heading>
-                                <br/>
-                                <Text align={"center"} mb={2}>
-                                    Не переключайте
-                                    вкладку{adaptiveW !== "100%" && ' для более точного результата'}.
-                                </Text>
-                                <Progress value={progress}/>
-                                <br/>
-                                <AdviceAlert/>
-                            </Box>
-                        </Center>
+                    <Center>
+                        <Box w={adaptiveW}>
+                            <br/>
+                            <Heading size={"md"} align={"center"}>Текущая страна: {currentCountry}</Heading>
+                            <br/>
+                            <Text align={"center"} mb={2}>
+                                Не переключайте
+                                вкладку{adaptiveW !== "100%" && ' для более точного результата'}.
+                            </Text>
+                            <Progress value={progress}/>
+                            <br/>
+                            <AdviceAlert/>
+                        </Box>
+                    </Center>
                     }
                 </Box>
             </Center>

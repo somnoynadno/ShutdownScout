@@ -27,13 +27,12 @@ export class API {
         })
     }
 
-    SendResult(pingResult, duration) {
-        // debug
-        //let query = ip ? "?ip=" + ip + "&type=test" : "?type=test";
-        let query = "?type=test"
-        let duration_query = duration ? "&duration=" + duration : '';
+    SendResult(pingResult, ip, duration) {
+        let type = "?type=test";
+        ip = ip ? `&ip=${ip}` : '';
+        duration = duration ? `&duration=${duration}` : '';
         return new Promise((resolve, reject) => {
-            axios.post(apiAddress + `/send_result${query}${duration_query}`, pingResult)
+            axios.post(apiAddress + `/send_result${type}${ip}${duration}`, pingResult)
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         })
