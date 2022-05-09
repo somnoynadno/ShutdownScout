@@ -8,7 +8,7 @@ from database_controller import DatabaseClient
 # }
 
 class PingRecord:
-    def __init__(self, timestamp, ip, region, country, ping, availability, provider="unknown"):
+    def __init__(self, timestamp, ip, region, country, ping, availability, provider="unknown", scan_type="unknown", duration=-1):
         self.timestamp = timestamp
         self.user_ip = ip
         self.user_region = region
@@ -16,11 +16,13 @@ class PingRecord:
         self.ping = ping
         self.availability = availability
         self.provider = provider
+        self.scan_type=scan_type
+        self.duration=duration
 
     def save_to_db(self):
         with DatabaseClient() as db:
             db.insert_record(self.timestamp, self.user_ip, self.user_region, self.pinged_county, self.ping,
-                             self.availability, self.provider)
+                             self.availability, self.provider, self.scan_type, self.duration)
 
     @classmethod
     def select_records(self, ip=None, region=None, limit=None, timestamp=None, provider=None):
