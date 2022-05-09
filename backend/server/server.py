@@ -82,6 +82,14 @@ def ip_lookup():
     return jsonify(ans)
 
 
+def save_ping_results(ts, ip, region, results_dict, provider, scan_type, duration):
+    for country in results_dict:
+        measure = results_dict[country]
+        r = PingRecord(ts, ip, region, country, measure["Ping"], measure["Availability"], provider, scan_type, duration)
+        r.save_to_db()
+
+
+
 @app.route('/api/send_result', methods=["POST"])
 @cross_origin()
 def send_result():
@@ -96,10 +104,7 @@ def send_result():
     region = ip_lookup_res["region"]
     provider = ip_lookup_res["org"]
     results = request.get_json()
-    for country in results:
-        measure = results[country]
-        r = PingRecord(ts, ip, region, country, measure["Ping"], measure["Availability"], provider, scan_type, duration)
-        r.save_to_db()
+    save_ping_results(ts, ip, region, results, provider, scan_type, duration)
     return "ok", 200
 
 
@@ -209,10 +214,17 @@ def ping_from_local():
     else:
         timeout = 120
     output_filename = f"/tmp/{generate_random_str()}.json"
+    start_time = datetime.datetime.now()
     p = subprocess.Popen(["python3", "ping_util.py", "-i", inp_filename, "-o", output_filename, '--proto', 'https' ])
     p.communicate(timeout=timeout)
+    duration_microsec = (datetime.datetime.now() - start_time).microseconds // 1000
+    ts = datetime.datetime.now(datetime.timezone.utc)
+
     with open(output_filename) as f:
-        return jsonify(json.load(f))
+        results_dict = json.load(f)
+    
+    save_ping_results(ts, 'local', 'local', results_dict, 'local', 'local', duration_microsec)
+    return jsonify(results_dict)
 
 
 # @app.route("/api/tracert", methods=["POST"])

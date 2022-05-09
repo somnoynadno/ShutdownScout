@@ -20,7 +20,7 @@ ping_site_res = {}
 
 proxies = {}
 
-TIMEOUT = 2
+TIMEOUT = 3
 
 def get_parsed_args():
     parser = argparse.ArgumentParser(description="ping <3")
