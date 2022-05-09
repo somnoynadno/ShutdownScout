@@ -47,11 +47,7 @@ function requestImage(url) {
 function requestOptions(url) {
     return new Promise(function (resolve, reject) {
         let xhr = new XMLHttpRequest();
-        xhr.open("OPTIONS", url);
-
-        xhr.setRequestHeader("Access-Control-Request-Method", "POST");
-        xhr.setRequestHeader("Access-Control-Request-Headers", "content-type");
-        //xhr.setRequestHeader("Origin", "https://reqbin.com");
+        xhr.open("OPTIONS", url, true);
 
         xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
