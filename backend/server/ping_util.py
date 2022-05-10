@@ -40,15 +40,14 @@ def _ping(path, proxies):
     try:
         ts = datetime.datetime.now()
         resp = requests.get(path, proxies=proxies, timeout=TIMEOUT)
-        time_delta_milliseconds = (datetime.datetime.now() - ts).microsecods() // 1000
+        time_delta_milliseconds = (datetime.datetime.now() - ts).microseconds // 1000
         #print(path, resp.ok)
         if resp.ok:
             return time_delta_milliseconds, 1
         return TIMEOUT*1000, 0
     except Exception as e:
-        #print(path, e)
+        print(path, e)
         return TIMEOUT*1000, 0
-    return TIMEOUT*1000, 0
 
 
 def ping_site(proto, url, proxies):
