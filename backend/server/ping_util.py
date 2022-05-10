@@ -96,7 +96,7 @@ def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}):
 
 def get_ping_res(ping_site_res, revert_dict, top_sites):
     ping_res = {}
-    for country in country_list:
+    for country in top_sites.keys():
         ping_res[country] = {"Ping": 0, "Availability": 0}
     for site in ping_site_res:
         country = revert_dict[site]
