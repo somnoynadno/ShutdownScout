@@ -78,7 +78,7 @@ def _parse_domains_json():
     
 
 
-def fill_ping_res_file(sites_list, filename):
+def check_availability_and_fill_ping_res_file(sites_list, filename):
     ping_res = scan_multithread('https', sites_list, target_func=ping_site)
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(ping_res, f, ensure_ascii=False, indent=4)  
@@ -107,17 +107,22 @@ def make_pool_smaller(ping_res_filename, favicon_sites_filename, small_pool_file
         ping_records_dict = json.loads(f.read())
     with open(favicon_sites_filename) as f:
         favicon_sites = json.loads(f.read())
-    small_good_sites_by_country = {}
-    for country in favicon_sites:
-        if len(favicon_sites[country]) <= SITES_MAX_COUNT:
-            small_good_sites_by_country[country] = favicon_sites[country]
-        else:
-            small_good_sites_by_country[country] = get_best_sites_for_each_country(
-                favicon_sites[country],
-                ping_records_dict
-            )
+    small_good_sites_by_country = _make_pool_smaller(favicon_sites, ping_records_dict)
     with open(small_pool_filename, 'w') as f:
         favicon_sites = json.dump(small_good_sites_by_country, f, ensure_ascii=False, indent=4)
+
+
+def _make_pool_smaller(filtered_sites, ping_records_dict):
+    small_good_sites_by_country = {}
+    for country in filtered_sites:
+        if len(filtered_sites[country]) <= SITES_MAX_COUNT:
+            small_good_sites_by_country[country] = filtered_sites[country]
+        else:
+            small_good_sites_by_country[country] = get_best_sites_for_each_country(
+                filtered_sites[country],
+                ping_records_dict
+            )
+    return small_good_sites_by_country
 
 
 def get_best_sites_for_each_country(sites_list, ping_records_dict):
@@ -160,22 +165,62 @@ def get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favic
     fill_web_pool_by_ping_res(sites_to_record_dict, favicon_ping_res_filename, favicon_sites_filename)
 
 
-def main():
-    sites_to_record_dict = parse_list_of_speedtest()
-  
-    ping_res_filename = 'speedtest_ping_res.json'
-    available_sites_filename = 'speedtest_available_from_europe_https.json'
-    #favicon_sites_filename = "speedtest_favicon_available_from_europe_https.json"
-    small_pool_filename = "speedtest_available_from_europe_https_small_united.json"
+def check_https_from_united():
+    pool_filename = 'speedtest_available_from_europe_https_united.json'
+    small_available_sites_filename = 'speedtest_available_from_europe_https_united_double_check_small.json'
+    
+    with open(pool_filename) as f:
+        sites_by_country = json.load(f)
+    sites_list = []
+    revert_dict = {}
+    for c in sites_by_country:
+        sites = sites_by_country[c]
+        for s in sites:
+            revert_dict[s] = c
+        sites_list += sites
+    ping_res = scan_multithread('https', sites_list, target_func=ping_site, timeout=10)
+    good_sites_by_country = defaultdict(list)
+    for site in ping_res:
+        if ping_res[site]["Availability"] == 1:
+            good_sites_by_country[revert_dict[site]].append(site)
+    
+    small_good_sites_by_country = {}
+    for country in good_sites_by_country:
+        if len(good_sites_by_country[country]) <= SITES_MAX_COUNT:
+            small_good_sites_by_country[country] = good_sites_by_country[country]
+        else:
+            small_good_sites_by_country[country] = sorted(
+                    good_sites_by_country[country],
+                    key=cmp_to_key(
+                        lambda site_a, site_b: 1 if ping_res[site_a]["Ping"] > ping_res[site_b]["Ping"] else -1
+                    )
+                )[:SITES_MAX_COUNT]
 
-    #fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
-    #print("ping res filled")
-    #fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename)
-    #print("webpool filled")
-    # get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favicon_sites_filename)
-    # print("filtered by favicon")
-    make_pool_smaller(ping_res_filename, "speedtest_available_from_europe_https_united.json", small_pool_filename)
-    print("got smaller")
+
+    with open(small_available_sites_filename, 'w', encoding='utf-8') as f:
+        json.dump(small_good_sites_by_country, f, ensure_ascii=False, indent=4)
+    
+    
+
+
+def main():
+    # sites_to_record_dict = parse_list_of_speedtest()
+  
+    # ping_res_filename = 'speedtest_ping_res.json'
+    # available_sites_filename = 'speedtest_available_from_europe_https.json'
+    # #favicon_sites_filename = "speedtest_favicon_available_from_europe_https.json"
+    # small_pool_filename = "speedtest_available_from_europe_https_small_united.json"
+
+    # # check_availability_and_fill_ping_res_file(sites_to_record_dict.keys(), ping_res_filename)
+    # # print("ping res filled")
+    # #fill_web_pool_by_ping_res(sites_to_record_dict, ping_res_filename, available_sites_filename)
+    # #print("webpool filled")
+    # # get_sites_with_favicon(sites_to_record_dict, available_sites_filename, favicon_sites_filename)
+    # # print("filtered by favicon")
+
+    # make_pool_smaller(ping_res_filename, "speedtest_available_from_europe_https_united.json", small_pool_filename)
+    # print("got smaller")
+    check_https_from_united()
 
     
     

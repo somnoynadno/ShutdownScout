@@ -36,7 +36,7 @@ def grouper(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return list(zip_longest(*args, fillvalue=fillvalue))
 
-def _ping(path, proxies):
+def _ping(path, proxies, timeout=TIMEOUT):
     headers = {
         "User-Agent" : "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
@@ -46,20 +46,20 @@ def _ping(path, proxies):
     }
     try:
         ts = datetime.datetime.now()
-        resp = requests.get(path, proxies=proxies, timeout=TIMEOUT, headers=headers)
+        resp = requests.get(path, proxies=proxies, timeout=timeout, headers=headers)
         time_delta_milliseconds = (datetime.datetime.now() - ts).microseconds // 1000
         #print(path, resp.ok)
         if resp.ok:
             return time_delta_milliseconds, 1
         else:
             print(path, resp.status_code, resp.text)
-        return TIMEOUT*1000, 0
+        return timeout*1000, 0
     except Exception as e:
         print(path, e)
-        return TIMEOUT*1000, 0
+        return timeout*1000, 0
 
 
-def ping_site(proto, url, proxies):
+def ping_site(proto, url, proxies, timeout=TIMEOUT):
     path = f"{proto}://{url}"
     return _ping(path, proxies)
 
@@ -69,13 +69,13 @@ def ping_site_like_browser(proto, url, proxies):
     return _ping(path, proxies)
 
 
-def scan_site(proto, site, proxies, func):
-    cur_ping, cur_av = func(proto, site, proxies)
+def scan_site(proto, site, proxies, func, timeout):
+    cur_ping, cur_av = func(proto, site, proxies, timeout)
     with ping_site_result_lock:
         ping_site_res[site] = {"Ping": cur_ping, "Availability": cur_av}
 
 
-def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}):
+def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}, timeout=TIMEOUT):
     global ping_site_res
     ping_site_res = {}
     threads = []
@@ -89,7 +89,7 @@ def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}):
         for site in part:
             if site is None:
                 break
-            thread = threading.Thread(target=scan_site, args=(proto, site, proxies, target_func))
+            thread = threading.Thread(target=scan_site, args=(proto, site, proxies, target_func, timeout))
             threads.append(thread)
             #print(f"start thread for {site}")
             thread.start()
