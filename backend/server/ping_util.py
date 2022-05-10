@@ -13,9 +13,6 @@ import resource
 from itertools import zip_longest
 import datetime
 
-ping_result_lock = threading.Lock()
-ping_res = {}
-
 ping_site_result_lock = threading.Lock()
 ping_site_res = {}
 
@@ -39,43 +36,36 @@ def grouper(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return list(zip_longest(*args, fillvalue=fillvalue))
 
+def _ping(path, proxies):
+    try:
+        ts = datetime.datetime.now()
+        resp = requests.get(path, proxies=proxies, timeout=TIMEOUT)
+        time_delta_milliseconds = (datetime.datetime.now() - ts).microsecods() // 1000
+        #print(path, resp.ok)
+        if resp.ok:
+            return time_delta_milliseconds, 1
+        return TIMEOUT*1000, 0
+    except Exception as e:
+        #print(path, e)
+        return TIMEOUT*1000, 0
+    return TIMEOUT*1000, 0
+
 
 def ping_site(proto, url, proxies):
-    try:
-        resp = requests.get(f"{proto}://{url}", proxies=proxies, timeout=TIMEOUT)
-        # print(resp.ok)
-        if resp.ok:
-            return 1
-        return 0
-    except Exception as e:
-        return 0
-    return 0
+    path = f"{proto}://{url}"
+    return _ping(path, proxies)
 
 # default proto is http
 def ping_site_like_browser(proto, url, proxies):
     path = f"{proto}://{url}/favicon.ico"
-    try:
-        resp = requests.get(path, proxies=proxies, timeout=TIMEOUT)
-        #print(path, resp.ok)
-        if resp.ok:
-            return 1
-        return 0
-    except Exception as e:
-        #print(path, e)
-        return 0
-    return 0
+    return _ping(path, proxies)
 
 
 def scan_site(proto, site, proxies, func):
-    ts = datetime.datetime.now()
-    time_delta = 3
-    cur_av = func(proto, site, proxies)
-    #print(cur_av)
-    if cur_av == 1:
-        time_delta = (datetime.datetime.now() - ts).total_seconds()
-    with ping_result_lock:
-        ping_site_res[site] = {"Ping": time_delta, "Availability": cur_av}
-        #print(site, ping_site_res[site])
+    time_delta = TIMEOUT
+    cur_ping, cur_av = func(proto, site, proxies)
+    with ping_site_result_lock:
+        ping_site_res[site] = {"Ping": cur_ping, "Availability": cur_av}
 
 
 def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}):
@@ -104,12 +94,10 @@ def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}):
     return ping_site_res
 
 
-def init_ping_res(country_list):
+def get_ping_res(ping_site_res, revert_dict, top_sites):
+    ping_res = {}
     for country in country_list:
         ping_res[country] = {"Ping": 0, "Availability": 0}
-
-
-def fill_ping_res(ping_site_res, revert_dict, top_sites):
     for site in ping_site_res:
         country = revert_dict[site]
         ping_res[country]["Ping"] += ping_site_res[site]["Ping"]
@@ -117,11 +105,10 @@ def fill_ping_res(ping_site_res, revert_dict, top_sites):
     for country in ping_res:
         ping_res[country]["Ping"] = ping_res[country]["Ping"] / len(top_sites[country])
         ping_res[country]["Availability"] = ping_res[country]["Availability"] / len(top_sites[country])
+    return ping_res
 
 
 def scan_web_pool(top_sites, proto, ping_func, proxies):
-    global ping_res
-    ping_res = {}
     print(f"I will scan {top_sites.keys()}")
 
     revert_dict = {}
@@ -136,8 +123,7 @@ def scan_web_pool(top_sites, proto, ping_func, proxies):
     duration = datetime.datetime.now() - start
     print(f"scan took {duration.microseconds // 1000} milliseconds")
 
-    init_ping_res(top_sites.keys())
-    fill_ping_res(ping_site_res, revert_dict, top_sites)
+    ping_res = get_ping_res(ping_site_res, revert_dict, top_sites)
     return ping_res
 
 def main():
@@ -149,10 +135,10 @@ def main():
     with open(args.input_filename, "r") as f:
         top_sites = json.load(f)
 
-    ping_res_local = scan_web_pool(top_sites, args.proto, ping_site, proxies)
+    ping_res = scan_web_pool(top_sites, args.proto, ping_site, proxies)
 
     with open(args.output_filename, 'w') as f:
-        json.dump(ping_res_local, f)
+        json.dump(ping_res, f)
     
 if __name__ == "__main__":
     main()
