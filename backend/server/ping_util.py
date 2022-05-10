@@ -11,6 +11,7 @@ import requests
 import threading
 import resource
 from itertools import zip_longest
+import datetime
 
 ping_result_lock = threading.Lock()
 ping_res = {}
@@ -117,16 +118,10 @@ def fill_ping_res(ping_site_res, revert_dict, top_sites):
         ping_res[country]["Ping"] = ping_res[country]["Ping"] / len(top_sites[country])
         ping_res[country]["Availability"] = ping_res[country]["Availability"] / len(top_sites[country])
 
-def main():
-    args = get_parsed_args()
-    proxies = {}
-    if args.proxy:
-        p_list = args.proxy.split(':')
-        proxies = {p_list[0]: p_list[1]}
 
-    with open(args.input_filename, "r") as f:
-        top_sites = json.load(f)
-
+def scan_web_pool(top_sites, proto, ping_func, proxies):
+    global ping_res
+    ping_res = {}
     print(f"I will scan {top_sites.keys()}")
 
     revert_dict = {}
@@ -135,14 +130,29 @@ def main():
             revert_dict[site] = country
 
     print("Dict reverted")
-
-    ping_site_res = scan_multithread(args.proto, revert_dict.keys(), ping_site, proxies)
+    
+    start = datetime.datetime.now()
+    ping_site_res = scan_multithread(proto, revert_dict.keys(), ping_func, proxies)
+    duration = datetime.datetime.now() - start
+    print(f"scan took {duration.microseconds // 1000} milliseconds")
 
     init_ping_res(top_sites.keys())
     fill_ping_res(ping_site_res, revert_dict, top_sites)
+    return ping_res
+
+def main():
+    args = get_parsed_args()
+    proxies = {}
+    if args.proxy:
+        p_list = args.proxy.split(':')
+        proxies = {p_list[0]: p_list[1]}
+    with open(args.input_filename, "r") as f:
+        top_sites = json.load(f)
+
+    ping_res_local = scan_web_pool(top_sites, args.proto, ping_site, proxies)
 
     with open(args.output_filename, 'w') as f:
-        json.dump(ping_res, f)
+        json.dump(ping_res_local, f)
     
 if __name__ == "__main__":
     main()
