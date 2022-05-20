@@ -1,0 +1,446 @@
+{
+    "Austria": [
+        "speedtest0401.anexia-it.com:8080",
+        "speedtest.nextlayer.at:8080",
+        "speedtest.citycom-austria.com:8080",
+        "speedcheck.liwest.at:8080",
+        "speedtest.ama-networx.net:8080"
+    ],
+    "Albania": [
+        "speedtest.vodafone.al:8080"
+    ],
+    "Algeria": [
+        "speedtest.ooredoo.dz:8080"
+    ],
+    "Armenia": [
+        "sp1.rtarmenia.am:8080"
+    ],
+    "Belarus": [
+        "test.byfly.by:8080"
+    ],
+    "Bahrain": [
+        "stest.bh.zain.com:8080",
+        "speedtest.viacloud.com:8080"
+    ],
+    "Australia": [
+        "ws1-n1per.isp.foxtel.net.au:8080",
+        "vic-speedtest.spirit.com.au:8080",
+        "speedtest.exetel.com.au:8080",
+        "mel1.speedtest.telstra.net:8080",
+        "ade1.speedtest.telstra.net:8080"
+    ],
+    "AR": [
+        "speedtest.telpin.com.ar:8080",
+        "speedtestbue.cabase.org.ar:8080",
+        "speedtest.ecowifi.com.ar:8080",
+        "speedtest.agilnet.com.ar:8080"
+    ],
+    "BR": [
+        "speedtest.netsystemcampos.com.br:8080",
+        "spd8.claro.com.br:8080",
+        "speedtest1.p4telecom.com.br:8080",
+        "speedtest.interativanetworks.net.br:8080",
+        "speedtest.connectalagoas.com.br:8080"
+    ],
+    "Bolivia": [
+        "test.entelnet.bo:8080"
+    ],
+    "Bangladesh": [
+        "speedtest.inspirebroadband.net:8080"
+    ],
+    "Bulgaria": [
+        "speedtest.thezone.bg:8080",
+        "speedtest.unacs.bg:8080",
+        "sp1.retecomtv.com:8080"
+    ],
+    "CH": [
+        "speedcheck.solnet.ch:8080",
+        "speedtest.swisscenter.com:8080",
+        "speedtest.wingo.ch:8080",
+        "speedtest1.swazi.net:8080"
+    ],
+    "Canada": [
+        "newspeedtest.accesscomm.ca:8080",
+        "speedtest.mnsi.net:8080",
+        "sp1.hcetelecom.com:8080",
+        "speedtest.netflash.net:8080",
+        "west-speedtest.frontiernetworks.ca:8080"
+    ],
+    "Czech Republic": [
+        "speedtest1.net-connect.cz:8080",
+        "rychlostinternetu.sk:8080",
+        "ookla.netbox.cz:8080",
+        "speedtest.jaw.cz:8080",
+        "speedtest.sychrovnet.cz:8080"
+    ],
+    "Cyprus": [
+        "speedtest.cytanet.com.cy:8080",
+        "speedtest.cablenetcy.net:8080",
+        "st1.extendbroadband.com:8080",
+        "speedtestlim.cablenet.com.cy:8080"
+    ],
+    "Croatia": [
+        "speedtest.ht.hr:8080"
+    ],
+    "Cayman Islands": [
+        "speedtest.c3.ky:8080"
+    ],
+    "Chile": [
+        "speedtest.wircom.cl:8080",
+        "speedtest.cablecolor.cl:8080",
+        "speedtest.masconectados.cl:8080"
+    ],
+    "Cambodia": [
+        "speedtest.cellcard.com.kh:8080"
+    ],
+    "DE": [
+        "muc.speedtest.contabo.net:8080",
+        "speedtest1.bc-networks.de:8080",
+        "speedtest.bc-networks.de:8080",
+        "speedtest.wtnet.de:8080",
+        "warp.cronon.net:8080"
+    ],
+    "DK": [
+        "speedtest.bornfiber.dk:8080",
+        "ookla1.kviknet.dk:8080",
+        "linespeed3.nms.tele.dk:8080"
+    ],
+    "ES": [
+        "speedtest.apfutura.net:8080",
+        "testdevelocidad.euskaltel.com:8080",
+        "speedtest.iguana.cat:8080",
+        "msibitnap.apfutura.net:8080",
+        "speedtest.conectabalear.com:8080"
+    ],
+    "Djibouti": [
+        "speedtest.djiboutitelecom.dj:8080"
+    ],
+    "Estonia": [
+        "kiirustest.telia.ee:8080"
+    ],
+    "Finland": [
+        "nopeus.dna.fi:8080",
+        "speedtest.netplaza.fi:8080"
+    ],
+    "CM": [
+        "speedtest1.orange.cm:8080"
+    ],
+    "France": [
+        "massy.testdebit.info:8080",
+        "reims.testdebit.info:8080",
+        "marseille.testdebit.info:8080",
+        "lyon.lafibre.info:8080",
+        "bordeaux.lafibre.info:8080"
+    ],
+    "GB": [
+        "speedtest.razorblue.net.uk:8080",
+        "speedtest-public1.ask4.net:8080"
+    ],
+    "Gibraltar": [
+        "speedtest.u-mee.com:8080"
+    ],
+    "Hungary": [
+        "gyor-speedtest.zt.hu:8080",
+        "speedtest.giganet.hu:8080",
+        "speedtest.atw.hu:8080",
+        "speedtest.telekom.hu:8080",
+        "speedtest1.digi.hu:8080"
+    ],
+    "Dominican Republic": [
+        "speedtest.viva.com.do:8080"
+    ],
+    "Greece": [
+        "ooklaspeedtest.vodafone.gr:8080"
+    ],
+    "CN": [
+        "speedtest1.online.sh.cn:8080",
+        "speedtest1.ah163.com:8080"
+    ],
+    "Iceland": [
+        "speedtest.siminn.is:8080"
+    ],
+    "Ecuador": [
+        "speedtest1.netlife.ec:8080"
+    ],
+    "Italy": [
+        "sp1.adalnetwork.com:8080",
+        "sp1.locontewifi.it:8080",
+        "sp1.novanetworks.it:8080",
+        "borg.micso.it:8080",
+        "rm-speedtest.optimaitalia.com:8080"
+    ],
+    "Israel": [
+        "speed.cellcom.co.il:8080",
+        "speedtest.ccc.net.il:8080"
+    ],
+    "Ireland": [
+        "perf.imagine.ie:8080"
+    ],
+    "ID": [
+        "speedtest.angkasa.id:8080",
+        "speedtest.ub.ac.id:8080",
+        "speedtest.cyberplus.net.id:8080",
+        "speedtest.idola.net.id:8080",
+        "speedtest.unsyiah.ac.id:8080"
+    ],
+    "India": [
+        "speedtest.alegra.in:8080",
+        "speedtestgzb.tripleplay.in:8080",
+        "mangalore.ganeshcable.net:8080",
+        "speedtestfbd.tripleplay.in:8080",
+        "speedtestdel.airtelbroadband.in:8080"
+    ],
+    "Isle of Man": [
+        "speedtest.manx.net:8080"
+    ],
+    "Jordan": [
+        "speedtest.damamax.jo:8080"
+    ],
+    "Iran": [
+        "rhaspd2.mci.ir:8080"
+    ],
+    "Kazakhstan": [
+        "test.ps.kz:8080",
+        "speedtest01.ttc.kz:8080"
+    ],
+    "Hong Kong": [
+        "ookla-speedtest.hgconair.hgc.com.hk:8080"
+    ],
+    "Liechtenstein": [
+        "speedtest.fl1.li:8080",
+        "speedtest.ton-net.com:8080"
+    ],
+    "Kuwait": [
+        "ookla.ooredoo.com.kw:8080",
+        "speedtest.ooredoo.com.kw:8080"
+    ],
+    "Latvia": [
+        "speedtest1.baltcom.lv:8080"
+    ],
+    "LU": [
+        "speedtest.tango.lu:8080",
+        "cabletest.eltrona.net:8080"
+    ],
+    "Lithuania": [
+        "speedtest-vno.init.lt:8080",
+        "speedtest-01.cgates.lt:8080"
+    ],
+    "Gabon": [
+        "speedtest.ga.airtel.com:8080"
+    ],
+    "Lithuanua": [
+        "www.topnet.lt:8080"
+    ],
+    "Malta": [
+        "speedtest.gov.mt:8080"
+    ],
+    "Guatemala": [
+        "speedtest1.tigo.net.gt:8080"
+    ],
+    "Netherlands": [
+        "speedtest.redhosting.nl:8080",
+        "speedtest.zeelandnet.nl:8080",
+        "spt01.sdhd.hosting:8080",
+        "speedtest1.mnd.bulk.iss.as9143.net:8080",
+        "speedtest.datacomfort.net:8080"
+    ],
+    "Mexico": [
+        "speedtest.cln.megared.net.mx:8080",
+        "speedtest.lpaz.megared.net.mx:8080",
+        "speedtest.puebla.megared.net.mx:8080",
+        "speedtest.tolu.megared.net.mx:8080",
+        "speedtest.torreon.megared.net.mx:8080"
+    ],
+    "Macao": [
+        "speedtest.mtel.mo:8080"
+    ],
+    "MG": [
+        "speedtest.telma.mg:8080"
+    ],
+    "Malaysia": [
+        "speedtest-my.vqbn.com:8080",
+        "speedtest.u.com.my:8080",
+        "speedtest.ytlcomms.my:8080",
+        "speed.time.com.my:8080"
+    ],
+    "Norway": [
+        "speedtest.pcsupport.no:8080",
+        "test.telenor.net:8080",
+        "osl-ulv-speedtest1.altibox.net:8080",
+        "stv-gm-speedtest1.altibox.net:8080",
+        "speed1.mimer.no:8080"
+    ],
+    "PL": [
+        "speedtest.jmdi.pl:8080",
+        "speedtest.kosakowo.net:8080",
+        "speedtest.km-net.pl:8080",
+        "speedtest1.provector.pl:8080",
+        "speedtest.systel.pl:8080"
+    ],
+    "Pakistan": [
+        "speedtest.tes.com.pk:8080"
+    ],
+    "NI": [
+        "speedtestserver.ibw.com.ni:8080",
+        "speedtest.tecomunica.com.ni:8080"
+    ],
+    "Panama": [
+        "speedtest.interfastpanama.com:8080"
+    ],
+    "Paraguay": [
+        "speedtest.tempusnet.com.py:8080",
+        "speedtest.dnsmasternet.com.py:8080"
+    ],
+    "MM": [
+        "mpt01.mpt.net.mm:8080"
+    ],
+    "Philippines": [
+        "speedtest.ptt.net.ph:8080",
+        "clk-srv04.convergeict.com:8080",
+        "sp1.nexlogic.ph:8080",
+        "speedtest-ilo.skybroadband.com.ph:8080",
+        "speedtest-bgo.skybroadband.com.ph:8080"
+    ],
+    "Nepal": [
+        "speedtest.wlink.com.np:8080",
+        "speedtest.subisu.net.np:8080",
+        "speedtest-srv.classic.com.np:8080"
+    ],
+    "Oman": [
+        "speedtest.awasr.com:8080"
+    ],
+    "Romania": [
+        "speedtest1.vodafone.ro:8080",
+        "speed.ines.ro:8080",
+        "speedtestcluj.vodafone.ro:8080",
+        "bucharest.getstreamhosting.com:8080",
+        "speedtest1.rcs-rds.ro:8080"
+    ],
+    "Portugal": [
+        "speedtest.nosmadeira.com:8080"
+    ],
+    "New Zealand": [
+        "speedtest.unifone.net.nz:8080",
+        "speedtest.lightwire.co.nz:8080",
+        "speedtest1-mod.vygr.net:8080",
+        "speedtest.vpscity.co.nz:8080"
+    ],
+    "RU": [
+        "speedtest.polycomm.net:8080",
+        "speedtest.vosnet.ru:8080",
+        "speedtest.selectel.ru:8080",
+        "speedtest.vidnoe.net:8080",
+        "speedtest.mosline.ru:8080"
+    ],
+    "Peru": [
+        "speedtest.bitel.com.pe:8080"
+    ],
+    "Republic of Singapore": [
+        "speedtest10.vqbn.com:8080"
+    ],
+    "Puerto Rico": [
+        "speed.claropr.com:8080",
+        "speedtest2.claropr.com:8080"
+    ],
+    "Qatar": [
+        "speedtest01.vodafone.com.qa:8080"
+    ],
+    "New Caledonia": [
+        "speedtest.mls.nc:8080"
+    ],
+    "Republic of Palau": [
+        "speedtest.pnccpalau.com:8080",
+        "speedtest.telco.pw:8080"
+    ],
+    "PY": [
+        "speedtest.fila.net.py:8080"
+    ],
+    "Singapore": [
+        "speedtest.singnet.com.sg:8080"
+    ],
+    "Serbia": [
+        "speedtest2.mts.rs:8080"
+    ],
+    "Slovakia": [
+        "speedtest.netspace.sk:8080",
+        "speedmeter.orange.sk:8080"
+    ],
+    "Sweden": [
+        "speedtest.no-ack.net:8080"
+    ],
+    "Saudi Arabia": [
+        "speedtest.saudi.net.sa:8080",
+        "ab-speedtest.saudi.net.sa:8080",
+        "jed-speedtest.saudi.net.sa:8080"
+    ],
+    "Somalia": [
+        "speedtest.somcable.com:8080",
+        "speedtest.hormuud.com:8080"
+    ],
+    "Saint Pierre and Miquelon": [
+        "speedtest.cheznoo.net:8080"
+    ],
+    "Turkey": [
+        "kysr01.hizinitestet.com:8080",
+        "medn01.hizinitestet.com:8080",
+        "brnv01.hizinitestet.com:8080",
+        "trbz01.hizinitestet.com:8080",
+        "diyb01.hizinitestet.com:8080"
+    ],
+    "Ukraine": [
+        "speedtest.status.ks.ua:8080",
+        "st01.kram.ua:8080",
+        "bgp.exstream.net.ua:8080",
+        "speedtest01.life.com.ua:8080",
+        "speedtest.magicom.net.ua:8080"
+    ],
+    "Tanzania": [
+        "speedtest.simbanet.co.tz:8080"
+    ],
+    "United Kingdom": [
+        "speedtest.darklight.city:8080"
+    ],
+    "United States": [
+        "tucson.speedtest.centurylink.net:8080",
+        "davenport.speedtest.centurylink.net:8080",
+        "orldp-speedtest-01.noc.bhn.net:8080",
+        "speedtest.west.rr.com:8080",
+        "dallas02.speedtest.windstream.net:8080"
+    ],
+    "Thailand": [
+        "speedtest.kku.ac.th:8080"
+    ],
+    "United Arab Emirates": [
+        "speedtest1.etisalat.ae:8080"
+    ],
+    "Uganda": [
+        "speedtest.roketelkom.co.ug:8080"
+    ],
+    "Taiwan": [
+        "dlv3-1.speedtest.idv.tw:8080",
+        "tpv3-1.speedtest.idv.tw:8080",
+        "ntv3-1.speedtest.idv.tw:8080",
+        "chv3-1.speedtest.idv.tw:8080",
+        "klv3-1.speedtest.idv.tw:8080"
+    ],
+    "ZA": [
+        "speedtest-pri.rsaweb.co.za:8080",
+        "ctspeed.rain.co.za:8080",
+        "jhbspeed.rain.co.za:8080",
+        "speedtest.cpt.mweb.co.za:8080",
+        "speedtest.rain.co.za:8080"
+    ],
+    "Uruguay": [
+        "speedtest.movistar.com.uy:8080"
+    ],
+    "Vietnam": [
+        "speedtest.vietnamhost.vn:8080",
+        "speedtest5.vtn.com.vn:8080"
+    ],
+    "US": [
+        "speedtest.bendtel.com:8080"
+    ],
+    "Vanuatu": [
+        "speedtest.wantok.vu:8080"
+    ]
+}

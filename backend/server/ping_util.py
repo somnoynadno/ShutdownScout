@@ -25,7 +25,7 @@ def get_parsed_args():
     parser.add_argument('-o', '--output-filename',
                         default='/tmp/tmp.json', dest='output_filename')
     parser.add_argument('-i', '--input-filename', dest='input_filename',
-                        default='init_db/web_pool.json')
+                        default='init_db/speedtest_available_from_europe_https_united_double_check_small.json')
     parser.add_argument('-p', '--proxy', dest='proxy')
     parser.add_argument('--proto', dest='proto', default="https")
 
@@ -36,22 +36,31 @@ def grouper(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return list(zip_longest(*args, fillvalue=fillvalue))
 
-def _ping(path, proxies):
+def _ping(path, proxies, timeout=TIMEOUT):
+    headers = {
+        "User-Agent" : "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Encoding" : "gzip, deflate",
+        "Cache-Control": "no-cache",
+        "Connection":"keep-alive"
+    }
     try:
         ts = datetime.datetime.now()
-        resp = requests.get(path, proxies=proxies, timeout=TIMEOUT)
-        time_delta_milliseconds = (datetime.datetime.now() - ts).microsecods() // 1000
+        resp = requests.get(path, proxies=proxies, timeout=timeout, headers=headers)
+        time_delta_milliseconds = (datetime.datetime.now() - ts).microseconds // 1000
         #print(path, resp.ok)
         if resp.ok:
             return time_delta_milliseconds, 1
-        return TIMEOUT*1000, 0
-    except Exception as e:
+        else:
+            pass
+            #print(path, resp.status_code, resp.text)
+        return timeout*1000, 0
+    except requests.exceptions.RequestException as e:
         #print(path, e)
-        return TIMEOUT*1000, 0
-    return TIMEOUT*1000, 0
+        return timeout*1000, 0
 
 
-def ping_site(proto, url, proxies):
+def ping_site(proto, url, proxies, timeout=TIMEOUT):
     path = f"{proto}://{url}"
     return _ping(path, proxies)
 
@@ -61,27 +70,27 @@ def ping_site_like_browser(proto, url, proxies):
     return _ping(path, proxies)
 
 
-def scan_site(proto, site, proxies, func):
-    time_delta = TIMEOUT
-    cur_ping, cur_av = func(proto, site, proxies)
+def scan_site(proto, site, proxies, func, timeout):
+    cur_ping, cur_av = func(proto, site, proxies, timeout)
     with ping_site_result_lock:
         ping_site_res[site] = {"Ping": cur_ping, "Availability": cur_av}
 
 
-def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}):
+def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}, timeout=TIMEOUT):
     global ping_site_res
     ping_site_res = {}
     threads = []
     open_files_os_limit = resource.getrlimit(resource.RLIMIT_NOFILE)[0]
-    print(f"I will run only {int(open_files_os_limit / 2)} threads at once, because of openfile limit")
-    items_parts = grouper(sites_list, int(open_files_os_limit / 2))
+    limit_delimiter = 32
+    print(f"I will run only {int(open_files_os_limit // limit_delimiter)} threads at once, because of openfile limit")
+    items_parts = grouper(sites_list, int(open_files_os_limit // limit_delimiter))
     print(f"So there will be {len(items_parts)} parts of threads")
     # print(f"partition is {items_parts}")
     for part in items_parts:
         for site in part:
             if site is None:
                 break
-            thread = threading.Thread(target=scan_site, args=(proto, site, proxies, target_func))
+            thread = threading.Thread(target=scan_site, args=(proto, site, proxies, target_func, timeout))
             threads.append(thread)
             #print(f"start thread for {site}")
             thread.start()
@@ -96,7 +105,7 @@ def scan_multithread(proto, sites_list, target_func=ping_site, proxies={}):
 
 def get_ping_res(ping_site_res, revert_dict, top_sites):
     ping_res = {}
-    for country in country_list:
+    for country in top_sites.keys():
         ping_res[country] = {"Ping": 0, "Availability": 0}
     for site in ping_site_res:
         country = revert_dict[site]
