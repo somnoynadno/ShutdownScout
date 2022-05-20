@@ -25,7 +25,7 @@ def get_parsed_args():
     parser.add_argument('-o', '--output-filename',
                         default='/tmp/tmp.json', dest='output_filename')
     parser.add_argument('-i', '--input-filename', dest='input_filename',
-                        default='init_db/web_pool.json')
+                        default='init_db/speedtest_available_from_europe_https_united_double_check_small.json')
     parser.add_argument('-p', '--proxy', dest='proxy')
     parser.add_argument('--proto', dest='proto', default="https")
 
@@ -52,10 +52,11 @@ def _ping(path, proxies, timeout=TIMEOUT):
         if resp.ok:
             return time_delta_milliseconds, 1
         else:
-            print(path, resp.status_code, resp.text)
+            pass
+            #print(path, resp.status_code, resp.text)
         return timeout*1000, 0
-    except Exception as e:
-        print(path, e)
+    except requests.exceptions.RequestException as e:
+        #print(path, e)
         return timeout*1000, 0
 
 
